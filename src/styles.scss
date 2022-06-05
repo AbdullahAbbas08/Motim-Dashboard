@@ -1,0 +1,61 @@
+/* You can add global styles to this file, and also import other style files */
+@import "./assets/scss/app.scss";
+@import '~ngx-print-element/styles.css';
+
+.font-style-header{
+    text-align: center;
+    font-weight: 500;
+    font-size: 20px;
+    color: white;
+}
+
+.font-style{
+    text-align: center;
+    font-size: 16px;
+}
+.bg-darkk{
+    background-color: #13192D;
+}
+
+.addnew-btn
+{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color:#D3AF37 ;
+    color: white;
+    cursor: pointer;
+}
+.btn-danger{
+    background-color: red !important;
+}
+
+.router-wrapper  {
+    position:  relative;
+    overflow:  hidden;
+    width:  100vw;
+    height:  calc(100%  -  47px);
+    perspective:  1200px;
+    transform-style:  preserve-3d;
+}
+
+:host  {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #60d7a9;
+}
+
+@import "@fontsource/cairo"; // Defaults to weight 400.
+body {
+    font-family: "Cairo" !important;
+  }
+
+  select{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 5px;
+}

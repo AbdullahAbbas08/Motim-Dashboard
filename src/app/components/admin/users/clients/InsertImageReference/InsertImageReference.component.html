@@ -1,0 +1,97 @@
+<app-breadcrumb [title]="'إدارة متطلبات الخدمة'" [active_item]="'Form Wizard'"></app-breadcrumb>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+
+        <div class="card-header" style="padding-bottom: 5px !important">
+          <div *ngIf="update; else elseBlock1">
+            <h5 class="pb-2">تعديل بيانات متطلبات خدمة</h5>
+            يمكنك تعديل بيانات متطلبات خدمة أو أكثر فى قائمة متطلبات الخدمة
+          </div>
+          <ng-template #elseBlock1>
+            <h5 class="pb-2">إضافة بيانات متطلبات خدمة</h5>
+            يمكنك تعديل بيانات متطلبات خدمة أو أكثر فى قائمة متطلبات الخدمة
+          </ng-template>
+        </div>
+
+        <form [formGroup]="InsertForm" >
+
+          <div class="card-body container row col-12" >
+
+            <div class="col-12 col-md-8">
+              <!-- name -->
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="name">أسم متطلب الخدمة </label>
+                  <input class="form-control" id="name" type="text" placeholder="أحمد" formControlName="name" />
+
+                  <ng-container class="invalid" style="color: red" *ngIf="
+                      InsertForm.get('name').hasError('required') &&
+                      InsertForm.get('name').touched">
+                    <span style="color: red;">
+                      أسم متطلب الخدمة مطلوب
+                    </span>
+                  </ng-container>
+                </div>
+              </div>
+
+              <!-- username -->
+              <div class="col-12">
+                <div class="form-group">
+                  <label>كود الصورة </label>
+                  <input class="form-control" type="number" placeholder="18" formControlName="imageCode" />
+
+                  <ng-container class="invalid" style="color: red" *ngIf="
+                      InsertForm.get('imageCode').hasError('required') &&
+                      InsertForm.get('imageCode').touched">
+                    <span style="color: red;">
+                      كود الصورة مطلوب
+                    </span>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+
+            <!-- image -->
+            <div class="col-12 col-md-4 d-flex align-items-center" >
+              <div class="col-12">
+                <div class="col-12 my-3 d-flex justify-content-center">
+                  <img src="{{ imgURL }}" class="image-style" />
+                </div>
+                <div class="col-12 ChangeProfilePhoto-block d-flex justify-content-center">
+                  <!--  -->
+                  <input type="file" formControlName="sourceImagePath" (change)="onSelectFile($event)"  #file accept="image/*" id="getFile" style="display: none"
+                    (change)="preview(file.files)" />
+
+                  <button onclick="document.getElementById('getFile').click()" class="changePhoto-btn">
+                    اضف مرجع لصورة
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="col-12 ">
+              <div *ngIf="update; else elseBlock">
+                <button class="btn btn-primary pull-right" type="submit" [disabled]="!InsertForm.valid"
+                  (click)="UpdateClient()">
+                  تعديل
+                </button>
+              </div>
+
+              <ng-template #elseBlock>
+                <button class="btn btn-primary pull-right" type="submit" [disabled]="InsertForm.invalid"
+                  (click)="InsertClient()">
+                  إضافة
+                </button>
+              </ng-template>
+            </div>
+
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

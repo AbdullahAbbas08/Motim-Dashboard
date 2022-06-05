@@ -1,0 +1,20 @@
+.img-col-block
+{
+    text-align: center;
+}
+
+.image-style
+{
+  width: 370px;
+  aspect-ratio: 1;
+}
+
+.changePhoto-btn
+{
+  padding: 15px 25px;
+  border-radius: 5px;
+  border: 1px solid #262d70;
+  background-color: #262d70;
+  color: white;
+  font-size: 14px;
+}

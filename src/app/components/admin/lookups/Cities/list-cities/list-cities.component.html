@@ -1,0 +1,59 @@
+<app-breadcrumb [title]="'قائمة المدن'" [items]="['Tables', 'Bootstrap Tables']" [active_item]="'Basic'">
+</app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header px-0 " style="padding-bottom: 5px;">
+                    <div class="row m-0 mb-2">
+                        <div class="col-12">
+                            <h5 class="py-2">المدن</h5>
+                            <span > إعدادت المدن الموجودة بالنظام ( عرض - تعديل - حذف ) </span>
+                        </div>
+                        <div class="col-12 col-md-9 mt-3">
+                            <div class="form-group">
+                                <label>اختر محافظة</label>
+                                <ng-multiselect-dropdown formControlName="categoryParentId"
+                                    placeholder="اختر محافظة" [settings]="dropdownSettings"
+                                    [data]="dropdownList" [(ngModel)]="selectedItem"
+                                    (onDeSelect)="onItemDeSelect($event)"
+                                    (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                                </ng-multiselect-dropdown>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 mt-3 d-flex justify-content-end align-items-center p-0">
+                            <div class="addnew-btn" (click)="AddNew()">
+                                إضافة مدينة جديدة
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table" style="width: 100%;">
+                        <thead>
+                            <tr class="bg-darkk ">
+                                <th scope="col" class="f-16 text-center text-white" style="width: 10%;">#</th>
+                                <th scope="col" class="f-16 text-center text-white" style="width: 20%;">أسم المدينة بالعربية</th>
+                                <th scope="col" class="f-16 text-center text-white" style="width: 20%;">أسم المدينة باللغة الانجليزية</th>
+                                <th scope="col" class="f-16 text-center text-white" style="width: 20%;">أسم المحافظة</th>
+                                <th scope="col" class="f-16 text-center text-white" style="width: 20%;">إعدادت</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of Filtered_List;let i=index">
+                                <th scope="row" class="font-style" style="width: 10%;">{{i+1}}</th>
+                                <td style="width: 20%;" class="font-style">{{item.nameAr}}</td>
+                                <td style="width: 20%;" class="font-style">{{item.name}}</td>
+                                <td style="width: 15%;" class="font-style">{{item.regionName}}</td>
+                                <td class="font-style" style="width: 50%;">
+                                    <button class="btn btn-danger mx-1" (click)="Delete(item.id)">حذف</button>
+                                    <button class="btn btn-success" (click)="update(item.id,item.governorateId, item.title)">تعديل</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

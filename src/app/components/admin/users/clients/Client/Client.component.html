@@ -1,0 +1,224 @@
+<app-breadcrumb [title]="'ادارة متطلبات الخدمة'" [items]="['Tables', 'Bootstrap Tables']" [active_item]="'Basic'"></app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-header px-0" style="padding-bottom: 5px;">
+              <div class="row m-0" >
+                  <div class="col-12 col-md-9">
+                    <h5 class="py-2"> متطلبات الخدمة</h5>
+                    <span >  إعدادت متطلب خدمة موجودة بالنظام ( عرض - تعديل - حذف ) </span>
+                  </div>
+                  <div class="col-12 col-md-3 d-flex justify-content-end align-items-center p-0">
+                      <div class="addnew-btn" (click)="AddNew()" >
+                            إضافة متطلب خدمة
+                      </div>
+                  </div>
+              </div>
+          
+          </div>
+          <div class="table-responsive">
+            <table class="table" style="width: 100%;">
+              <thead>
+                <tr class="bg-darkk ">
+                  <th scope="col" class="f-16 text-center text-white" style="width: 12%;">#</th>
+                  <th scope="col" class="f-16 text-center text-white" style="width: 22%;">أسم متطلب الخدمة</th>
+                  <th scope="col" class="f-16 text-center text-white" style="width: 22%;">كود متطلب الخدمة </th>
+                  <th scope="col" class="f-16 text-center text-white" style="width: 22%;">إعدادت</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr *ngFor="let item of Client_List;let i=index">
+                  <th scope="row" class="font-style" style="width: 12%;">{{i+1}}</th>
+                  <td style="width: 22%;" class="font-style">{{item.name}}</td>
+                  <td style="width: 22%;" class="font-style">{{item.imageCode}}</td>
+                  <td class="font-style" style="width: 22%;">
+                        <button class="btn btn-danger mx-1"
+                                (click)="DeleteClient(item.id)">حذف</button>
+                        <button class="btn btn-success" (click)="updateClient(item.id, item)">تعديل</button>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+<!-- <app-breadcrumb [title]="'ادارة العملاء'"> </app-breadcrumb>
+  <app-breadcrumb [title]="'ادارة متطلبات الخدمة'"></app-breadcrumb>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-12 xl-60">
+      <div class="row"  *ngFor="let item of Client_List">
+        <div class="col-xl-12">
+          <div class="card">
+            <div class="blog-box blog-list row">
+              <div class="col-sm-12">
+                <div class="d-flex justify-content-end pt-3">
+                  <i class="icon-marker-alt p-2 mx-1 edit-btn" style="font-size: 23px;text-align: center;" (click)="updateClient(item)" ></i>
+                  <i class="icon-trash p-2 mx-1 delete-btn" style="font-size: 23px; ;text-align: center;" (click)=" DeleteClient(item.id)" ></i>
+                </div>
+              </div>
+              <div class="col-sm-5 d-flex justify-content-center">
+                <img class="img-fluid sm-100-w" src="https://motimappapi.wecancity.com/images/{{item.sourceImagePath}}" style="width: 350px;aspect-ratio: 1;" alt="">
+              </div>
+              <div class="col-sm-7">
+                <div class="blog-details">
+                  <div class="blog-date digits"><span>05</span> January 2019</div>
+                  <h6>{{item.clientTypeTitle}}</h6>
+                  <div class="blog-bottom-content">
+                    <ul class="blog-social">
+                      <li>{{item.name}}</li>
+                      <li class="blog-social">{{item.clientTypeTitle}}</li>
+                    </ul>
+                    <hr>
+                    <p class="mt-0 client-body">
+                      <span>{{item.address}}</span>
+                      <span>{{item.cityTitle}}</span>
+                      <span>{{item.governorateTitle}}</span>
+                    </p>
+                  </div>
+                </div>
+              </div> 
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 project-list">
+      <div class="card">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group" style="margin-bottom: 0px">
+              <label></label>
+
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="text-right" style="margin-top: 15px; margin-left: 15px">
+              <div class="form-group mb-0 mr-0"></div>
+              <a class="btn add-btn" (click)="NavigateToInsertClient()">
+                <i data-feather="plus-square"> </i>إضافة عميل
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <div class="card" style="margin: 3px">
+        <div class="card-body">
+          <div class="tab-content" id="top-tabContent">
+            <div
+              class="tab-pane fade show active"
+              id="top-home"
+              role="tabpanel"
+              aria-labelledby="top-home-tab"
+            >
+              <div class="row">
+                <div
+                  *ngFor="let item of Client_List"
+                  class="col-xl-4 col-lg-6 mb-4"
+                >
+                  <div class="project-box shadow">
+                    <h6></h6>
+                    <div class="media Contain-Style mt-4">
+                      <i
+                        class="fas fa-layer-group mr-2 pt-1"
+                        style="color: darkgrey"
+                      ></i>
+                    </div>
+                    <div class="Category-Img-Title" style="background-image: url(./assets/images/MainDirectory/{{item.logoPath}}) ;background-size: cover;width: 230px;height: 230px;">
+                  </div>
+                    <div
+                      class="row"
+                      style="margin-left: 0px; margin-right: 0px">
+
+                      <div class="col-12 description-Style"
+                            style=" padding-left: 0px;
+                                    padding-right: 0px;
+                                    margin-top: 10px;
+                                    margin-bottom: 15px;">
+                      </div>
+                    </div>
+                    <div
+                      class="row details"
+                      style="margin-left: 0px; margin-right: 5px"
+                    >
+                      <div class="col-5"><span>الأسم</span></div>
+                      <div class="col-7" style="color: #eb2067">
+                        <span style="color: #eb2067">
+                        {{item.name}}
+                        </span>
+                      </div>
+                      <div class="col-5"><span>أسم المستخدم </span></div>
+                      <div class="col-7" style="color: #eb2067">
+                        <span style="color: #eb2067">
+                        {{item.userName}}
+                        </span>
+                      </div>
+                      <div class="col-5"><span>الموبايل </span></div>
+                      <div class="col-7" style="color: #eb2067">
+                        <span style="color: #eb2067">
+                        {{item.mobile}}
+                        </span>
+                      </div>
+                      <div class="col-5"><span>العنوان </span></div>
+                      <div class="col-7" style="color: #eb2067">
+                        <span style="color: #eb2067">
+                        {{item.address}}
+                        </span>
+                      </div>
+                      <div class="col-5"><span>نوع العميل </span></div>
+                      <div class="col-7" style="color: #eb2067">
+                        <span style="color: #eb2067"> 
+                          {{item.clientTypeTitle}}
+                        </span>
+                      </div>
+                      <div class="col-5"><span> مدينة </span></div>
+                      <div class="col-7" style="color: #eb2067">
+                        <span style="color: #eb2067">{{item.cityTitle}} </span>
+                      </div>
+                    </div>
+                    <div
+                      class="row"
+                      style="
+                        margin-left: 0px;
+                        margin-right: 0px;
+                        margin-bottom: 10px;
+                      "
+                    >
+                      <div class="col-12">
+                        <button
+                          class="update-btn ml-2"
+                          (click)="updateClient(item)">
+                          تعديل
+                        </button>
+                        <button
+                          class="delete-btn mr-2"
+                          (click)=" DeleteClient(item.clientId)">
+                          حذف
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

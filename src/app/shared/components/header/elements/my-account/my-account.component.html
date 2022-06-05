@@ -1,0 +1,12 @@
+<div class="media profile-media">
+  <img class="b-r-10" src="assets/images/dashboard/profile.jpg" alt="">
+  <div class="media-body"><span>أسم الموظف</span>
+  </div>
+</div>
+<ul class="profile-dropdown onhover-show-div">
+  <li><a><app-feather-icons [icon]="'user'"></app-feather-icons><span>حسابى </span></a></li>
+  <li><a><app-feather-icons [icon]="'mail'" ></app-feather-icons><span>البريد</span></a></li>
+  <li><a><app-feather-icons [icon]="'file-text'"></app-feather-icons><span>مهماتى</span></a></li>
+  <li><a><app-feather-icons [icon]="'settings'"></app-feather-icons><span>الاعدادات</span></a></li>
+  <li (click)="logout()"><a><app-feather-icons [icon]="'log-in'"></app-feather-icons><span>سجل خروج</span></a></li>
+</ul> 

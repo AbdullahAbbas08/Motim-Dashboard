@@ -1,0 +1,147 @@
+<app-breadcrumb [title]="'إدارة موظفى خدمة العملاء'" [active_item]="'Form Wizard'"></app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="padding-bottom:5px !important ;">
+                    <div *ngIf="update; else elseBlock1">
+                        <h5 class="pb-2">تعديل موظف موجود</h5>
+                        يمكنك تعديل موظف أو أكثر فى قائمة موظفى خدمة العملاء
+                    </div>
+                    <ng-template #elseBlock1>
+                        <h5 class="pb-2">إضافة موظف جديد</h5>
+                        يمكنك إضافة موظف خدمة عملاء أو أكثر فى قائمة موظفى خدمة العملاء
+                    </ng-template>
+
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="EmployeeForm">
+
+                        <!-- name -->
+                        <div class="form-group">
+                            <label for="name"> أسم الموظف</label>
+                            <input class="form-control" id="name" type="text" placeholder="أحمد" required="required"
+                                formControlName="name"><!-- onlyAlphabets -->
+
+                            <ng-container class="invalid" style="color: red;"
+                                *ngIf="EmployeeForm.get('name').hasError('required') && EmployeeForm.get('name').touched">
+                                <span style="color: red;">
+                                    أسم الموظف مطلوب
+                                </span>
+                            </ng-container>
+                        </div>
+
+                        <!-- username -->
+                        <div class="form-group">
+                            <label for="username"> أسم المستخدم</label>
+                            <input class="form-control" id="username" type="text" placeholder="Ahmed250"
+                                required="required" formControlName="username"><!-- onlyAlphabets -->
+
+                            <ng-container class="invalid" style="color: red;"
+                                *ngIf="EmployeeForm.get('username').hasError('required') && EmployeeForm.get('username').touched">
+                                <span style="color: red;">
+                                    أسم المستخدم مطلوب
+                                </span>
+                            </ng-container>
+                        </div>
+
+                        <!-- password -->
+                        <div class="form-group">
+                           
+                            <div *ngIf="update; else elseBlock11">
+                                <label for="Password"> تعديل كلمة المرور</label>
+                            </div>
+                            <ng-template #elseBlock11>
+                                <label for="Password"> كلمة المرور</label>
+                            </ng-template>
+                            <input class="form-control" id="Password" type="password" placeholder="حروف وأرقام ورموز "
+                                formControlName="password">
+
+                            <!-- <ng-container class="invalid" 
+                                *ngIf="EmployeeForm.get('password').hasError('required') && EmployeeForm.get('password').touched">
+                                <span style="color: red;">
+                                    كلمة المرور مطلوبة
+                                </span>
+                            </ng-container> -->
+                        </div>
+
+                        <!-- national id -->
+                        <div class="form-group">
+                            <label for="nationalid"> الرقم القومى</label>
+                            <input class="form-control" id="nationalid" type="text" placeholder="رقم فقط 14 "
+                                required="required" formControlName="nationalId"
+                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                maxlength="14" minlength="14">
+
+                            <ng-container class="invalid" style="color: red;"
+                                *ngIf="EmployeeForm.get('nationalId').hasError('required') && EmployeeForm.get('nationalId').touched">
+                                <span style="color: red;">
+                                    الرقم القومى مطلوب
+                                </span>
+                            </ng-container>
+                        </div>
+
+                        <!-- mobile -->
+                        <div class="form-group">
+                            <label for="mobilenumber"> رقم الموبايل</label>
+                            <input class="form-control" id="mobilenumber" type="text" placeholder="رقم فقط 11"
+                                required="required" formControlName="mobile"
+                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                maxlength="11" minlength="11">
+
+                            <ng-container class="invalid" style="color: red;"
+                                *ngIf="EmployeeForm.get('mobile').hasError('required') && EmployeeForm.get('mobile').touched">
+                                <span style="color: red;">
+                                    رقم الموبايل مطلوب
+                                </span>
+                            </ng-container>
+                        </div>
+
+                        <!-- address -->
+                        <div class="form-group">
+                            <label for="address"> العنوان</label>
+                            <input class="form-control textForArabic" id="address" type="text" placeholder="أكتب العنوان بالتفصيل"
+                                required="required" formControlName="address"><!-- onlyAlphabets -->
+
+                            <ng-container class="invalid" style="color: red;"
+                                *ngIf="EmployeeForm.get('address').hasError('address') && EmployeeForm.get('address').touched">
+                                <span style="color: red;">
+                                    العنوان مطلوب
+                                </span>
+                            </ng-container>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>  إضافة عملاء  لهذا الموظف  </label>
+                            <ng-multiselect-dropdown
+                            formControlName="Clients"
+                            placeholder="أختر عميل أو أكتر من القائمة"
+                            [settings]="dropdownSettings"
+                            [data]="dropdownList"
+                            [(ngModel)]="selectedItems"
+                            (ngModelChange)="onItemSelect($event)"
+                            (onSelectAll)="onSelectAll($event)">
+                    </ng-multiselect-dropdown>
+                        </div>
+
+                        <div *ngIf="update; else elseBlock">
+                            <button class="btn btn-primary pull-right" type="submit" [disabled]="!EmployeeForm.valid"
+                                (click)="UpdateClientType()">
+                                تعديل
+                            </button>
+                        </div>
+
+                        <ng-template #elseBlock>
+                            <button class="btn btn-primary pull-right" type="submit" [disabled]="!EmployeeForm.valid"
+                                (click)="InsertEmployee()">
+                                إضافة
+                            </button>
+                        </ng-template>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

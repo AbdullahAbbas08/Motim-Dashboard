@@ -1,0 +1,209 @@
+<app-breadcrumb [title]="'إدارة الباقات'" [active_item]="'Form Wizard'"></app-breadcrumb>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header" style="padding-bottom: 5px !important ">
+          <div *ngIf="update; else elseBlock1">
+            <h5 class="pb-2">تعديل باقة</h5>
+            يمكنك تعديل باقة أو أكثر فى الباقات
+          </div>
+          <ng-template #elseBlock1>
+            <h5 class="pb-2">إضافة باقة جديدة</h5>
+            يمكنك إضافة باقة أو أكثر فى الباقات
+          </ng-template>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="PackageForm">
+
+            <div class="card-body container row col-12 p-0">
+
+              <div class="col-12 col-md-8 row">
+                <!-- name -->
+
+
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="packageTitleAR">أسم الباقة باللغة العربية</label>
+                    <input class="form-control" id="packageTitleAR" type="text" placeholder="Civil Registry"
+                      formControlName="packageTitleAR" />
+
+                    <ng-container class="invalid" style="color: red" *ngIf="
+                      PackageForm.get('packageTitleAR').hasError('required') &&
+                      PackageForm.get('packageTitleAR').touched">
+                      <span style="color: red;">
+                        أسم الباقة باللغة العربية مطلوب
+                      </span>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="packageTitle"> أسم الباقة باللغة الانجليزية </label>
+                    <input class="form-control" id="packageTitle" type="text" placeholder="السجل المدنى"
+                      formControlName="packageTitle" />
+
+                    <ng-container class="invalid" style="color: red" *ngIf="
+                      PackageForm.get('packageTitle').hasError('required') &&
+                      PackageForm.get('packageTitle').touched">
+                      <span style="color: red;">
+                        أسم الباقة باللغة الانجليزية مطلوب </span>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="packageDescription">وصف الباقة باللغة الانجليزية </label>
+                    <input class="form-control" id="packageDescription" type="text"
+                      placeholder="Civil Registry Description" formControlName="packageDescription" />
+
+                    <ng-container class="invalid" style="color: red" *ngIf="
+                      PackageForm.get('packageDescription').hasError('required') &&
+                      PackageForm.get('packageDescription').touched">
+                      <span style="color: red;">
+                        وصف الباقة باللغة الانجليزية مطلوب
+                      </span>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="packageDescriptionAR">وصف الباقة باللغة العربية</label>
+                    <input class="form-control" id="packageDescriptionAR" type="text" placeholder="وصف السجل المدني"
+                      formControlName="packageDescriptionAR" />
+
+                    <ng-container class="invalid" style="color: red" *ngIf="
+                      PackageForm.get('packageDescriptionAR').hasError('required') &&
+                      PackageForm.get('packageDescriptionAR').touched">
+                      <span style="color: red;">
+                        وصف الباقة باللغة العربية مطلوب </span>
+                    </ng-container>
+                  </div>
+                </div>
+
+
+
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="packagePrice">سعر الباقة </label>
+                    <input class="form-control" id="packagePrice" type="number" placeholder="1"
+                      formControlName="packagePrice" />
+
+                    <ng-container class="invalid" style="color: red" *ngIf="
+                      PackageForm.get('packagePrice').hasError('required') &&
+                      PackageForm.get('packagePrice').touched">
+                      <span style="color: red;">
+                        سعر الباقة مطلوب
+                      </span>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="packageOrder">ترتيب الباقة</label>
+                    <input class="form-control" id="packageOrder" type="number" placeholder="0"
+                      formControlName="packageOrder" />
+
+                    <ng-container class="invalid" style="color: red" *ngIf="
+                      PackageForm.get('packageOrder').hasError('required') &&
+                      PackageForm.get('packageOrder').touched">
+                      <span style="color: red;">
+                        ترتيب الباقة مطلوب
+                      </span>
+                    </ng-container>
+                  </div>
+                </div>
+
+
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="serviceRequestCount">عدد طلبات الخدمة</label>
+                    <input class="form-control" id="serviceRequestCount" type="number" placeholder="1"
+                      formControlName="serviceRequestCount" />
+
+                    <ng-container class="invalid" style="color: red" *ngIf="
+                      PackageForm.get('serviceRequestCount').hasError('required') &&
+                      PackageForm.get('serviceRequestCount').touched">
+                      <span style="color: red;">
+                        عدد طلبات الخدمة مطلوب
+                      </span>
+                    </ng-container>
+                  </div>
+                </div>
+
+
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="packageDuration">مدة الباقة</label>
+                    <input class="form-control" id="packageDuration" type="number" placeholder="1"
+                      formControlName="packageDuration" />
+
+                    <ng-container class="invalid" style="color: red" *ngIf="
+                      PackageForm.get('packageDuration').hasError('required') &&
+                      PackageForm.get('packageDuration').touched">
+                      <span style="color: red;">
+                        مدة الباقة مطلوب
+                      </span>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-group">
+                    <label> خصص تصنيفات لهذة الباقة</label>
+
+                    <ng-multiselect-dropdown placeholder="أختر نوع تصنيف او اكثر أو أكتر من القائمة"
+                      [settings]="dropdownSettings" formControlName="categoryTypes" [data]="dropdownList"
+                      [(ngModel)]="selectedItems" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                    </ng-multiselect-dropdown>
+                  </div>
+                </div>
+              </div>
+
+              <!-- image -->
+              <div class="col-12 col-md-4 d-flex align-items-center">
+                <div class="col-12">
+                  <div class="col-12 my-3 d-flex justify-content-center">
+                    <img src="{{ imgURL }}" class="image-style" />
+                  </div>
+                  <div class="col-12 ChangeProfilePhoto-block d-flex justify-content-center">
+                    <!--  -->
+                    <input type="file" formControlName="packageImagePath" (change)="onSelectFile($event)" #file
+                      accept="image/*" id="getFile" style="display: none" (change)="preview(file.files)" />
+
+                    <button onclick="document.getElementById('getFile').click()" class="changePhoto-btn">
+                      اضف صورة للباقة
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+
+
+            </div>
+
+            <div *ngIf="update; else elseBlock">
+              <button class="btn btn-primary pull-right" type="submit" [disabled]="!PackageForm.valid"
+                (click)="UpdateCallReason()">
+                تعديل
+              </button>
+            </div>
+
+            <ng-template #elseBlock>
+              <button class="btn btn-primary pull-right" type="submit" [disabled]="PackageForm.invalid"
+                (click)="InsertPackage()">
+                إضافة
+              </button>
+            </ng-template>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

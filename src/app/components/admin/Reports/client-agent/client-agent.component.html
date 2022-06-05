@@ -1,0 +1,59 @@
+<app-breadcrumb [title]="'تقارير عن العملاء - موظفى خدمة العملاء'" [items]="['Tables', 'Bootstrap Tables']" [active_item]="'Basic'">
+</app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header px-0 " style="padding-bottom: 5px;">
+                    <div class="row m-0 mb-2">
+                        <!-- <div class="col-12">
+                            <h5 class="py-2">المدن</h5>
+                            <span style="font-size: 16px;"> إعدادت المدن الموجودة بالنظام ( عرض - تعديل - حذف ) </span>
+                        </div> -->
+                        <div class="col-12 col-md-9">
+                            <div class="form-group">
+                                <label>أختر عميل</label>
+                                <Select class="form-control " formControlName="GovernorateId"
+                                    aria-label="Default select example" (change)="SelectedChange($event)">
+    
+                                    <option value="" selected disabled>أختر عميل </option>
+                                    <option *ngFor="let obj of ClientList" value="{{ obj.id }}">
+                                        <h3 class="selected-value"> {{ obj.name }} </h3>
+                                    </option>
+                                </Select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 mt-3 d-flex justify-content-end align-items-center p-0">
+                         <button class="addnew-btn" [print]="['DataTable']">طباعة البيانات</button>  
+                         <!-- <div class="addnew-btn" (click)="AddNew()">
+                                إضافة مدينة جديدة
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table" style="width: 100%;" id="DataTable">
+                        <thead>
+                            <tr class="bg-darkk ">
+                                <th scope="col" class="font-style-header" style="width: 5%;">#</th>
+                                <th scope="col" class="font-style-header" style="width: 30%;">أسم الموظف </th>
+                                <th scope="col" class="font-style-header" style="width: 20%;">الرقم القومى</th>
+                                <th scope="col" class="font-style-header" style="width: 10%;">الموبايل</th>
+                                <th scope="col" class="font-style-header" style="width: 35%;">العنوان</th>
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <tr *ngFor="let item of Client_Agent_Report;let i=index">
+                                <th scope="row" class="font-style" style="width: 5%;">{{i+1}}</th>
+                                <td style="width: 30%;" class="font-style">{{item.name}}</td>
+                                <td style="width: 20%;" class="font-style">{{item.nationalId}}</td>
+                                <td style="width: 10%;" class="font-style">{{item.mobile}}</td>
+                                <td style="width: 35%;" class="font-style">{{item.address}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+<app-breadcrumb [title]="'تقارير عن العملاء'" [items]="['Tables', 'Bootstrap Tables']" [active_item]="'Basic'">
+</app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header px-0 " style="padding-bottom: 5px;">
+                    <div class="row m-0 mb-2">
+                        <!-- <div class="col-12">
+                            <h5 class="py-2">المدن</h5>
+                            <span style="font-size: 16px;"> إعدادت المدن الموجودة بالنظام ( عرض - تعديل - حذف ) </span>
+                        </div> -->
+                        <div class="col-12 col-md-3">
+                            <div class="form-group">
+                                <label>أختر نوع العميل</label>
+                                <Select class="form-control " formControlName="GovernorateId"
+                                    aria-label="Default select example" (change)="SelectedChange($event)">
+    
+                                    <option value="" selected disabled>نوع العميل </option>
+                                    <option value="-1" >الكل  </option>
+                                    <option *ngFor="let obj of Client_Type_List" value="{{ obj.typeId }}">
+                                        <h3 class="selected-value"> {{ obj.title }} </h3>
+                                    </option>
+                                </Select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 col-md-3">
+                            <div class="form-group">
+                                <label>أسم العميل</label>
+                               <input  type="text" (change)="ClientNameChange($event)"  class="form-control ">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-3">
+                            <div class="form-group">
+                                <label>رقم موبايل</label>
+                               <input type="text" (change)="ClientMobileChange($event)"  class="form-control ">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-3 mt-3 d-flex justify-content-end align-items-center p-0">
+                         <button class="addnew-btn" [print]="['DataTable']">طباعة البيانات</button>  
+                         <!-- <div class="addnew-btn" (click)="AddNew()">
+                                إضافة مدينة جديدة
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table" style="width: 100%;" id="DataTable">
+                        <thead>
+                            <tr class="bg-dark ">
+                                <th scope="col" class="font-style-header" style="width: 10%;">#</th>
+                                <th scope="col" class="font-style-header" style="width: 40%;">أسم العميل </th>
+                                <th scope="col" class="font-style-header" style="width: 15%;">رقم الموبايل</th>
+                                <th scope="col" class="font-style-header" style="width: 20%;">نوع العميل</th>
+                                <th scope="col" class="font-style-header" style="width: 15%;">المدينة</th>
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <tr *ngFor="let item of Filtered_List;let i=index">
+                                <th scope="row" class="font-style" style="width: 10%;">{{i+1}}</th>
+                                <td style="width: 40%;" class="font-style">{{item.name}}</td>
+                                <td style="width: 15%;" class="font-style">{{item.mobile}}</td>
+                                <td style="width: 20%;" class="font-style">{{item.clientTypeTitle}}</td>
+                                <td style="width: 15%;" class="font-style">{{item.cityTitle}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

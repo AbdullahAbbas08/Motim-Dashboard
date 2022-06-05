@@ -1,0 +1,50 @@
+<app-breadcrumb [title]="'إدارة أنواع العملاء'"  [active_item]="'Form Wizard'"></app-breadcrumb>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header" style="padding-bottom:5px !important ;">
+            <div *ngIf="update; else elseBlock1">
+              <h5 class="pb-2">تعديل نوع عميل موجود</h5>
+              يمكنك تعديل نوع عميل أو أكثر فى قائمة أنواع العملاء 
+            </div>
+          <ng-template #elseBlock1>
+            <h5 class="pb-2">إضافة نوع عميل جديد</h5>
+              يمكنك إضافة نوع عميل أو أكثر فى قائمة أنواع العملاء 
+            </ng-template>
+
+        </div>
+        <div class="card-body">
+            <form [formGroup]="ClientTypeForm">
+                <div class="form-group">
+                  <label for="name">نوع العميل</label>
+                  <input class="form-control" id="name" type="text" placeholder="مجال طبى" required="required"
+                    formControlName="firstName" ><!-- onlyAlphabets -->
+                    
+                  <ng-container class="invalid" style="color: red;"
+                    *ngIf="ClientTypeForm.get('firstName').hasError('required') && ClientTypeForm.get('firstName').touched">
+                    نوع العميل مطلوب</ng-container>
+                </div>
+                <div *ngIf="update; else elseBlock">
+                    <button  class="btn btn-primary pull-right" 
+                    type="submit"
+                    [disabled]="!ClientTypeForm.valid"
+                    (click)="UpdateClientType()">
+                    تعديل
+                 </button>
+                </div>
+                <ng-template #elseBlock>
+                    <button  class="btn btn-primary pull-right" 
+                    type="submit"
+                    [disabled]="!ClientTypeForm.valid"
+                    (click)="InsertClientType()">
+                    إضافة
+                 </button>
+                </ng-template>
+               
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
