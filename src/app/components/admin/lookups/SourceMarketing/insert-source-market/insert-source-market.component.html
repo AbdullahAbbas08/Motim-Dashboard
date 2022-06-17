@@ -1,0 +1,235 @@
+<app-breadcrumb [title]="'إدارة الخدمات'" [active_item]="'Form Wizard'"></app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="padding-bottom:5px !important ;">
+                    <div *ngIf="update; else elseBlock1">
+                        <h5 class="pb-2">تعديل خدمة موجودة</h5>
+                        يمكنك تعديل خدمة أو أكثر فى قائمة الخدمات
+                    </div>
+                    <ng-template #elseBlock1>
+                        <h5 class="pb-2">إضافة خدمة جديدة</h5>
+                        يمكنك إضافة خدمة أو أكثر فى قائمة الخدمات
+                    </ng-template>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="InsertForm">
+
+                        <div class="card-body container row p-0  col-12">
+
+                            <div class="col-12 col-md-8 row">
+                                <!-- name -->
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="nameAr">أسم الخدمة باللغة العربية </label>
+                                        <input class="form-control" id="nameAr" type="text" placeholder="أسم الخدمة"
+                                            formControlName="ServiceTitleAR" />
+
+                                        <ng-container class="invalid" style="color: red" *ngIf="
+                      InsertForm.get('ServiceTitleAR').hasError('required') &&
+                      InsertForm.get('ServiceTitleAR').touched">
+                                            <span style="color: red;">
+                                                أسم الخدمة باللغة العربية مطلوب </span>
+                                        </ng-container>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="nameEn">أسم الخدمة باللغة الانجليزية</label>
+                                        <input class="form-control" id="nameEn" type="text" placeholder="Service Title"
+                                            formControlName="ServiceTitle" />
+
+                                        <ng-container class="invalid" style="color: red" *ngIf="
+                      InsertForm.get('ServiceTitle').hasError('required') &&
+                      InsertForm.get('ServiceTitle').touched">
+                                            <span style="color: red;">
+                                                أسم الخدمة باللغة الانجليزية مطلوب
+                                            </span>
+                                        </ng-container>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="descAr">وصف الخدمة باللغة العربية</label>
+                                        <input class="form-control" id="descAr" type="text"
+                                            placeholder="وصف الخدمة هنا " formControlName="ServiceDescriptionAR" />
+
+                                        <ng-container class="invalid" style="color: red" *ngIf="
+                      InsertForm.get('ServiceDescriptionAR').hasError('required') &&
+                      InsertForm.get('ServiceDescriptionAR').touched">
+                                            <span style="color: red;">
+                                                وصف الخدمة باللغة العربية مطلوب </span>
+                                        </ng-container>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="descEn">وصف الخدمة باللغة الانجليزية </label>
+                                        <input class="form-control" id="descEn" type="text"
+                                            placeholder="Service Description here"
+                                            formControlName="ServiceDescription" />
+
+                                        <ng-container class="invalid" style="color: red" *ngIf="
+                      InsertForm.get('ServiceDescription').hasError('required') &&
+                      InsertForm.get('ServiceDescription').touched">
+                                            <span style="color: red;">
+                                                وصف الخدمة باللغة الانجليزية مطلوب
+                                            </span>
+                                        </ng-container>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="averg">سعر الخدمة </label>
+                                        <input class="form-control" id="averg" type="number" placeholder="1"
+                                            formControlName="ServicePrice" />
+
+                                        <ng-container class="invalid" style="color: red" *ngIf="
+                      InsertForm.get('ServicePrice').hasError('required') &&
+                      InsertForm.get('ServicePrice').touched">
+                                            <span style="color: red;">
+                                                سعر الخدمة مطلوب
+                                            </span>
+                                        </ng-container>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="orderTime">ترتيب الخدمة</label>
+                                        <input class="form-control" id="orderTime" type="number" placeholder="0"
+                                            formControlName="ServiceOrder" />
+
+                                        <ng-container class="invalid" style="color: red" *ngIf="
+                      InsertForm.get('ServiceOrder').hasError('required') &&
+                      InsertForm.get('ServiceOrder').touched">
+                                            <span style="color: red;">
+                                                ترتيب الخدمة مطلوب
+                                            </span>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="orderTime">رابط موقع الخدمة </label>
+                                        <input class="form-control" id="servicelink" type="text" placeholder="ضع رابط موقع الخدمة هنا "
+                                            formControlName="ServiceLink" />
+
+                                        <ng-container class="invalid" style="color: red" *ngIf="
+                                           InsertForm.get('ServiceLink').hasError('required') &&
+                                            InsertForm.get('ServiceLink').touched">
+                                            <span style="color: red;">
+                                                رابط موقع الخدمة  مطلوب
+                                            </span>
+                                        </ng-container>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label> خصص تصنيفات لهذة الخدمة</label>
+
+                                        <ng-multiselect-dropdown placeholder="أختر نوع تصنيف او اكثر أو أكتر من القائمة"
+                                            [settings]="dropdownSettings" formControlName="CategoriesIds"
+                                            [data]="dropdownList" [(ngModel)]="selectedItems"
+                                            (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label> خصص متطلبات لهذة الخدمة</label>
+
+                                        <ng-multiselect-dropdown placeholder="أختر نوع تصنيف او اكثر أو أكتر من القائمة"
+                                            [settings]="dropdownSettingsImage" formControlName="PrerequistsIds"
+                                            [data]="dropdownListImage" [(ngModel)]="selectedItemsImage"
+                                            (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- image -->
+                            <div class="col-12 col-md-4 d-flex align-items-center">
+                                <div class="col-12">
+                                    <div class="col-12 my-3 d-flex justify-content-center">
+                                        <img src="{{ imgURL }}" class="image-style" />
+                                    </div>
+                                    <div class="col-12 ChangeProfilePhoto-block d-flex justify-content-center">
+                                        <!--  -->
+                                        <input type="file" formControlName="ServiceImagePath"
+                                            (change)="onSelectFile($event)" #file accept="image/*" id="getFile"
+                                            style="display: none" (change)="preview(file.files)" />
+
+                                        <button onclick="document.getElementById('getFile').click()"
+                                            class="changePhoto-btn">
+                                            اضف صورة للتصنيف
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="update; else elseBlock">
+                            <button class="btn btn-primary pull-right" type="submit" [disabled]="!InsertForm.valid"
+                                (click)="Update()">
+                                تعديل
+                            </button>
+                        </div>
+
+                        <ng-template #elseBlock>
+                            <button class="btn btn-primary pull-right" type="submit" [disabled]="InsertForm.invalid"
+                                (click)="Insert()">
+                                إضافة
+                            </button>
+                        </ng-template>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="padding-bottom:5px !important ;">
+                    <div class="row">
+                        <div class="col-12 col-md-8">
+                            <h5 class="pb-2">أختيار مجموعة لهذه الخدمة</h5>
+                            يمكنك أختيار مجموعة أو أكثر لهذه الخدمة
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <b><label style="font-size: 18px; padding: 10px;">
+                                الخدمة المختارة :
+                            </label></b>
+                            {{serviceTitle}}
+                        </div>
+                    </div>     
+                </div>
+                <div class="card-body">
+                    <div class="card-body container row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>خصص مجموعات لهذه الخدمة </label>
+
+                                <ng-multiselect-dropdown placeholder="أختر مجموعة او اكثر من القائمة"
+                                    [settings]="dropdownSettingsGroup"
+                                    [data]="groups" [(ngModel)]="selectedItemsgroup">
+                                </ng-multiselect-dropdown>
+                            </div>
+                    </div>
+                    <div class="col-12">
+                        <button class="btn btn-primary pull-right" type="submit" 
+                        (click)="InsertGroupService()">
+                        إضافة
+                    </button>
+                    </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

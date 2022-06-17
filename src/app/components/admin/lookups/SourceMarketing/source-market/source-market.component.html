@@ -1,0 +1,54 @@
+<app-breadcrumb [title]="'قائمة الخدمات'" [items]="['Tables', 'Bootstrap Tables']" [active_item]="'Basic'"></app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-header px-0" style="padding-bottom: 5px;">
+              <div class="row m-0" >
+                  <div class="col-12 col-md-9">
+                    <h5 class="py-2"> الخدمات</h5>
+                    <span >  إعدادت خدمة موجودة بالنظام ( عرض - تعديل - حذف ) </span>
+                  </div>
+                  <div class="col-12 col-md-3 d-flex justify-content-end align-items-center p-0">
+                      <div class="addnew-btn" (click)="AddNew()">
+                            إضافة خدمة
+                      </div>
+                  </div>
+              </div>
+          
+          </div>
+          <div class="table-responsive">
+            <table class="table" style="width: 100%;">
+              <thead>
+                <tr class="bg-darkk ">
+                  <th scope="col" class="f-16 text-center text-white" style="width: 2%;">#</th>
+                  <th scope="col" class="f-16 text-center text-white" style="width: 24%;">اسم الخدمة ( إنجليزي )  </th>
+                  <th scope="col" class="f-16 text-center text-white" style="width: 24%;">اسم الخدمة( عربي )  </th>
+                  <th scope="col" class="f-16 text-center text-white" style="width: 14%;">سعر الخدمة </th>
+                  <th scope="col" class="f-16 text-center text-white" style="width: 14%;">موقع الخدمة </th>
+                  <th scope="col" class="f-16 text-center text-white" style="width: 22%;">إعدادت</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr *ngFor="let service of Response_List;let i=index">
+                  <th scope="row" class="font-style" style="width: 2%;">{{i+1}}</th>
+                  <td style="width: 24%;" class="font-style">{{service.title}}</td>
+                  <td style="width: 24%;" class="font-style">{{service.titleAr}}</td>
+                  <td style="width: 14%;" class="font-style">{{service.price}} ر.س</td>
+                  <td style="width: 14%;" class="font-style">
+                    <a href="https://www.google.com/" target="_blank" >
+                    أضغط هنا
+                  </a></td>
+                  <td class="font-style" style="width: 22%;">
+                        <button class="btn btn-danger mx-1"
+                                (click)="Delete(service.id)">حذف</button>
+                        <button class="btn btn-success" (click)="update(service.id, service)">تعديل</button>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,303 @@
+<!-- <app-breadcrumb [title]="'بيانات عميل '" [active_item]="'Form Wizard'"></app-breadcrumb> -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <div class="card" style="margin-top: 30px">
+        <div class="card-header" style="padding-bottom: 5px !important ">
+          <div>
+            <h5 class="pb-2">إظهار بيانات عميل موجود</h5>
+          </div>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="EmployeeForm">
+            <!-- name -->
+            <div class="form-group">
+              <label for="name"> أسم ألعميل</label>
+              <input
+                class="form-control"
+                id="name"
+                type="text"
+                placeholder="أحمد"
+                formControlName="name"
+                disabled
+              /><!-- onlyAlphabets -->
+            </div>
+
+            <!-- Gender -->
+            <div class="form-group">
+              <label>أختر نوع العميل </label>
+              <input
+                class="form-control"
+                id="name"
+                type="text"
+                placeholder="أحمد"
+                formControlName="Gender"
+                disabled
+              />
+
+              <!-- <Select class="form-control" 
+                                      formControlName="Gender"
+                                      aria-label="Default select example"
+                                      (change)="SelectedItem($event)" >
+                                      <option value="" selected disabled> أختر نوع العميل </option>
+                                      <option value="1"  > ذكر </option>
+                                      <option value="0"  > أنثى </option>
+                              </Select> -->
+            </div>
+
+            <!-- mobile -->
+            <div class="form-group">
+              <label for="mobilenumber"> رقم الموبايل</label>
+              <input
+                class="form-control"
+                id="mobilenumber"
+                type="text"
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                maxlength="11"
+                minlength="11"
+                formControlName="mobile"
+                disabled
+              />
+            </div>
+
+            <!-- mobile2 -->
+            <div class="form-group">
+              <label> رقم الموبايل أخر </label>
+              <input
+                class="form-control"
+                type="text"
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                maxlength="11"
+                minlength="11"
+                formControlName="mobile2"
+                
+              />
+            </div>
+
+            <!-- phone -->
+            <div class="form-group">
+              <label>رقم تليفون</label>
+              <input
+                class="form-control"
+                type="text"
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                maxlength="11"
+                minlength="11"
+                formControlName="phone" 
+              />
+            </div>
+
+            <div class="form-group">
+              <label>أختر المحافظة</label>
+
+              <Select
+                class="form-control"
+                aria-label="Default select example"
+                (change)="SelectedGovernorate($event)"
+              >
+                <option value="" selected disabled>{{ Governorate }}</option>
+                <option
+                  *ngFor="let obj of Governorate_List"
+                  value="{{ obj.id }}"
+                >
+                  <h3 class="selected-value">{{ obj.title }}</h3>
+                </option>
+              </Select>
+            </div>
+
+            <div class="form-group">
+              <!-- <label >أختر المدينة</label>
+                            <input class="form-control" type="text"
+                            required="required" formControlName="CityId" disabled> -->
+              <Select
+                class="form-control"
+                aria-label="Default select example"
+                formControlName="CityId"
+                (change)="SelectedCity($event)"
+              >
+                <option value="" selected disabled>{{ City }}</option>
+                <option *ngFor="let obj of Filtered_List" value="{{ obj.id }}">
+                  <h3 class="selected-value">{{ obj.title }}</h3>
+                </option>
+              </Select>
+            </div>
+
+            <!-- address -->
+            <div class="form-group">
+              <label for="mobilenumber"> العنوان</label>
+              <textarea
+                formControlName="address"
+                class="form-control textForArabic"
+                placeholder="أكتب العنوان بالتفصيل "
+                style="height: 120px"
+              >
+              </textarea>
+            </div>
+
+            <!-- DateOfBirth -->
+            <div class="form-group">
+              <label> تاريخ الميلاد </label>
+              <input
+                class="form-control"
+                type="date"
+                formControlName="DateOfBirth"
+              />
+            </div>
+
+            <!-- insert button -->
+            <!--  -->
+            <!-- <ng-template #elseBlock>
+                            <button class="btn btn-primary pull-right" type="submit" 
+                                    [disabled]="!EmployeeForm.valid"
+                                    >
+                                إضافة
+                            </button>
+                        </ng-template> -->
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <div class="card" style="margin-top: 30px">
+        <div class="card-header" style="padding-bottom: 5px !important ">
+          <h5 class="pb-2">ملخص المكالمة</h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="Form">
+
+            <div class="form-group">
+              <label>نوع المكالمة</label>
+              <Select
+                class="form-control"
+                formControlName="callType"
+                aria-label="Default select example"
+                (change)="SelectedcallType($event)" >
+                <option value="" selected disabled>أختر نوع المكالمة</option>
+                <option value="0" >صادرة</option>
+                <option value="1" >واردة</option>
+               
+              </Select>
+            </div>
+            
+            <div class="form-group">
+              <label> سبب المكالمة</label>
+              <Select
+                class="form-control"
+                formControlName="callReasonId"
+                aria-label="Default select example"
+                (change)="SelectedcallReason($event)"
+              >
+                <option value="" selected disabled>أختر سبب المكالمة</option>
+                <option
+                  *ngFor="let obj of CallReason_List"
+                  value="{{ obj.id }}"
+                >
+                  <h3>{{ obj.title }}</h3>
+                </option>
+              </Select>
+            </div>
+
+            <div class="form-group">
+              <label> سبب المكالمة</label>
+              <input
+                class="form-control"
+                type="text"
+                placeholder="أكتب سبب المكالمة هنا"
+                formControlName="reason"
+              />
+
+              <ng-container
+                class="invalid"
+                style="color: red"
+                *ngIf="
+                  Form.get('reason').hasError('required') &&
+                  Form.get('reason').touched
+                "
+              >
+                <span style="color: red"> سبب المكالمة مطلوب </span>
+              </ng-container>
+            </div>
+
+            <div class="form-group">
+              <label> وصف المكالمة</label>
+              <!-- <input class="form-control" type="text" placeholder="أكتب تفاصيل المكالمة هنا "
+                                formControlName="description"> -->
+              <textarea
+                formControlName="description"
+                class="form-control textForArabic"
+                placeholder="أكتب تفاصيل المكالمة هنا "
+                style="height: 75px"
+              >
+              </textarea>
+
+              <ng-container
+                class="invalid"
+                style="color: red"
+                *ngIf="
+                  Form.get('description').hasError('required') &&
+                  Form.get('description').touched
+                "
+              >
+                <span style="color: red"> تفاصيل المكالمة مطلوبة </span>
+              </ng-container>
+            </div>
+
+            <div class="form-group">
+              <label> ملاحظات عن المكالمة</label>
+              <input
+                class="form-control"
+                type="text"
+                placeholder="أكتب ملاحظات المكالة هنا "
+                formControlName="notes"
+              />
+            </div>
+
+            <div class="form-group">
+              <label> مصدر الاعلان</label>
+              <Select
+                class="form-control"
+                formControlName="sourceMarketId"
+                aria-label="Default select example"
+                (change)="SelectedsourceMarket($event)"
+              >
+                <option value="" selected disabled>أختر مصدر الاعلان</option>
+                <option
+                  *ngFor="let obj of SourceMarket_List"
+                  value="{{ obj.id }}"
+                >
+                  <h3>{{ obj.title }}</h3>
+                </option>
+              </Select>
+            </div>
+
+            <!-- [checked]="item.Active" -->
+            <div class="form-group">
+              <br />
+              <label> رضاء العميل عن المكالة</label><br />
+              <label class="switch">
+                <input type="checkbox" (click)="toggle_click()" />
+                <span class="slider round"></span>
+              </label>
+            </div>
+
+            <!--update button -->
+            <div>
+              <button
+                class="btn btn-primary pull-right m-1"
+                type="submit"
+                [disabled]="!Form.valid"
+                (click)="submitCall()"
+              >
+                تسجيل
+              </button>
+              <button class="btn btn-primary pull-right m-1" (click)="back()">
+                رجوع
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,286 @@
+<app-breadcrumb [title]="'إدارة مقدمى الخدمات'" [active_item]="'Form Wizard'"></app-breadcrumb>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+
+        <div class="card-header" style="padding-bottom: 5px !important">
+          <div *ngIf="update; else elseBlock1">
+            <h5 class="pb-2">تعديل بيانات مقدم خدمة موجود</h5>
+            يمكنك تعديل بيانات مقدم خدمة أو أكثر فى قائمة مقدمى الخدمات
+          </div>
+          <ng-template #elseBlock1>
+            <h5 class="pb-2">إضافة عميل جديد</h5>
+            يمكنك إضافة مقدم خدمة أو أكثر فى قائمة مقدمى الخدمات
+          </ng-template>
+        </div>
+
+        <form [formGroup]="InsertForm" >
+
+          <div class="card-body container row col-12" >
+
+              <!-- name -->
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="name">الأسم الأول  </label>
+                  <input class="form-control" id="name" type="text" placeholder="أكتب الأسم هنا" formControlName="name" />
+                  <ng-container class="invalid" style="color: red" *ngIf="
+                      InsertForm.get('name').hasError('required') &&
+                      InsertForm.get('name').touched">
+                    <span style="color: red;">
+                      الأسم الأول مطلوب
+                    </span>
+                  </ng-container>
+                </div>
+              </div>
+             
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="nameEn"> الأسم الأول ( إنجليزى )  </label>
+                  <input class="form-control" id="nameEn" type="text" placeholder="Enter Name Here" formControlName="nameEn" />
+                  <ng-container class="invalid" style="color: red" *ngIf="
+                      InsertForm.get('nameEn').hasError('required') &&
+                      InsertForm.get('nameEn').touched">
+                    <span style="color: red;">
+                      الأسم الأول ( إنجليزى ) مطلوب
+                    </span>
+                  </ng-container>
+                </div>
+              </div>
+              
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="mname">الأسم الأوسط  </label>
+                  <input class="form-control" id="mname" type="text" placeholder="أكتب الأسم هنا" formControlName="mname" />
+                  <ng-container class="invalid" style="color: red" *ngIf="
+                      InsertForm.get('mname').hasError('required') &&
+                      InsertForm.get('mname').touched">
+                    <span style="color: red;">
+                      الأسم الأوسط مطلوب
+                    </span>
+                  </ng-container>
+                </div>
+              </div>
+             
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="mnameEn"> الأسم الأوسط ( إنجليزى )  </label>
+                  <input class="form-control" id="mnameEn" type="text" placeholder="Enter Name Here" formControlName="nameEn" />
+                  <ng-container class="invalid" style="color: red" *ngIf="
+                      InsertForm.get('mnameEn').hasError('required') &&
+                      InsertForm.get('mnameEn').touched">
+                    <span style="color: red;">
+                      الأسم الأوسط ( إنجليزى ) مطلوب
+                    </span>
+                  </ng-container>
+                </div>
+              </div>
+              
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="lname">الأسم الأخير  </label>
+                  <input class="form-control" id="lname" type="text" placeholder="أكتب الأسم هنا" formControlName="lname" />
+                  <ng-container class="invalid" style="color: red" *ngIf="
+                      InsertForm.get('lname').hasError('required') &&
+                      InsertForm.get('lname').touched">
+                    <span style="color: red;">
+                      الأسم الأخير مطلوب
+                    </span>
+                  </ng-container>
+                </div>
+              </div>
+             
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="lnameEn"> الأسم الأخير ( إنجليزى )  </label>
+                  <input class="form-control" id="lnameEn" type="text" placeholder="Enter Name Here" formControlName="lnameEn" />
+                  <ng-container class="invalid" style="color: red" *ngIf="
+                      InsertForm.get('lnameEn').hasError('required') &&
+                      InsertForm.get('lnameEn').touched">
+                    <span style="color: red;">
+                      الأسم الأخير ( إنجليزى ) مطلوب
+                    </span>
+                  </ng-container>
+                </div>
+              </div>
+            
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="email">البريد الإلكترونى   </label>
+                  <input class="form-control" id="email" type="email" placeholder="example@abc123.com" formControlName="email" />
+                  <ng-container class="invalid" style="color: red" *ngIf="
+                      InsertForm.get('email').hasError('required') &&
+                      InsertForm.get('email').touched">
+                    <span style="color: red;">
+                      البريد الإلكترونى مطلوب
+                    </span>
+                  </ng-container>
+                </div>
+              </div>
+             
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="nid"> الرقم القومى  </label>
+                  <input class="form-control" id="nid" type="text" placeholder="Enter 14 Digits" formControlName="nid" />
+                  <ng-container class="invalid" style="color: red" *ngIf="
+                      InsertForm.get('nid').hasError('required') &&
+                      InsertForm.get('nid').touched">
+                    <span style="color: red;">
+                      الرقم القومى مطلوب
+                    </span>
+                  </ng-container>
+                </div>
+              </div>
+             
+               <!-- mobile -->
+               <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label>رقم الموبايل </label>
+                  <input class="form-control" type="text" placeholder="Enter 13 Digits" formControlName="mobile" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                  maxlength="13" minlength="13" />
+
+                  <ng-container class="invalid" style="color: red" *ngIf="
+                      InsertForm.get('mobile').hasError('required') &&
+                      InsertForm.get('mobile').touched">
+                    <span style="color: red;">
+                      رقم الموبايل مطلوب
+                    </span>
+                  </ng-container>
+                </div>
+              </div>
+             
+              <!-- password -->
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <div *ngIf="update; else elseBlock12">
+                    <label> تعديل كلمة المرور </label>
+                  </div>
+                  <ng-template #elseBlock12>
+                    <label>كلمة المرور </label>
+                  </ng-template>
+                  <input class="form-control" type="password" formControlName="password" placeholder="***********" />
+                </div>
+              </div>
+
+
+              <!-- cityId -->
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label>أختر المدينة</label>
+                  <Select class="form-control" 
+                          formControlName="cityId" 
+                          aria-label="Default select example" 
+                    (change)="SelectedCity($event)">
+                    <option value="" selected disabled>
+                      {{ City }}
+                    </option>
+                    <option *ngFor="let obj of cities_List" value="{{ obj.id }}">
+                      <h3 class="selected-value">{{ obj.nameAr }}</h3>
+                    </option>
+                  </Select>
+                </div>
+              </div>
+          
+              <!-- cityId -->
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label>أختر المنطقة</label>
+                  <Select class="form-control" formControlName="regionId" aria-label="Default select example"
+                    (change)="Selectedregion($event)">
+                    <option value="" selected disabled>
+                      {{ region }}
+                    </option>
+                    <option *ngFor="let obj of Region_List" value="{{ obj.regionID }}">
+                      <h3 class="selected-value">{{ obj.regionName }}</h3>
+                    </option>
+                  </Select>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="pid"> رقم الباسبورت  </label>
+                  <input class="form-control" id="pid" type="text" placeholder="Enter 14 Digits" formControlName="pid" />
+                  <ng-container class="invalid" style="color: red" *ngIf="
+                      InsertForm.get('pid').hasError('required') &&
+                      InsertForm.get('pid').touched">
+                    <span style="color: red;">
+                      رقم الباسبورت مطلوب
+                    </span>
+                  </ng-container>
+                </div>
+              </div>
+              
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="pordid"> رقم الحدود  </label>
+                  <input class="form-control" id="pordid" type="text" placeholder="Enter min 2 Digits" formControlName="pordid" />
+                  <ng-container class="invalid" style="color: red" *ngIf="
+                      InsertForm.get('pordid').hasError('required') &&
+                      InsertForm.get('pordid').touched">
+                    <span style="color: red;">
+                      رقم الحدود مطلوب
+                    </span>
+                  </ng-container>
+                </div>
+              </div>
+
+              <!-- address -->
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="address">العنوان   </label>
+                <textarea formControlName="address" class="form-control textForArabic" placeholder="Leave address here"
+                  style="height: 120px">
+                </textarea>
+                </div>
+              </div>
+              
+              <!-- address en -->
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="addressEn"> العنوان باللغة الانجليزية  </label>
+                <textarea formControlName="addressEn" class="form-control textForArabic" placeholder="Leave address  ( English ) here"
+                  style="height: 120px">
+                </textarea>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="form-group">
+                  <label>أختر رقم المجموعة</label>
+                  <Select class="form-control" formControlName="groupid" aria-label="Default select example"
+                    (change)="SelectedGroup($event)">
+                    <option value="" selected disabled>
+                      {{ group }}
+                    </option>
+                    <option *ngFor="let obj of group_List" value="{{ obj.id }}">
+                      <h3 class="selected-value">{{ obj.name }}</h3>
+                    </option>
+                  </Select>
+                </div>
+              </div>
+
+            <!-- Actions -->
+            <div class="col-12">
+              <div *ngIf="update; else elseBlock">
+                <button class="btn btn-primary pull-right" type="submit" [disabled]="!InsertForm.valid"
+                  (click)="UpdateClient()">
+                  تعديل
+                </button>
+              </div>
+
+              <ng-template #elseBlock>
+                <button class="btn btn-primary pull-right" type="submit" [disabled]="InsertForm.invalid"
+                  (click)="InsertServiceProvider()">
+                  إضافة
+                </button>
+              </ng-template>
+            </div>
+
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<app-breadcrumb [title]="'قائمة الباقات'"></app-breadcrumb>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header px-0" style="padding-bottom: 5px;">
+          <div class="row m-0">
+            <div class="col-4 col-md-4">
+              <h5 class="py-2">الباقات</h5>
+              <span > إعدادت الباقات الموجودة بالنظام ( عرض - تعديل - حذف ) </span>
+            </div>
+            <div class="align-items-center col-4 col-md-4 d-flex">
+              <input type="text" name="isSearching" class="form-control m-1" placeholder="يمكنك البحث بالاسم" [(ngModel)]="isSearching" id="">
+              <h5 class="py-2"><button class="btn btn-warning" (click)="getPackage()" style="background-color: #D3AF37 !important;">بحث</button></h5>
+            </div>
+            <div class="col-4 col-md-4 d-flex justify-content-end align-items-center p-0">
+              <div class="addnew-btn" (click)="AddNew()">
+                إضافة باقة جديدة
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="table-responsive">
+          <table class="table" style="width: 100%;">
+            <thead>
+              <tr class="bg-darkk ">
+                <th scope="col" class="f-16 text-center text-white" style="width: 10%;">#</th>
+                <th scope="col" class="f-16 text-center text-white" style="width: 15%;">اسم الباقة بالعربية </th>
+                <th scope="col" class="f-16 text-center text-white" style="width: 15%;">اسم الباقة بالانجليزية </th>
+                <th scope="col" class="f-16 text-center text-white" style="width: 10%;">سعر الباقة </th>
+                <th scope="col" class="f-16 text-center text-white" style="width: 13%;">عدد طلبات الباقة</th>
+                <th scope="col" class="f-16 text-center text-white" style="width: 10%;">مدة الباقة </th>
+                <th scope="col" class="f-16 text-center text-white" style="width: 25%;">إعدادت</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let package of Response_List;let i=index">
+                <th scope="row" class="font-style" style="width: 10%;">{{i+1}}</th>
+                <td style="width: 15%;" class="font-style">{{package.packageTitleAr}}</td>
+                <td style="width: 15%;" class="font-style">{{package.packageTitle}}</td>
+                <td style="width: 10%;" class="font-style">{{package.packagePrice}} ر.س</td>
+                <td style="width: 13%;" class="font-style">{{package.serviceRequestCount}} طلب</td>
+                <td style="width: 10%;" class="font-style">{{package.packagePrice}} يوم</td>
+                <td class="font-style" style="width: 25%;">
+                  <button class="btn btn-danger mx-1" (click)="Delete(package.packageID)">حذف</button>
+                  <button class="btn btn-success" (click)="update(package)">تعديل</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

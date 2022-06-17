@@ -1,0 +1,24 @@
+.font-style-header{
+     text-align: center;
+     font-weight: 500;
+     font-size: 20px;
+     color: white;
+ }
+ 
+ .font-style{
+     text-align: center;
+     font-size: 18px;
+ }
+ 
+ .addnew-btn
+ {
+     padding-left: 20px;
+     padding-right: 20px;
+     padding-top: 10px;
+     padding-bottom: 10px;
+     background-color: #7366ff;
+     color: white;
+     cursor: pointer;
+     margin-left: 15px;
+     border-width: 0px;
+ }

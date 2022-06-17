@@ -1,0 +1,150 @@
+<app-breadcrumb [title]="'تقارير عن العملاء'" [items]="['Tables', 'Bootstrap Tables']" [active_item]="'Basic'">
+</app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header px-0 " style="padding-bottom: 5px;">
+                    <div class="row m-0 mb-2">
+                         <div class="col-12 col-md-10">
+                              <div class="row">
+
+                                   <div class="col-12 col-md-3">
+                                        <div class="form-group">
+                                            <label>أختر نوع العميل</label>
+                                            <Select class="form-control " formControlName="GovernorateId"
+                                                aria-label="Default select example" (change)="SelectedChange($event)">
+                
+                                                <option value="" selected disabled>نوع العميل </option>
+                                                <option value="-1" >الكل  </option>
+                                                <option *ngFor="let obj of Client_Type_List" value="{{ obj.typeId }}">
+                                                    <h3 class="selected-value"> {{ obj.title }} </h3>
+                                                </option>
+                                            </Select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12 col-md-3">
+                                        <div class="form-group">
+                                            <label>أسم العميل</label>
+                                           <input  type="text" (change)="ClientNameChange($event)"  class="form-control ">
+                                        </div>
+                                    </div>
+            
+                                    <div class="col-12 col-md-3">
+                                        <div class="form-group">
+                                            <label> رقم موبايل الشركة</label>
+                                           <input type="text" (change)="ClientMobileChange($event)"  class="form-control ">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3">
+                                        <div class="form-group">
+                                             <label>سبب المكالمة</label>
+                                            <Select class="form-control " formControlName="GovernorateId"
+                                                aria-label="Default select example"  (change)="CallReasonChange($event)">
+                
+                                                <option value="" selected disabled>سبب المكالمة</option>
+                                                <option value="-1" >الكل  </option>
+                                                <option *ngFor="let obj of CallReason_List" value="{{ obj.id }}">
+                                                    <h3 class="selected-value"> {{ obj.title }} </h3>
+                                                </option>
+                                            </Select>
+                                        </div>
+                                    </div>
+                              </div>
+
+                              <div class="row">
+
+                                   <div class="col-12 col-md-3">
+                                        <div class="form-group">
+                                            <label>تاريخ المكالمة من </label>
+                                           <input type="date" (change)="datefromchange($event)" class="form-control">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12 col-md-3">
+                                        <div class="form-group">
+                                            <label>تاريخ المكالمة الى </label>
+                                           <input type="date" (change)="datetochange($event)" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3">
+                                        <div class="form-group">
+                                            <label>أختر المحافظة</label>
+                                            <Select class="form-control " formControlName="GovernorateId"
+                                                aria-label="Default select example" (change)="governorateChange($event)">
+                
+                                                <option value="" selected disabled>أختر المحافظة  </option>
+                                                <option value="-1" >الكل  </option>
+                                                <option *ngFor="let obj of Governorate_List" value="{{ obj.id }}">
+                                                    <h3 class="selected-value"> {{ obj.title }} </h3>
+                                                </option>
+                                            </Select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3">
+                                        <div class="form-group">
+                                            <label>أختر المدينة</label>
+                                            <Select class="form-control " formControlName="GovernorateId"
+                                                aria-label="Default select example" (change)="cityChange($event)">
+                                                <option value="-1" >الكل  </option>
+                                                <option *ngFor="let obj of City_Filtered_List" value="{{ obj.id }}">
+                                                    <h3 class="selected-value"> {{ obj.title }} </h3>
+                                                </option>
+                                            </Select>
+                                        </div>
+                                    </div>
+                              </div>
+                             
+                         </div>           
+
+                        <div class="col-12 col-md-2 mt-3 d-flex justify-content-end align-items-center p-0">
+                         <button class="addnew-btn" [print]="['DataTable']">طباعة البيانات</button>  
+                         <!-- <div class="addnew-btn" (click)="AddNew()">
+                                إضافة مدينة جديدة
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table" style="width: 100%;" id="DataTable">
+                        <thead>
+                            <tr class="bg-dark ">
+                                <th scope="col" class="font-style-header" style="width: 5%;">#</th>
+                                <th scope="col" class="font-style-header" style="width: 20%;">أسم الموظف </th>
+                                <th scope="col" class="font-style-header" style="width: 20%;">أسم المتصل </th>
+                                <th scope="col" class="font-style-header" style="width: 15%;">نوع المكالمة</th>
+                                <th scope="col" class="font-style-header" style="width: 15%;">رقم الموبايل</th>
+                                <th scope="col" class="font-style-header" style="width: 10%;"> المكالمة</th>
+                                <th scope="col" class="font-style-header" style="width: 15%;">التقييم </th>
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <tr *ngFor="let item of Client_Call_list_Filter;let i=index" style="cursor: pointer;">
+                                <th (click)="MoveDetail()" scope="row" class="font-style" style="width: 5%;">{{i+1}}</th>
+                                <td (click)="MoveDetail()" style="width: 20%;" class="font-style">{{item.agentName}}</td>
+                                <td (click)="MoveDetail()" style="width: 20%;" class="font-style">{{item.customerName}}</td>
+                                <td (click)="MoveDetail()" style="width: 15%;" class="font-style" >
+                                   <span *ngIf="item.gender == 1;else elseblock_gender">ذكر</span>
+                                   <ng-template #elseblock_gender>أنثى</ng-template>
+                                </td>
+                                <td (click)="MoveDetail()" style="width: 15%;" class="font-style">{{item.mobileNumber}}</td>
+                                <td (click)="MoveDetail()" style="width: 10%;" class="font-style">
+                                   <span *ngIf="item.callType == 1;else elseblock_type">صادرة</span>
+                                   <ng-template #elseblock_type>واردة</ng-template>
+                                </td>
+                                <td (click)="MoveDetail()" style="width: 15%;" class="font-style">
+                                   <span *ngIf="item.satisfy == true;else elseblock_satisfy">راضى</span>
+                                   <ng-template #elseblock_satisfy>غير راضى</ng-template>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

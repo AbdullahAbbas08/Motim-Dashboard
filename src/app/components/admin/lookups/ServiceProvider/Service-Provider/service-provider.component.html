@@ -1,0 +1,45 @@
+<app-breadcrumb [title]="'قائمة الأقسام'" [items]="['Tables', 'Bootstrap Tables']" [active_item]="'Basic'"></app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-header px-0" style="padding-bottom: 5px;">
+              <div class="row m-0" >
+                  <div class="col-12 col-md-9">
+                    <h5 class="py-2">الأقسام</h5>
+                    <span >  إعدادت الأقسام الموجودة بالنظام ( عرض - تعديل - حذف ) </span>
+                  </div>
+                  <div class="col-12 col-md-3 d-flex justify-content-end align-items-center p-0">
+                      <div class="addnew-btn" (click)="AddNew()">
+                            إضافة القسم جديد
+                      </div>
+                  </div>
+              </div>
+          
+          </div>
+          <div class="table-responsive">
+            <table class="table" style="width: 100%;">
+              <thead>
+                <tr class="bg-darkk">
+                  <th scope="col" class="f-16 text-center text-white" style="width: 10%;">#</th>
+                  <th scope="col" class="f-16 text-center text-white" style="width: 60%;">أسم القسم باللغة العربية</th>
+                  <th scope="col" class="f-16 text-center text-white" style="width: 30%;">إعدادت</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr *ngFor="let item of Response_List;let i=index">
+                  <th scope="row" class="font-style" style="width: 10%;">{{i+1}}</th>
+                  <td style="width: 60%;" class="font-style"> {{item.name}}</td>
+                  <td class="font-style" style="width: 30%;">
+                        <button class="btn btn-danger mx-1"
+                                (click)="Delete(item.id)">حذف</button>
+                        <button class="btn btn-success" (click)="update(item.id, item)">تعديل</button>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

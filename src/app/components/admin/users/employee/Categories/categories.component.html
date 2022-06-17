@@ -1,0 +1,58 @@
+<app-breadcrumb [title]="'قائمة التصنيفات'" [items]="['Tables', 'Bootstrap Tables']" [active_item]="'Basic'">
+</app-breadcrumb>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header px-0" style="padding-bottom: 5px">
+          <div class="row m-0">
+            <div class="col-4 col-md-4">
+              <h5 class="py-2">التصنيفات</h5>
+              <span style="font-size: 16px"> إعدادت التصنيفات </span>
+            </div>
+            <div class="col-4 col-md-4 align-items-center d-flex">
+              <input type="text" name="isSearching" [(ngModel)]="isSearching"  placeholder="يمكنك البحث بالاسم"  class="form-control m-1" id="">
+              <h5 class="py-2"><button class="btn btn-warning" (click)="GetEmployee()" style="background-color: #D3AF37 !important;">بحث</button></h5>
+            </div>
+            <div class="col-4 col-md-4 d-flex justify-content-end align-items-center p-0">
+              <div class="addnew-btn" (click)="NavigateToInsert()">
+                إضافة تصنيف جديد
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table" style="width: 100%">
+            <thead>
+              <tr class="bg-darkk">
+                <th scope="col" class="f-16 text-center text-white">#</th>
+                <th scope="col" class="f-16 text-center text-white" style="width: 20%;">العنوان باللغة العربية </th>
+                <th scope="col" class="f-16 text-center text-white" style="width: 20%;">العنوان باللغة الانجليزية</th>
+                <th scope="col" class="f-16 text-center text-white" style="width: 20%;"> اسم الأب بالانجليزية </th>
+                <th scope="col" class="f-16 text-center text-white" style="width: 30%;">إعدادت</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of Employee_List; let i = index">
+                <td scope="row" class="font-style">{{ i + 1 }}</td>
+                <td class="font-style">{{ item.title }}</td>
+                <td class="font-style">{{ item.titleAr }}</td>
+                <td class="font-style">{{ item.parentId > 0 ? item.parentTitle : 'لا يوجد حاليا' }}</td>
+
+                <td class="font-style">
+                  <button class="btn btn-danger mx-1" (click)="DeleteEmployee(item.id)">
+                    حذف
+                  </button>
+                  <button class="btn btn-success" (click)="updateEmployee(item.id, item)">
+                    تعديل
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

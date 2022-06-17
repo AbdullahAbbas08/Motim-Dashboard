@@ -1,0 +1,1112 @@
+<!-- <app-breadcrumb [title]="'Sample Page'" [items]="['other']" [active_item]="'Sample'"></app-breadcrumb> -->
+
+<!-- page-wrapper Start-->
+<div [ngClass]="layout.config.settings.layout_type" [class]="layout.config.settings.layout_version">
+     <div class="page-wrapper sidebarst" id="canvas-bookmark" [ngClass]="layoutClass">
+          <app-header></app-header>
+          <!-- Page Body Start-->
+          <div class="page-body-wrapper">
+               <div class="sidebar-wrapper" 
+               [attr.sidebar-layout]="layout.config.settings.sidebar_type"
+           [class.close_icon]="navServices.collapseSidebar"
+               style="height:100% ;">
+                    <!-- <app-sidebar></app-sidebar> -->
+
+                    <!-- Page Sidebar Start-->
+                    <div class="logo-wrapper">
+                         <!-- <a routerLink='/'> -->
+                         <img class="img-fluid for-light" src="assets/images/logo/Logo-01.png" width="100" alt="" />
+                         <img class="img-fluid for-dark" src="assets/images/logo/Logo-02.png" width="100" alt="" />
+                         <!-- </a> -->
+                         <div class="back-btn" (click)="sidebarToggle()">
+                              <i class="fa fa-angle-left"></i>
+                            </div>
+                            <div class="toggle-sidebar" (click)="sidebarToggle()">
+                              <app-feather-icons [icon]="'grid'" class="status_toggle middle sidebar-toggle"></app-feather-icons>
+                            </div>
+                    </div>
+
+                    <div class="logo-icon-wrapper">
+                         <a href="javascript:void(0)">
+                              <img class="img-fluid" src="assets/images/logo/logo-icon.png" alt="" />
+                         </a>
+                    </div>
+
+                    <nav class="sidebar-main">
+                         <div class="servReqSt">
+                              <label>طلبات الخدمات</label>
+                         </div>
+
+                         <!-- ServiceRequest_New -->
+                         <div>
+                              <p class="d-flex justify-content-center">
+                                   <label class="btn btn-primary srl" data-toggle="collapse"
+                                        [attr.href]="'#collapseExample_new'" aria-expanded="false"
+                                        aria-controls="collapseExample">
+                                        طلبات الخدمات الجديدة
+                                   </label>
+                              </p>
+                              <div class=".collapse.show" id="collapseExample_new">
+                                   <div class="card card-body sidebar_card">
+                                        <ul class="sidebar_items">
+                                             <li *ngIf="
+                                                  ServiceRequest_New.length <= 0;
+                                                  else ServiceRequest_New_block
+                                                  " class="px-4">
+                                                  لا يوجد خدمات الجديدة
+                                             </li>
+                                             <ng-template #ServiceRequest_New_block>
+                                                  <li *ngFor="let item of ServiceRequest_New" class="py-2 px-3 my-1"
+                                                       style="background-color:#d3af374a ;"
+                                                       (click)="GetDtail(item.serviceRequestID , item.userId)">
+                                                       <label class="header-service-title py-1"> {{
+                                                            item.serviceRequestCutomerSummary }} </label><br>
+                                                       <label class="inner-item-st">التصنيف : </label> <label>category
+                                                            Service</label><br>
+                                                       <label class="inner-item-st">تاريخ الطلب :
+                                                       </label><label>{{item.creationDate | date}}</label><br>
+                                                       <label class="inner-item-st">تاريخ التنفيذ :
+                                                       </label><label>{{item.serviceRequestDate |date}}</label><br>
+                                                       <label class="inner-item-st">أسم العميل : </label><label>Customer
+                                                            Name</label>
+                                                  </li>
+                                             </ng-template>
+                                        </ul>
+                                   </div>
+                              </div>
+                         </div>
+
+                         <!-- ServiceRequest_Hold -->
+                         <div>
+                              <p class="d-flex justify-content-center">
+                                   <label class="btn btn-primary srl" type="button" data-toggle="collapse"
+                                        [attr.href]="'#ServiceRequest_Hold'" aria-expanded="false"
+                                        aria-controls="collapseExample">
+                                        طلبات الخدمات المعلقة
+                                   </label>
+                              </p>
+                              <div class="collapse" id="ServiceRequest_Hold">
+                                   <div class="card card-body sidebar_card">
+                                        <ul class="sidebar_items">
+                                             <li *ngIf="
+                      ServiceRequest_Hold.length <= 0;
+                      else ServiceRequest_Hold_block
+                    " class="px-4">
+                                                  لا يوجد خدمات معلقة
+                                             </li>
+                                             <ng-template #ServiceRequest_Hold_block>
+                                                  <li *ngFor="let item of ServiceRequest_Hold" class="py-2 px-3 my-1"
+                                                       style="background-color:#d3af374a ;"
+                                                       (click)="GetDtail(item.serviceRequestID , item.userId)">
+                                                       <label class="header-service-title py-1"> {{
+                                                            item.serviceRequestCutomerSummary }} </label><br>
+                                                       <label class="inner-item-st">التصنيف : </label> <label>category
+                                                            Service</label><br>
+                                                       <label class="inner-item-st">تاريخ الطلب :
+                                                       </label><label>{{item.creationDate | date}}</label><br>
+                                                       <label class="inner-item-st">تاريخ التنفيذ :
+                                                       </label><label>{{item.serviceRequestDate |date}}</label><br>
+                                                       <label class="inner-item-st">أسم العميل : </label><label>Customer
+                                                            Name</label>
+                                                  </li>
+                                             </ng-template>
+                                        </ul>
+                                   </div>
+                              </div>
+                         </div>
+
+                         <!-- ServiceRequest_Closed -->
+                         <div>
+                              <p class="d-flex justify-content-center">
+                                   <label class="btn btn-primary srl" type="button" data-toggle="collapse"
+                                        [attr.href]="'#ServiceRequest_Closed'" aria-expanded="false"
+                                        aria-controls="collapseExample">
+                                        طلبات الخدمات المغلقة
+                                   </label>
+                              </p>
+                              <div class="collapse" id="ServiceRequest_Closed">
+                                   <div class="card card-body sidebar_card">
+                                        <ul class="sidebar_items">
+                                             <li *ngIf="ServiceRequest_Closed.length <= 0;else ServiceRequest_Closed_block
+                                                      " class="px-4">
+                                                  لا يوجد خدمات مغلقة
+                                             </li>
+                                             <ng-template #ServiceRequest_Closed_block>
+                                                       <li *ngFor="let item of ServiceRequest_Closed" class="py-2 px-3 my-1"
+                                                       style="background-color:#d3af374a ;"
+                                                       (click)="GetDtail(item.serviceRequestID , item.userId)">
+                                                       <label class="header-service-title py-1"> {{
+                                                            item.serviceRequestCutomerSummary }} </label><br>
+                                                       <label class="inner-item-st">التصنيف : </label> <label>category
+                                                            Service</label><br>
+                                                       <label class="inner-item-st">تاريخ الطلب :
+                                                       </label><label>{{item.creationDate | date}}</label><br>
+                                                       <label class="inner-item-st">تاريخ التنفيذ :
+                                                       </label><label>{{item.serviceRequestDate |date}}</label><br>
+                                                       <label class="inner-item-st">أسم العميل : </label><label>Customer
+                                                            Name</label>
+                                                  </li>
+                                             </ng-template>
+                                        </ul>
+                                   </div>
+                              </div>
+                         </div>
+
+                         <!-- ServiceRequest_InProgress -->
+                         <div>
+                              <p class="d-flex justify-content-center">
+                                   <label class="btn btn-primary srl" type="button" data-toggle="collapse"
+                                        [attr.href]="'#ServiceRequest_InProgress'" aria-expanded="false"
+                                        aria-controls="collapseExample">
+                                        طلبات الخدمات قيد الإنتظار
+                                   </label>
+                              </p>
+                              <div class="collapse" id="ServiceRequest_InProgress">
+                                   <div class="card card-body sidebar_card">
+                                        <ul class="sidebar_items">
+                                             <li *ngIf="ServiceRequest_InProgress.length <= 0;else ServiceRequest_InProgress_block
+                                                    " class="px-4">
+                                                  لا يوجد خدمات قيد الإنتظار
+                                             </li>
+                                             <ng-template #ServiceRequest_InProgress_block>
+                                                  <li *ngFor="let item of ServiceRequest_InProgress"
+                                                       class="py-2 px-3 my-1" style="background-color:#d3af374a ;"
+                                                       (click)="GetDtail(item.serviceRequestID , item.userId)">
+                                                       <label class="header-service-title py-1"> {{
+                                                            item.serviceRequestCutomerSummary }} </label><br>
+                                                       <label class="inner-item-st">التصنيف : </label> <label>category
+                                                            Service</label><br>
+                                                       <label class="inner-item-st">تاريخ الطلب :
+                                                       </label><label>{{item.creationDate | date}}</label><br>
+                                                       <label class="inner-item-st">تاريخ التنفيذ :
+                                                       </label><label>{{item.serviceRequestDate |date}}</label><br>
+                                                       <label class="inner-item-st">أسم العميل : </label><label>Customer
+                                                            Name</label>
+                                                  </li>
+                                             </ng-template>
+                                        </ul>
+                                   </div>
+                              </div>
+                         </div>
+                    </nav>
+               </div>
+               <div class="page-body">
+                    <main>
+                         <!-- <router-outlet #o="outlet"></router-outlet> -->
+                         <div class="container-fluid" >
+                              <div class="row">
+                                   <div class="col-12">
+                                        <div class="card" style="margin-top :20px ;">
+                                             <!-- <div class="card-header">
+                                   <h5>Pills</h5>
+                                   </div> -->
+                                             <div class="card-body">
+                                                  <ngb-tabset type="pills">
+                                                       <!-- Service Request Details -->
+                                                       <ngb-tab title="تفاصيل طلب الخدمة">
+                                                            <ng-template ngbTabContent>
+                                                                 <div
+                                                                      *ngIf="this.ServiceRequest_Obj.orderType != ''; else elseblock_ServiceRequest_Obj">
+                                                                      <div class="">
+                                                                           <div class="row">
+
+                                                                                <!-- creationDate -->
+                                                                                <div
+                                                                                     class="col-12 col-md-4 d-flex justify-content-between">
+                                                                                     <label for="name"> تاريخ طلب
+                                                                                          الخدمة</label>
+                                                                                     <label class="px-2">:</label>
+                                                                                </div>
+                                                                                <div class="col-12 col-md-2">
+                                                                                     <label style="font-weight: bold;">
+                                                                                          {{
+                                                                                          this.ServiceRequest_Obj.creationDate
+                                                                                          | date}}
+                                                                                     </label>
+                                                                                </div>
+
+                                                                                <!-- orderTypeNameAr -->
+                                                                                <div
+                                                                                     class="col-12 col-md-3 d-flex justify-content-between">
+                                                                                     <label> نوع طلب الخدمة </label>
+                                                                                     <label class="px-2">:</label>
+                                                                                </div>
+                                                                                <div class="col-12 col-md-2">
+                                                                                     <span style="font-weight: bold;">
+                                                                                          {{
+                                                                                          this.ServiceRequest_Obj.orderTypeNameAr}}
+                                                                                     </span>
+                                                                                </div>
+
+
+                                                                                <!-- serviceRequestDate -->
+                                                                                <div
+                                                                                     class="col-12 col-md-4 d-flex justify-content-between">
+                                                                                     <label for="name"> تاريخ تنفيذ
+                                                                                          الخدمة</label><label
+                                                                                          class="px-2">:</label>
+                                                                                </div>
+                                                                                <div class="col-12 col-md-2">
+                                                                                     <label style="font-weight: bold;">
+                                                                                          {{
+                                                                                          this.ServiceRequest_Obj.serviceRequestDate
+                                                                                          | date
+                                                                                          }}
+                                                                                     </label>
+                                                                                </div>
+
+                                                                                <!-- assignmentToEmpDate -->
+                                                                                <div
+                                                                                class="col-12 col-md-3 d-flex justify-content-between">
+                                                                                <label for="name">
+                                                                                     تاريخ الإضافة
+                                                                                     للموظف</label><label
+                                                                                     class="px-2">:</label>
+                                                                           </div>
+                                                                           <div class="col-12 col-md-3">
+                                                                                <label style="font-weight: bold;">
+                                                                                     {{
+                                                                                     this.ServiceRequest_Obj.assignmentToEmpDate
+                                                                                     | date
+                                                                                     }}
+                                                                                </label>
+                                                                           </div>
+
+                                                                                <!-- serviceRequestCutomerSummary -->
+                                                                                <div
+                                                                                     class="col-12 col-md-4 d-flex justify-content-between">
+                                                                                     <label for="name"> ملخص الطلب من
+                                                                                          قبل العميل </label><label
+                                                                                          class="px-2">:</label>
+                                                                                </div>
+                                                                                <div class="col-12 col-md-8">
+                                                                                     <label style="font-weight: bold;"
+                                                                                          *ngIf="this.ServiceRequest_Obj.serviceRequestCutomerSummary !='' || this.ServiceRequest_Obj.serviceRequestCutomerSummary !=null ;else else_serviceRequestCutomerSummary">
+                                                                                          {{
+                                                                                          this.ServiceRequest_Obj.serviceRequestCutomerSummary
+                                                                                          }}
+                                                                                     </label>
+                                                                                     <ng-template
+                                                                                          #else_serviceRequestCutomerSummary>
+                                                                                          <label
+                                                                                               style="font-weight: bold;">
+                                                                                               لا يوجد ملخص
+                                                                                          </label>
+                                                                                     </ng-template>
+                                                                                </div>
+
+
+
+
+                                                                                <!-- serviceRequestEmployeeSummary -->
+                                                                                <div
+                                                                                     class="col-12 col-md-4 d-flex justify-content-between">
+                                                                                     <label for="name"> ملخص الطلب من
+                                                                                          قبل الموظف</label>
+                                                                                     <label class="px-2">:</label>
+                                                                                </div>
+                                                                                <div class="col-12 col-md-8">
+                                                                                     <label style="font-weight: bold;"
+                                                                                          *ngIf="this.ServiceRequest_Obj.serviceRequestEmployeeSummary !='' || this.ServiceRequest_Obj.serviceRequestEmployeeSummary !='null' ;else else_serviceRequestEmployeeSummary">
+                                                                                          {{this.ServiceRequest_Obj.serviceRequestEmployeeSummary}}
+                                                                                     </label>
+                                                                                     <ng-template
+                                                                                          #else_serviceRequestEmployeeSummary>
+                                                                                          <label
+                                                                                               style="font-weight: bold;">
+                                                                                               لا يوجد ملخص
+                                                                                          </label>
+                                                                                     </ng-template>
+                                                                                </div>
+                                                                               
+                                                                                <div
+                                                                                     class="col-12 col-md-4 d-flex justify-content-between">
+                                                                                     <label for="name">  رابط موقع الخدمة</label>
+                                                                                     <label class="px-2">:</label>
+                                                                                </div>
+                                                                                <div class="col-12 col-md-8">
+                                                                                     <label style="font-weight: bold;">
+                                                                                         <a href="https://www.google.com/" target="_blank">أضغط هنا</a>
+                                                                                     </label>
+                                                                                    
+                                                                                </div>
+
+                                                                                <br><br>
+
+                                                                           </div>
+                                                                           <div class="row " style="margin-top: 10px;">
+                                                                                <div
+                                                                                     class="col d-flex justify-content-end">
+                                                                                     <button
+                                                                                          class="buttonDetailPage submit"
+                                                                                          *ngIf="this.ServiceRequest_Obj.orderType == 1"
+                                                                                          (click)="UpdateServiceRequestby(ServiceRequest_Obj,4 )">
+                                                                                          <span
+                                                                                               style="font-weight: 600;">سحب
+                                                                                               الخدمة</span>
+                                                                                     </button>
+                                                                                     <button
+                                                                                          class="buttonDetailPage hold"
+                                                                                          data-toggle="modal" data-target="#pendingmodal"
+                                                                                          *ngIf="this.ServiceRequest_Obj.orderType == 4"
+                                                                                          (click)="UpdateServiceRequestby(ServiceRequest_Obj,3 )">
+                                                                                          <span
+                                                                                               style="font-weight: 600;">تعليق</span>
+                                                                                     </button>
+                                                                                     <button
+                                                                                          class="buttonDetailPage cancel"
+                                                                                          data-toggle="modal" data-target="#pendingmodal"
+                                                                                          *ngIf="this.ServiceRequest_Obj.orderType == 4 || this.ServiceRequest_Obj.orderType == 3"
+                                                                                          (click)="UpdateServiceRequestby(ServiceRequest_Obj,2 )">
+                                                                                          <span
+                                                                                               style="font-weight: 600;">إنهاء</span>
+                                                                                     </button>
+                                                                                     <!-- <button
+                                                                                          class="buttonDetailPage cancel"
+                                                                                          *ngIf="this.ServiceRequest_Obj.orderType == 4">
+                                                                                          قيد الإنتظار
+                                                                                     </button> -->
+
+                                                                                </div>
+                                                                           </div>
+                                                                      </div>
+                                                                      <div class="">
+                                                                           <div class="row d-flex justify-content-center"
+                                                                                style="margin-top: 20px;">
+                                                                                <div class="col-lg-12">
+                                                                                     <div class="card shadow-0 border"
+                                                                                          style="background-color: #f0f2f5;">
+                                                                                          <div class="card-body p-4">
+                                                                                               <div
+                                                                                                    class="form-outline mb-4">
+                                                                                                    <!-- <input type="text" id="addANote" class="form-control p-3" placeholder="أكتب تعليق" /> -->
+                                                                                                    <textarea
+                                                                                                         id="addANote"
+                                                                                                         class="form-control p-3"
+                                                                                                         placeholder="أكتب تعليق"
+                                                                                                         name="w3review"
+                                                                                                         rows="4"
+                                                                                                         cols="50"
+                                                                                                         [(ngModel)]="Comment_Desc">
+                                                                                     </textarea>
+                                                                                                    <button
+                                                                                                         class="btn btn-primary mt-3"
+                                                                                                         style="cursor: pointer;margin-right: 10px;"
+                                                                                                         (click)="addComment()">
+                                                                                                         إضافة
+                                                                                                    </button>
+                                                                                               </div>
+
+                                                                                               <div *ngFor="let item of comment"
+                                                                                                    class="card mb-2">
+                                                                                                    <div class="card-body"
+                                                                                                         style="padding:10px !important ;">
+                                                                                                         <div
+                                                                                                              class="commenter d-flex justify-content-between">
+                                                                                                              <span> تم
+                                                                                                                   التعليق
+                                                                                                                   بواسطة
+                                                                                                                   : (
+                                                                                                                   أسم
+                                                                                                                   المعلق
+                                                                                                                   هنا )
+                                                                                                              </span>
+                                                                                                              <p
+                                                                                                                   class="mb-0">
+                                                                                                                   {{item.createdAt
+                                                                                                                   |
+                                                                                                                   date:'medium'}}
+                                                                                                              </p>
+                                                                                                         </div>
+                                                                                                         <div
+                                                                                                              class="comment">
+                                                                                                              <p class=""
+                                                                                                                   style="font-size: 16px;">
+                                                                                                                   {{item.comment}}
+                                                                                                              </p>
+                                                                                                         </div>
+
+                                                                                                         <!-- <div class="d-flex justify-content-between"> -->
+                                                                                                         <!-- <div class="d-flex flex-row align-items-center"> -->
+                                                                                                         <!-- <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(4).webp" alt="avatar" width="25"
+                                                                                           height="25" />
+                                                                                         <p class="small mb-0 ms-2">Martha</p> -->
+                                                                                                         <!-- </div> -->
+                                                                                                         <!-- <div class="d-flex flex-row align-items-center">
+                                                                                         <p class="mb-0">
+                                                                                              {{item.createdAt | date:'medium'}}
+                                                                                         </p>
+                                                                                
+                                                                                       </div> -->
+                                                                                                         <!-- </div> -->
+                                                                                                    </div>
+                                                                                               </div>
+                                                                                          </div>
+                                                                                     </div>
+                                                                                </div>
+                                                                           </div>
+                                                                      </div>
+
+                                             
+                                                                      
+                                                                      <!-- Modal pending-->
+                                                                      <div class="modal fade" id="pendingmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                                           <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                           <div class="modal-content">
+                                                                           <div class="modal-header">
+                                                                                <h5 class="modal-title" id="exampleModalLongTitle">{{reason_title}} </h5>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                           </div>
+                                                                           <div class="modal-body">
+                                                                                <div class="row">
+                                                                                     <div class="col-12">
+                                                                                          <!-- <label>{{select_reason_lbl}}</label> -->
+                                                                                          <Select class="form-control" aria-label="Default select example"
+                                                                                            (change)="SelectedReason($event)">
+                                                                          
+                                                                                            <option value="" selected disabled> {{reason}} </option>
+                                                                                            <option *ngFor="let obj of Reason_List" value="">
+                                                                                              <h3 class="selected-value">  </h3>
+                                                                                            </option>
+                                                                                          </Select>
+                                                                                     </div>
+                                                                                     <div class="col-12">
+                                                                                          <textarea
+                                                                                                         id="addANote"
+                                                                                                         class="form-control p-3 mt-3"
+                                                                                                         placeholder="أكتب السبب هنا ..."
+                                                                                                         name="w3review"
+                                                                                                         rows="4"
+                                                                                                         cols="50"
+                                                                                                         [(ngModel)]="reason_Desc">
+                                                                                     </textarea>
+                                                                                     </div>
+                                                                                </div>
+                                                                           </div>
+                                                                           <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">إلغاء</button>
+                                                                                <button type="button" class="btn btn-primary">حفظ التغيرات </button>
+                                                                           </div>
+                                                                           </div>
+                                                                           </div>
+                                                                      </div>
+
+                                                                 </div>
+                                                                 <ng-template #elseblock_ServiceRequest_Obj>
+                                                                 </ng-template>
+                                                            </ng-template>
+                                                       </ngb-tab>
+
+                                                       <ngb-tab>
+                                                            <ng-template ngbTabTitle> بيانات المستخدم </ng-template>
+                                                            <ng-template ngbTabContent style="font-size: 16px;">
+
+                                                                 <div class="row">
+                                                                      <div class="col-12">
+                                                                           <div
+                                                                                class="row d-flex align-items-center p-2 pb-4">
+                                                                                <div class="col-12 col-md-6">
+                                                                                     <div class="row">
+                                                                                          <!-- firstNameAr -->
+                                                                                          <div
+                                                                                               class="col-5 d-flex justify-content-between">
+                                                                                               <label for="name"> الأسم
+                                                                                                    الأول</label>
+                                                                                               <label
+                                                                                                    class="px-2">:</label>
+
+                                                                                          </div>
+                                                                                          <div class="col-7">
+                                                                                               <label
+                                                                                                    style="font-weight: bold;">
+                                                                                                    {{
+                                                                                                    this.userProfile.firstNameAr
+                                                                                                    }}
+                                                                                               </label>
+                                                                                          </div>
+
+                                                                                          <!-- middleNameAr -->
+                                                                                          <div
+                                                                                               class="col-5 d-flex justify-content-between ">
+                                                                                               <label for="name"> الأسم
+                                                                                                    الأوسط</label>
+                                                                                               <label
+                                                                                                    class="px-2">:</label>
+                                                                                          </div>
+                                                                                          <div class="col-7">
+                                                                                               <label
+                                                                                                    style="font-weight: bold;">
+                                                                                                    {{
+                                                                                                    this.userProfile.middleNameAr
+                                                                                                    }}
+                                                                                               </label>
+                                                                                          </div>
+
+                                                                                          <!-- lastNameAr -->
+                                                                                          <div
+                                                                                               class="col-5 d-flex justify-content-between ">
+                                                                                               <label for="name"> الأسم
+                                                                                                    الأخير</label>
+                                                                                               <label
+                                                                                                    class="px-2">:</label>
+                                                                                          </div>
+                                                                                          <div class="col-7">
+                                                                                               <label
+                                                                                                    style="font-weight: bold;">
+                                                                                                    {{
+                                                                                                    this.userProfile.lastNameAr
+                                                                                                    }}
+                                                                                               </label>
+                                                                                          </div>
+                                                                                     </div>
+                                                                                </div>
+                                                                                <div
+                                                                                     class="col-12 col-md-6 d-flex justify-content-sm-center justify-content-start ">
+                                                                                     <img src="{{imgURL2}}/{{userProfile.image}}"
+                                                                                          (error)="$event.target.src = imgURL"
+                                                                                          width="200"
+                                                                                          style="aspect-ratio:4/3 ;" />
+                                                                                </div>
+                                                                           </div>
+
+                                                                           <div class="row">
+
+                                                                                <!-- phoneNumber -->
+                                                                                <div
+                                                                                     class="col-5 col-md-2 d-flex justify-content-between">
+                                                                                     <label for="name"> رقم
+                                                                                          الموبايل</label>
+                                                                                     <label class="px-2">:</label>
+                                                                                </div>
+                                                                                <div class="col-7 col-md-4 ">
+                                                                                     <label style="font-weight: bold;">
+                                                                                          {{
+                                                                                          this.userProfile.phoneNumber
+                                                                                          }}
+                                                                                     </label>
+                                                                                </div>
+
+                                                                                <!-- phoneNumber -->
+                                                                                <div
+                                                                                     class="col-5 col-md-2 d-flex justify-content-between">
+                                                                                     <label for="name">رقم موبايل
+                                                                                          أخر</label>
+                                                                                     <label class="px-2">:</label>
+                                                                                </div>
+                                                                                <div class="col-7 col-md-4 ">
+                                                                                     <label style="font-weight: bold;">
+                                                                                          {{
+                                                                                          this.userProfile.phoneNumber2
+                                                                                          }}
+                                                                                     </label>
+                                                                                </div>
+
+
+                                                                                <!-- nationalID -->
+                                                                                <div
+                                                                                     class="col-5 col-md-2 d-flex justify-content-between">
+
+                                                                                     <label for="name"> الرقم القومى
+                                                                                     </label>
+                                                                                     <label class="px-2">:</label>
+
+                                                                                </div>
+                                                                                <div class="col-7 col-md-4 ">
+                                                                                     <label style="font-weight: bold;">
+                                                                                          {{
+                                                                                          this.userProfile.nationalID
+                                                                                          }}
+                                                                                     </label>
+                                                                                </div>
+
+                                                                                <!-- passportID -->
+                                                                                <div
+                                                                                     class="col-5 col-md-2 d-flex justify-content-between">
+
+                                                                                     <label for="name"> رقم جواز السفر
+                                                                                     </label>
+                                                                                     <label class="px-2">:</label>
+
+                                                                                </div>
+                                                                                <div class="col-7 col-md-4 ">
+                                                                                     <label style="font-weight: bold;">
+                                                                                          {{
+                                                                                          this.userProfile.passportID
+                                                                                          }}
+                                                                                     </label>
+                                                                                </div>
+
+
+                                                                                <!-- borderNumber -->
+                                                                                <div
+                                                                                     class="col-5 col-md-2 d-flex justify-content-between">
+                                                                                     <label for="name"> borderNumber
+                                                                                     </label>
+                                                                                     <label class="px-2">:</label>
+
+                                                                                </div>
+                                                                                <div class="col-7 col-md-4 ">
+                                                                                     <label style="font-weight: bold;">
+                                                                                          {{
+                                                                                          this.userProfile.borderNumber
+                                                                                          }}
+                                                                                     </label>
+                                                                                </div>
+
+                                                                                <!-- age -->
+                                                                                <div
+                                                                                     class="col-5 col-md-2 d-flex justify-content-between">
+
+                                                                                     <label for="name"> السن </label>
+                                                                                     <label class="px-2">:</label>
+
+                                                                                </div>
+                                                                                <div class="col-7 col-md-4 ">
+                                                                                     <label style="font-weight: bold;">
+                                                                                          {{
+                                                                                          this.userProfile.age
+                                                                                          }}
+                                                                                     </label>
+                                                                                </div>
+
+
+                                                                                <!-- region -->
+                                                                                <div
+                                                                                     class="col-5 col-md-2 d-flex justify-content-between">
+
+                                                                                     <label for="name"> المنطقة </label>
+                                                                                     <label class="px-2">:</label>
+
+                                                                                </div>
+                                                                                <div class="col-7 col-md-4 ">
+                                                                                     <label style="font-weight: bold;">
+                                                                                          {{
+                                                                                          this.userProfile.region
+                                                                                          }}
+                                                                                     </label>
+                                                                                </div>
+
+                                                                                <!-- city -->
+                                                                                <div
+                                                                                     class="col-5 col-md-2 d-flex justify-content-between">
+
+                                                                                     <label for="name"> المدينة </label>
+                                                                                     <label class="px-2">:</label>
+
+                                                                                </div>
+                                                                                <div class="col-7 col-md-4 ">
+                                                                                     <label style="font-weight: bold;">
+                                                                                          {{
+                                                                                          this.userProfile.city
+                                                                                          }}
+                                                                                     </label>
+                                                                                </div>
+
+                                                                                <!-- address -->
+                                                                                <div
+                                                                                     class="col-5 col-md-2 d-flex justify-content-between">
+
+                                                                                     <label for="name"> العنوان </label>
+                                                                                     <label class="px-2">:</label>
+
+                                                                                </div>
+                                                                                <div class="col-7 col-md-4 ">
+                                                                                     <label style="font-weight: bold;">
+                                                                                          {{
+                                                                                          this.userProfile.addressAr
+                                                                                          }}
+                                                                                     </label>
+                                                                                </div>
+
+                                                                                <!-- email -->
+                                                                                <div
+                                                                                     class="col-5 col-md-2 d-flex justify-content-between">
+
+                                                                                     <label for="name"> البريد
+                                                                                          الإلكترونى </label>
+                                                                                     <label class="px-2">:</label>
+                                                                                </div>
+                                                                                <div class="col-7 col-md-4 ">
+                                                                                     <label style="font-weight: bold;">
+                                                                                          {{
+                                                                                          this.userProfile.email
+                                                                                          }}
+                                                                                     </label>
+                                                                                </div>
+
+
+                                                                           </div>
+
+                                                                      </div>
+
+                                                                 </div>
+
+
+                                                            </ng-template>
+                                                       </ngb-tab>
+                                                       <ngb-tab>
+                                                            <ng-template ngbTabTitle> مرفقات المستخدم </ng-template>
+                                                            <ng-template ngbTabContent>
+
+
+                                                                 <div class="row"
+                                                                      *ngIf="attachment.length >0;else elseblock_attachment">
+
+                                                                      <div class="col-12">
+                                                                           <div class="row attachment-st py-3 px-3">
+                                                                                <div
+                                                                                     class="col-md-1 d-flex justify-content-start">
+                                                                                     #</div>
+                                                                                <div
+                                                                                     class="col-md-9 d-flex justify-content-start">
+                                                                                     عنوان المرفق</div>
+                                                                                <div
+                                                                                     class="col-md-1 d-flex justify-content-center">
+                                                                                     عرض
+                                                                                </div>
+                                                                                <div
+                                                                                     class="col-md-1 d-flex justify-content-center">
+                                                                                     تحميل
+                                                                                </div>
+                                                                           </div>
+                                                                      </div>
+
+                                                                      <div *ngFor="let item of attachment;let i=index"
+                                                                           class="col-12">
+
+
+                                                                           <div
+                                                                                class="row attachment-value-st py-2 px-3">
+                                                                                <div
+                                                                                     class="col-md-1 d-flex justify-content-start">
+                                                                                     {{i+1}}</div>
+                                                                                <div
+                                                                                     class="col-md-9 d-flex justify-content-start">
+                                                                                     {{item.attachmentTitle}}
+                                                                                </div>
+                                                                                <div class="col-md-1 d-flex justify-content-center"
+                                                                                     style="cursor: pointer;">
+                                                                                     <i class="fa fa-eye"
+                                                                                          (click)="displaySwal(item.attachmentFilePath)"
+                                                                                          style="font-size: 20px;color: #D4B45C;"
+                                                                                          aria-hidden="true"></i>
+
+                                                                                </div>
+
+                                                                                <div class="col-md-1 d-flex justify-content-center"
+                                                                                     style="cursor: pointer;">
+
+                                                                                     <a [href]="imgURL2+item?.attachmentFilePath"
+                                                                                          target="_blank"
+                                                                                          [download]="imgURL2+item?.attachmentFilePath"
+                                                                                          style="text-decoration: none;">
+                                                                                          <i class="fa fa-download"
+                                                                                               style="font-size: 22px;"
+                                                                                               aria-hidden="true"></i>
+                                                                                     </a>
+
+                                                                                </div>
+
+                                                                           </div>
+
+
+                                                                           <!-- <div class="Galary-unit-block">
+                                                                        <img class="image-style"  src="{{imgURL2}}/{{item.attachmentFilePath}}" (error)="$event.target.src = imgURL">              
+                                                                      </div> -->
+                                                                           <div class="d-flex justify-content-center  view-delete-card-galary"
+                                                                                style=" background-color: rgb(211 175 55);">
+                                                                                <!-- <div class="btn" data-bs-toggle="modal" [attr.data-bs-target]="'#viewGalary'" >
+                                                                          <span  >
+                                                                            <i class="far fa-eye delete-view-btn" id="togglePassword"></i>
+                                                                          </span>
+                                                                        </div> -->
+
+                                                                                <!-- <div class="modal fade" id="viewGalary" tabindex="-1" aria-labelledby="exampleModal2Label"
+                                                                          aria-hidden="true">
+                                                                          <div class="modal-dialog modal-dialog-centered">
+                                                                            <div class="modal-content">
+                                                                              <img  src="{{imgURL2}}{{item.attachmentFilePath}}" (error)="$event.target.src = imgURL">              
+                                                                            </div>
+                                                                          </div>
+                                                                        </div> -->
+                                                                                <!-- End Modal -->
+
+
+
+                                                                           </div>
+                                                                      </div>
+                                                                 </div>
+
+                                                                 <ng-template #elseblock_attachment>
+                                                                      <div class="alert alert-primary "
+                                                                           style="text-align:center ;">
+                                                                           لا توجد مرفقات للمستخدم
+                                                                      </div>
+                                                                 </ng-template>
+
+
+
+
+
+
+                                                            </ng-template>
+                                                       </ngb-tab>
+                                                       <ngb-tab>
+                                                            <ng-template ngbTabTitle>تاريخ الطلب</ng-template>
+                                                            <ng-template ngbTabContent>
+                                                                 <div class="row col-12">
+                                                                      <div *ngFor="let item of History;let i=index"
+                                                                           class="col-12">
+                                                                           <p>
+                                                                                <label
+                                                                                     class="my-1 px-3 py-2 box-history w-100"
+                                                                                     data-toggle="collapse"
+                                                                                     [attr.href]="'#collapseExample'+i"
+                                                                                     aria-expanded="false" a
+                                                                                     ria-controls="collapseExample">
+                                                                                     <div class="row">
+                                                                                          <div class="col-6">
+                                                                                               {{item.serviceTitle}}
+                                                                                          </div>
+                                                                                          <div class="col-6">
+                                                                                               {{item.creationDate |
+                                                                                               date}}
+                                                                                          </div>
+                                                                                     </div>
+
+                                                                                </label>
+                                                                           </p>
+                                                                           <div class="collapse my-2"
+                                                                                id="collapseExample{{i}}"
+                                                                                *ngIf="i != 0;else elsehis">
+                                                                                <div class="card card-body ">
+                                                                                     <div>
+                                                                                          <div class="row">
+                                                                                               <div
+                                                                                                    class="col-12 col-md-2 his_style  d-flex justify-content-between">
+                                                                                                    <span>عنوان الفئة
+                                                                                                    </span>
+                                                                                                    <span
+                                                                                                         class="px-2">:</span>
+                                                                                               </div>
+                                                                                               <div
+                                                                                                    class="col-12 col-md-4 his_style d-flex justify-content-start">
+                                                                                                    <sapn
+                                                                                                         style="font-weight: bold;">
+                                                                                                         {{item.categoryTitle}}
+                                                                                                    </sapn>
+                                                                                               </div>
+                                                                                               <div
+                                                                                                    class="col-12 col-md-2 his_style d-flex justify-content-between">
+
+                                                                                                    <span> نوع الطلب
+                                                                                                    </span>
+                                                                                                    <span
+                                                                                                         class="px-2">:</span>
+                                                                                               </div>
+                                                                                               <div
+                                                                                                    class="col-12 col-md-4 his_style d-flex justify-content-start">
+
+                                                                                                    <sapn
+                                                                                                         style="font-weight: bold;">
+                                                                                                         {{item.orderType
+                                                                                                         }}
+                                                                                                    </sapn>
+                                                                                               </div>
+                                                                                               <div
+                                                                                                    class="col-12 col-md-2 his_style d-flex justify-content-between">
+
+                                                                                                    <span> وصف الطلب
+                                                                                                    </span>
+                                                                                                    <span
+                                                                                                         class="px-2">:</span>
+                                                                                               </div>
+                                                                                               <div
+                                                                                                    class="col-12 col-md-10 his_style d-flex justify-content-start">
+
+                                                                                                    <sapn
+                                                                                                         style="font-weight: bold;">
+                                                                                                         {{item.serviceDescription
+                                                                                                         }}
+                                                                                                    </sapn>
+                                                                                               </div>
+                                                                                               <div
+                                                                                                    class="col-12 col-md-2 his_style d-flex justify-content-between">
+
+                                                                                                    <span>أسم الملف
+                                                                                                    </span>
+                                                                                                    <span
+                                                                                                         class="px-2">:</span>
+                                                                                               </div>
+                                                                                               <div
+                                                                                                    class="col-12 col-md-4 his_style d-flex justify-content-start">
+
+                                                                                                    <sapn style="font-weight: bold;"
+                                                                                                         *ngIf="item.packageName !='';else elsepackageName">
+                                                                                                         {{item.packageName
+                                                                                                         }}
+                                                                                                    </sapn>
+                                                                                                    <ng-template
+                                                                                                         #elsepackageName>
+                                                                                                         <sapn
+                                                                                                              style="font-weight: bold;">
+                                                                                                              لا يوجد
+                                                                                                         </sapn>
+                                                                                                    </ng-template>
+
+                                                                                               </div>
+                                                                                               <div
+                                                                                                    class="col-12 col-md-2 his_style d-flex justify-content-between">
+
+                                                                                                    <span> سعر الخدمة
+                                                                                                    </span>
+                                                                                                    <span
+                                                                                                         class="px-2">:</span>
+                                                                                               </div>
+                                                                                               <div
+                                                                                                    class="col-12 col-md-4 his_style d-flex justify-content-start">
+
+                                                                                                    <sapn
+                                                                                                         style="font-weight: bold;">
+                                                                                                         {{item.price }}
+                                                                                                    </sapn>
+
+                                                                                               </div>
+                                                                                          </div>
+                                                                                     </div>
+                                                                                </div>
+
+                                                                           </div>
+
+                                                                           <ng-template #elsehis>
+                                                                                <div class="my-2"
+                                                                                     id="collapseExample{{i}}">
+                                                                                     <div class="card card-body ">
+                                                                                          <div>
+                                                                                               <div class="row">
+                                                                                                    <div
+                                                                                                         class="col-12 col-md-2 his_style  d-flex justify-content-between">
+                                                                                                         <span>عنوان
+                                                                                                              الفئة
+                                                                                                         </span>
+                                                                                                         <span
+                                                                                                              class="px-2">:</span>
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                         class="col-12 col-md-4 his_style d-flex justify-content-start">
+                                                                                                         <sapn
+                                                                                                              style="font-weight: bold;">
+                                                                                                              {{item.categoryTitle}}
+                                                                                                         </sapn>
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                         class="col-12 col-md-2 his_style d-flex justify-content-between">
+
+                                                                                                         <span> نوع
+                                                                                                              الطلب
+                                                                                                         </span>
+                                                                                                         <span
+                                                                                                              class="px-2">:</span>
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                         class="col-12 col-md-4 his_style d-flex justify-content-start">
+
+                                                                                                         <sapn
+                                                                                                              style="font-weight: bold;">
+                                                                                                              {{item.orderType
+                                                                                                              }}
+                                                                                                         </sapn>
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                         class="col-12 col-md-2 his_style d-flex justify-content-between">
+
+                                                                                                         <span> وصف
+                                                                                                              الطلب
+                                                                                                         </span>
+                                                                                                         <span
+                                                                                                              class="px-2">:</span>
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                         class="col-12 col-md-10 his_style d-flex justify-content-start">
+
+                                                                                                         <sapn
+                                                                                                              style="font-weight: bold;">
+                                                                                                              {{item.serviceDescription
+                                                                                                              }}
+                                                                                                         </sapn>
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                         class="col-12 col-md-2 his_style d-flex justify-content-between">
+
+                                                                                                         <span>أسم الملف
+                                                                                                         </span>
+                                                                                                         <span
+                                                                                                              class="px-2">:</span>
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                         class="col-12 col-md-4 his_style d-flex justify-content-start">
+
+                                                                                                         <sapn style="font-weight: bold;"
+                                                                                                              *ngIf="item.packageName !='';else elsepackageName">
+                                                                                                              {{item.packageName
+                                                                                                              }}
+                                                                                                         </sapn>
+                                                                                                         <ng-template
+                                                                                                              #elsepackageName>
+                                                                                                              <sapn
+                                                                                                                   style="font-weight: bold;">
+                                                                                                                   لا
+                                                                                                                   يوجد
+                                                                                                              </sapn>
+                                                                                                         </ng-template>
+
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                         class="col-12 col-md-2 his_style d-flex justify-content-between">
+
+                                                                                                         <span> سعر
+                                                                                                              الخدمة
+                                                                                                         </span>
+                                                                                                         <span
+                                                                                                              class="px-2">:</span>
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                         class="col-12 col-md-4 his_style d-flex justify-content-start">
+
+                                                                                                         <sapn
+                                                                                                              style="font-weight: bold;">
+                                                                                                              {{item.price
+                                                                                                              }}
+                                                                                                         </sapn>
+
+                                                                                                    </div>
+                                                                                               </div>
+                                                                                          </div>
+                                                                                     </div>
+                                                                                </div>
+                                                                           </ng-template>
+                                                                      </div>
+                                                                 </div>
+
+                                                            </ng-template>
+                                                       </ngb-tab>
+                                                  </ngb-tabset>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                    </main>
+               </div>
+               <!-- footer start-->
+               <footer class="footer">
+                    <app-footer></app-footer>
+               </footer>
+               <!-- footer End-->
+          </div>
+          <!-- Page Body End-->
+     </div>
+</div>
+<!-- page-wrapper End-->
