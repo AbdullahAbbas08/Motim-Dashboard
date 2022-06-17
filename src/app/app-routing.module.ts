@@ -4,6 +4,7 @@ import { LoginComponent } from './components/authentication/login/login.componen
 import { ContentComponent } from "./shared/components/layout/content/content.component";
 import { content } from "./shared/routes/routes";
 import { LoginGuardService } from './shared/services/Loginguard.service';
+import { ServiceproviderService } from './shared/services/serviceprovider.service';
 
 
 const routes: Routes = [
@@ -15,6 +16,11 @@ const routes: Routes = [
   {
     path: '',
     component:LoginComponent
+  },
+  {
+    canActivate: [ServiceproviderService],
+    path: 'ServiceRequest',
+    component:ServiceRequestComponent
   },
   {
     path: 'login',
