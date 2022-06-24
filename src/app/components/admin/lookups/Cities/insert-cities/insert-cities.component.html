@@ -45,7 +45,7 @@
                   *ngIf="InsertForm.get('code').hasError('required') && InsertForm.get('code').touched">
                   <span class="text-danger">    الرمز البريدى مطلوب </span> </ng-container>
               </div>
-              <div class="form-group col-lg-6 col-md-6 col-sm-12">
+              <!-- <div class="form-group col-lg-6 col-md-6 col-sm-12">
                 <label for="order">ترتيب المدينة</label>
                 <input class="form-control" id="order" type="number" placeholder="0" required="required"
                   formControlName="order">
@@ -53,13 +53,16 @@
                 <ng-container class="invalid" style="color: red;"
                   *ngIf="InsertForm.get('order').hasError('required') && InsertForm.get('order').touched">
                   <span class="text-danger"> ترتيب المدينة مطلوب </span></ng-container>
-              </div>
+              </div> -->
               <div class="form-group col-lg-6 col-md-6 col-sm-12">
                 <label>أختر المحافظة</label>
-                <Select class="form-control" formControlName="regionId" aria-label="Default select example"
+                <Select class="form-control" 
+                        formControlName="regionId" 
+                        aria-label="Default select example"
+
                   (change)="SelectedGovernorate($event)">
 
-                  <option value="" selected disabled> {{Governorate}} </option>
+                  <option selected> {{Governorate}} </option>
                   <option *ngFor="let obj of Governorate_List" value="{{ obj.regionID }}">
                     <h3 class="selected-value"> {{ obj.regionNameAR }} </h3>
                   </option>

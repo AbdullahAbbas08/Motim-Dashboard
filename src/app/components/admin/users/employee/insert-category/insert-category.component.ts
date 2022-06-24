@@ -10,6 +10,7 @@ import { Roles } from 'src/app/shared/Models/Roles';
 import Swal from 'sweetalert2';
 import { GenericResponse } from 'src/app/shared/Models/GenericResponse';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-insert-category',
@@ -36,6 +37,7 @@ export class InsertCategoryComponent implements OnInit {
   dropdownSettings: IDropdownSettings = {};
   dropdownList: any = [];
   selectedItem:any = [];
+
   //#endregion
 
   //#region  constructor
@@ -56,7 +58,7 @@ export class InsertCategoryComponent implements OnInit {
       this.update = true;
       this.selectedItem = [{id:this.ApiService.Category.parentId, titleAr:this.ApiService.Category.parentTitleAr}]
       this.categoryId = this.ApiService.Category.parentId.toString();
-     this.imgURL = "assets/images/statics/personAvatar.png";
+    
     }else
     {
       this.update = false;
@@ -113,17 +115,20 @@ export class InsertCategoryComponent implements OnInit {
 
   //#region  Init Form
   InitForm(category:GetCategories){
+    console.log(category);
+    
     this.Governorate = category.parentTitle;
     this.CategoryForm = this._formBuilder.group({
       categoryTitleEN: [category.title, Validators.required],
       categoryTitleAR: [category.titleAr, Validators.required],
-      categoryImagePath: ['', Validators.required],
+      categoryImagePath: [category.imagePath, Validators.required],
       categoryDescriptionEN: [category.description, Validators.required],
       categoryDescriptionAR: [category.descriptionAr, Validators.required],
       servicesAvgTime: [category.servicesAvgTime, Validators.nullValidator],
       categoryParentId: ['',  Validators.required],
       order: [category.order, Validators.required],
     });
+    this.imgURL = environment.Server_Image_URL+category.imagePath;
   }
 
   _InitForm(){
@@ -191,12 +196,13 @@ export class InsertCategoryComponent implements OnInit {
 
   //#region Update Client
   UpdateClientType(){
+    
+    let id = +this.route.snapshot.paramMap.get('id');
 
-    let id = this.route.snapshot.paramMap.get('id');
-
-    this.categoryFormPic.append('CategoryID', id)
+    this.categoryFormPic.append('CategoryID', id as unknown as Blob)
     this.categoryFormPic.append('CategoryTitle',this.CategoryForm.get('categoryTitleEN').value)
     this.categoryFormPic.append('CategoryTitleAR',this.CategoryForm.get('categoryTitleAR').value)
+    if(!this.file == null)
     this.categoryFormPic.append('CategoryImagePath',this.file)
     this.categoryFormPic.append('CategoryDescription',this.CategoryForm.get('categoryDescriptionEN').value)
     this.categoryFormPic.append('CategoryDescriptionAR',this.CategoryForm.get('categoryDescriptionAR').value)
@@ -216,6 +222,8 @@ export class InsertCategoryComponent implements OnInit {
         localStorage.removeItem("RiskEmployeeData")
       },
       err=>{
+        console.log(err);
+        
         Swal.fire({
           icon: 'error',
           title: 'خطأ',

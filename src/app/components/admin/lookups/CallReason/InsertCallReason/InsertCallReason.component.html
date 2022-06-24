@@ -53,11 +53,18 @@
                   </div>
                 </div>
 
-                <div class="col-6">
+                <div class="col-12">
                   <div class="form-group">
                     <label for="packageDescription">وصف الباقة باللغة الانجليزية </label>
-                    <input class="form-control" id="packageDescription" type="text"
-                      placeholder="package Description" formControlName="packageDescription" />
+                      <textarea
+                      id="packageDescription"
+                      class="form-control p-3 "
+                      placeholder="package Description"
+                      name="w3review"
+                      rows="3"
+                      cols="50"
+                      formControlName="packageDescription">
+                  </textarea>
 
                     <ng-container class="invalid" style="color: red" *ngIf="
                       PackageForm.get('packageDescription').hasError('required') &&
@@ -69,11 +76,20 @@
                   </div>
                 </div>
 
-                <div class="col-6">
+                <div class="col-12">
                   <div class="form-group">
                     <label for="packageDescriptionAR">وصف الباقة باللغة العربية</label>
-                    <input class="form-control" id="packageDescriptionAR" type="text" placeholder="وصف الباقة"
-                      formControlName="packageDescriptionAR" />
+
+                      <textarea
+                      id="packageDescriptionAR"
+                      class="form-control p-3 "
+                      placeholder="وصف الباقة"
+                      name="w3review"
+                      rows="3"
+                      cols="50"
+                      formControlName="packageDescriptionAR">
+                  </textarea>
+
 
                     <ng-container class="invalid" style="color: red" *ngIf="
                       PackageForm.get('packageDescriptionAR').hasError('required') &&
@@ -168,7 +184,10 @@
               <div class="col-12 col-md-4 d-flex align-items-center">
                 <div class="col-12">
                   <div class="col-12 my-3 d-flex justify-content-center">
-                    <img src="{{ imgURL }}" class="image-style" />
+                    <img src="{{ imgURL }}"
+                          onerror="this.onerror=null; this.src='assets/images/statics/not_found.png'"
+                         class="image-style" 
+                         style="width: 300px;aspect-ratio:1 ; border-radius: 5px;" />
                   </div>
                   <div class="col-12 ChangeProfilePhoto-block d-flex justify-content-center">
                     <!--  -->

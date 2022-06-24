@@ -71,9 +71,7 @@ export class ListCitiesComponent implements OnInit {
   GetCities() {
     this.citiesApiService.GetCitiesWithGovernorate().subscribe(
       (response:any) => {
-        debugger
         this.response = response.data;
-        // console.log("----- : ",this.response[0].governorate.title);
         
         this.Response_List = response.data;
         this.Filtered_List = response.data;
@@ -142,19 +140,15 @@ export class ListCitiesComponent implements OnInit {
   //#endregion
 
   //#region Governoate
-  update(cityid: number,governid: number, title: any) {
-    debugger
-    this.citiesApiService.title = title;
-    this.citiesApiService.regionId = governid;
-    localStorage.setItem("Governoratetitle",title);
-    localStorage.setItem("GovernorateId",JSON.stringify(governid));
-    this.router.navigate(['content/admin/update-city', cityid]);
+  update( obj: any) {
+    
+    localStorage.setItem("Governorate",JSON.stringify(obj));    
+    this.router.navigate(['content/admin/update-city', obj.regionId]);
   }
   //#endregion
 
   //#region Selected Governorate
   SelectedGovernorate(event: any) {
-    debugger
     this.Govern_id = event.target.value;
     if (event.target.value == -1)
       this.Filtered_List = this.Response_List;
@@ -165,10 +159,8 @@ export class ListCitiesComponent implements OnInit {
 
   //#region  get Governoate
   getGovernoate() {
-    debugger
     this.governorateApiService.GetGovernorate().subscribe(
       response => {
-        debugger
         this.Governorate_List = response.data;
         this.dropdownList = response.data;
 

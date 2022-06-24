@@ -32,7 +32,9 @@
     "./src/app/shared/Models/Client_Call_Report_input.ts",
     "./src/app/shared/Models/serviceRequestObj.ts",
     "./src/app/shared/Constants/Roles.ts",
-    "./src/app/shared/Constants/Roles.ts"
+    "./src/app/shared/Constants/Roles.ts",
+    "./src/app/shared/Constants/ReasonsType.ts",
+    "./src/app/shared/Constants/Error_Message.ts"
   ],
   "include": [
     "src/**/*.d.ts"

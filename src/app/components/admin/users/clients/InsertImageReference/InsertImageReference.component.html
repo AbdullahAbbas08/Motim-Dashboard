@@ -23,14 +23,28 @@
               <!-- name -->
               <div class="col-12">
                 <div class="form-group">
-                  <label for="name">أسم متطلب الخدمة </label>
+                  <label for="Namear"> متطلب الخدمة </label>
+                  <input class="form-control" id="Namear" type="text" placeholder="متطلب خدمة جديد" formControlName="Namear" />
+
+                  <ng-container class="invalid" style="color: red" *ngIf="
+                      InsertForm.get('Namear').hasError('required') &&
+                      InsertForm.get('Namear').touched">
+                    <span style="color: red;">
+                       متطلب الخدمة مطلوب
+                    </span>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="name"> متطلب الخدمة (إنجليزى) </label>
                   <input class="form-control" id="name" type="text" placeholder="متطلب خدمة جديد" formControlName="name" />
 
                   <ng-container class="invalid" style="color: red" *ngIf="
                       InsertForm.get('name').hasError('required') &&
                       InsertForm.get('name').touched">
                     <span style="color: red;">
-                      أسم متطلب الخدمة مطلوب
+                       متطلب الخدمة (إنجليزى) مطلوب
                     </span>
                   </ng-container>
                 </div>
@@ -57,7 +71,9 @@
             <div class="col-12 col-md-4 d-flex align-items-center" >
               <div class="col-12">
                 <div class="col-12 my-3 d-flex justify-content-center">
-                  <img src="{{ imgURL }}" class="image-style" />
+                  <img src="{{ imgURL }}" [width]="250" [height]="250"
+                  onerror="this.onerror=null; this.src='assets/images/statics/not_found.png'"
+                   class="image-style" width="250" height="250" />
                 </div>
                 <div class="col-12 ChangeProfilePhoto-block d-flex justify-content-center mb-2">
                   <!--  -->

@@ -23,11 +23,27 @@ export class ServiceRequestApiService {
           //#endregion
         
             //#region Options
-            httpOptionsWithTocken = { headers: new HttpHeaders({ 'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxNzBkZTM1MS1mNDAxLTQxMmEtODJkOC03OTljM2JkYjUxNmMiLCJzdWIiOiIwMTAwMDk1NzI4Nzc4Iiwicm9sZXMiOiJDVVNUT01FUiIsImV4cCI6MTY1NDk3NTk5MiwiaXNzIjoiU2VjdXJlQXBpIiwiYXVkIjoiU2VjdXJlQXBpVXNlciJ9.5a3LGN5Rf24iXr79XzFYSYc9FH6pRKrDnw9FgpVcnOc', 'Accept': ' */*' }) };
+            httpOptionsWithTocken = { headers: new HttpHeaders({ 'Authorization': environment.Toaken, 'Accept': ' */*' }) };
             //#endregion
         
             Get(): Observable<any[]> {
               return this.http.get<any[]>(`${environment.Server_URL}/ServiceRequest`,this.httpOptionsWithTocken);
+            }
+            
+            Get_ChatThread(): Observable<any[]> {
+              return this.http.get<any[]>(`${environment.Server_URL}/ChatThread`,this.httpOptionsWithTocken);
+            }
+            
+            insert_ChatThread(data:any): Observable<any[]> {
+              return this.http.post<any[]>(`${environment.Server_URL}/ChatThread`,data,this.httpOptionsWithTocken);
+            }
+            
+            insert_Message(data:any): Observable<any[]> {
+              return this.http.post<any[]>(`${environment.Server_URL}/Chat`,data,this.httpOptionsWithTocken);
+            }
+            
+            get_Message_user(id:any): Observable<any[]> {
+              return this.http.get<any[]>(`${environment.Server_URL}/Chat/user/${id}`,this.httpOptionsWithTocken);
             }
 
             GetProfile(id:any): Observable<any> {

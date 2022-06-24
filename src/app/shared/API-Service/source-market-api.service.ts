@@ -52,7 +52,7 @@ export class SourceMarketApiService {
           }
       
           Update(id:number,Data:any): Observable<GenericResponseSingle<any>> {
-            return this.http.put<GenericResponseSingle<any>>(`${environment.Server_URL}/Service/${id}`,Data);
+            return this.http.post<GenericResponseSingle<any>>(`${environment.Server_URL}/Service/${id}`,Data);
           }
       
           Delete(Id:number): Observable<GenericResponseSingle<InsertSourceMarket>> {

@@ -24,7 +24,9 @@ export class InsertCitiesComponent implements OnInit {
   Governorate_Dictionary:{[Id:number]:string} = {}
   Governorate_List:GetGovernorate[];
   Govern_id:number;
-  Governorate:string;
+  Governorate:string="أختر المنطقة";
+  Governorateobj:any;
+
   //#endregion
 
   //#region  constructor
@@ -42,14 +44,13 @@ export class InsertCitiesComponent implements OnInit {
     this.Govern_id = -1;
     this.getGovernoate();
     
-    this.citiesApiService.title = localStorage.getItem("Governoratetitle");
-    this.citiesApiService.regionId = +localStorage.getItem("GovernorateId")
+    this.Governorateobj = JSON.parse(localStorage.getItem("Governorate"));
 
     if (this.route.snapshot.paramMap.get('id')) {
-      this.InitForm(this.citiesApiService.title)
+      this.InitForm(this.Governorateobj)
       this.governorateApiService.GetGovernorate().subscribe(
         response => {
-          this.Governorate = response.data.find(x=>x.regionID == this.citiesApiService.regionId)?.regionName;
+          this.Governorate = response.data.find(x=>x.regionID == this.Governorateobj.regionId)?.regionName;
         },
         err => {
           Swal.fire({
@@ -70,28 +71,33 @@ export class InsertCitiesComponent implements OnInit {
   //#endregion
 
   //#region  Init Form
-  InitForm(title: any) {
+  InitForm(obj: any) {
     this.InsertForm = this._formBuilder.group({
-      Title: [title, Validators.required],
-      GovernorateId: ['-1', Validators.nullValidator],
+      name: [obj.name, Validators.required],
+      nameAr: [obj.nameAr, Validators.required],
+      code: [obj.code, Validators.required],
+      // order: ['', Validators.required],
+      regionId: [obj.regionCode, Validators.nullValidator],
     });
+  
+    
   }
   _InitForm() {
     this.InsertForm = this._formBuilder.group({
       name: ['', Validators.required],
       nameAr: ['', Validators.required],
       code: ['', Validators.required],
-      order: ['', Validators.required],
-      regionId: [0, Validators.nullValidator],
+      // order: ['', Validators.required],
+      regionId: [-1, Validators.nullValidator],
     });
   }
   //#endregion
 
   //#region  Insert Cities Method
   InsertCities() {
+    console.log("riehgt : ",this.InsertForm.get('regionId').value);
     // console.log("this.InsertForm.get('GovernorateId') : ",this.InsertForm.get('GovernorateId').value);
-    debugger
-    if(this.Govern_id == -1){
+    if(this.InsertForm.get('regionId').value == -1){
       Swal.fire({
         icon: 'error',
         title: 'خطأ',
@@ -99,16 +105,17 @@ export class InsertCitiesComponent implements OnInit {
       })
     }else
     {
+     
+      
       this.citiesApiService.InsertCities({
         
         name: this.InsertForm.get('name').value,
         nameAr: this.InsertForm.get('nameAr').value,
         code: this.InsertForm.get('code').value,
-        order: this.InsertForm.get('order').value,
-        regionId: this.Govern_id
+        // order: this.InsertForm.get('order').value,
+        regionId: this.InsertForm.get('regionId').value
       } as InsertCities).subscribe(
         response => {
-          debugger
           Swal.fire({
             icon: 'success',
             title: "تم إدخال المدينة بنجاح",
@@ -132,53 +139,73 @@ export class InsertCitiesComponent implements OnInit {
 
   //#region Update Cities
   UpdateCities() {
-    let id = +this.route.snapshot.paramMap.get('id');
-    
-    this.citiesApiService.UpdateCities(id, {
-      name: this.InsertForm.get('name').value,
-        nameAr: this.InsertForm.get('nameAr').value,
-        code: this.InsertForm.get('code').value,
-        order: this.InsertForm.get('order').value,
-        regionId: this.citiesApiService.regionId
-    } as InsertCities).subscribe(
-      response => {
-        Swal.fire({
-          icon: 'success',
-          title: "تم تعديل المدينة بنجاح",
-          showConfirmButton: false,
-          timer: 1500
-        })
-        this.router.navigateByUrl("content/admin/Get-cities");
-        localStorage.removeItem("Governoratetitle");
-        localStorage.removeItem("GovernorateId");
-      },
-      err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
-      }
-    )
+
+    if(!(this.InsertForm.get('regionId').value == -1)){
+      let id = this.Governorateobj.id;
+      this.citiesApiService.UpdateCities(id, {
+        id: id,
+        name: this.InsertForm.get('name').value,
+          nameAr: this.InsertForm.get('nameAr').value,
+          code: this.InsertForm.get('code').value,
+          order: 0,
+          regionId: this.InsertForm.get('regionId').value
+      }).subscribe(
+        response => {
+          console.log("response : ",response);
+          
+          Swal.fire({
+            icon: 'success',
+            title: "تم تعديل المدينة بنجاح",
+            showConfirmButton: false,
+            timer: 1500
+          })
+          this.router.navigateByUrl("content/admin/Get-cities");
+          localStorage.removeItem("Governorate");
+        },
+        err => {
+          Swal.fire({
+            icon: 'error',
+            title: 'خطأ',
+            text: err.error,
+          })
+        }
+      )
+    }
+    else{
+      Swal.fire({
+        icon: 'error',
+        title: 'خطأ',
+        text: "أختر المنطقة أولا",
+      })
+    }
+   
   }
   //#endregion
 
   //#region Selected Governorate
   SelectedGovernorate(event:any){
-    this.Govern_id = event.target.value;
+    this.InsertForm.patchValue({
+      regionId:event.target.value
+    })
   }
   //#endregion
 
   //#region  get Governoate
     getGovernoate() {
-      debugger
       this.governorateApiService.GetGovernorate().subscribe(
         response => {
-          debugger
           this.Governorate_List = response.data;
-          response.data.forEach(element => {
-            this.Governorate_Dictionary[element.regionID] = element.regionName;            
-          });
+          // console.log(response);
+
+          // response.data.forEach(element => {
+            
+          //   if(element.regionID ==this.Governorateobj.nameAr ){
+          //     this.Governorate = element.regionNameAR
+          //     this.InsertForm.patchValue({
+          //       regionId:element.regionID
+          //     })
+          //   }
+          //  });
         },
         err => {
           Swal.fire({

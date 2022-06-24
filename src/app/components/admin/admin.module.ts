@@ -32,6 +32,8 @@ import { GroupsComponent } from './lookups/Group/groups/groups.component';
 import { InsertGroupComponent } from './lookups/Group/insert-group/insert-group.component';
 import { DepartmentsComponent } from './lookups/ServiceProvider/Service-Provider/service-provider.component';
 import { InsertDepartmentComponent } from './lookups/ServiceProvider/insert-Service-Provider/insert-service-provider.component';
+import { InsertReasonComponent } from './lookups/reasons/insert-reason/insert-reason.component';
+import { ReasonsComponent } from './lookups/reasons/reason-list/reasons.component';
 
 
 
@@ -61,7 +63,9 @@ import { InsertDepartmentComponent } from './lookups/ServiceProvider/insert-Serv
     InsertGroupComponent,
     InsertGroupComponent,
     DepartmentsComponent,
-    InsertDepartmentComponent
+    InsertDepartmentComponent,
+    InsertReasonComponent,
+    ReasonsComponent
   ],
   imports: [
     CommonModule,

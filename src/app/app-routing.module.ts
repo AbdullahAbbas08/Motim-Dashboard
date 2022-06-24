@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/authentication/login/login.component';
+import { ChatComponent } from './components/chat/chat.component';
 import { SampleComponent } from './components/sample/sample.component';
 import { ServiceRequestComponent } from './components/service-request/service-request.component';
 import { TabsetComponent } from './components/tabset/tabset.component';
@@ -15,6 +16,10 @@ const routes: Routes = [
   {
     path: '',
     component:LoginComponent
+  },
+  {
+    path: 'chat',
+    component:ChatComponent
   },
   {
     canActivate: [ServiceproviderService],

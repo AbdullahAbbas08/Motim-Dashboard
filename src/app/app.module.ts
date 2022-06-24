@@ -28,6 +28,7 @@ import { LoginGuardService } from './shared/services/Loginguard.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { SampleModule } from './components/sample/sample.module';
 import { ServiceRequestComponent } from './components/service-request/service-request.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {

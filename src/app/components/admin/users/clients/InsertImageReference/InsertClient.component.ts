@@ -12,6 +12,7 @@ import { GetClientType } from 'src/app/shared/Models/GetClientType';
 import { GetGovernorate } from 'src/app/shared/Models/GetGovernorate';
 import { InsertCities } from 'src/app/shared/Models/InsertCities';
 import { Roles } from 'src/app/shared/Models/Roles';
+import { environment } from 'src/environments/environment.prod';
 import Swal from 'sweetalert2';
 import { CitiesApiService } from '../../../../../shared/API-Service/cities-api.service';
 
@@ -65,9 +66,10 @@ export class InsertClientComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
 
     if (this.route.snapshot.paramMap.get('id')) {
-      this.ApiService.Client = JSON.parse(localStorage.getItem("RiskClientData"));
+      this.ApiService.Client = JSON.parse(localStorage.getItem("RequirementClientData"));
+      console.log( this.ApiService.Client);
+      
       this.InitForm(this.ApiService.Client);
-      this.imgURL = "assets/images/statics/personAvatar.png";
       this.update = true;
     } else {
       this.update = false;
@@ -85,10 +87,11 @@ export class InsertClientComponent implements OnInit {
     
     this.InsertForm = this._formBuilder.group({
       name: [client.name, Validators.required],
+      Namear: [client.NameAR, Validators.required],
       imageCode: [client.imageCode, Validators.required],
       sourceImagePath: ['', Validators.required],
     });
-    this.imgURL = "./assets/images/MainDirectory/" + client.logoPath;
+    this.imgURL =environment.Server_Image_URL+ client.sourceImagePath;
   }
   onSelectFile(event) {
 
@@ -97,6 +100,7 @@ export class InsertClientComponent implements OnInit {
   _InitForm() {
     this.InsertForm = this._formBuilder.group({
       name: ['', Validators.required],
+      Namear: ['', Validators.required],
       imageCode: [, Validators.required],
       sourceImagePath: ['', Validators.required],
     });
@@ -108,14 +112,8 @@ export class InsertClientComponent implements OnInit {
 
   //#region  Insert Client Method
   InsertClient() {
-    if (this.InsertForm.get('name').value == -1) {
-      Swal.fire({
-        icon: 'error',
-        title: 'خطأ',
-        text: "أختر المدينة أولا",
-      })
-    }
-    else if (this.InsertForm.get('imageCode').value == -1) {
+   
+   if (this.InsertForm.get('imageCode').value == -1) {
       Swal.fire({
         icon: 'error',
         title: 'خطأ',
@@ -125,6 +123,7 @@ export class InsertClientComponent implements OnInit {
     else {
 
       this.logoForm.append("Name", this.InsertForm.get('name').value)
+      this.logoForm.append("NameAR", this.InsertForm.get('Namear').value)
       this.logoForm.append("SourceImagePath", this.file)
       this.logoForm.append("ImageCode", this.InsertForm.get('imageCode').value)
       this.ApiService.InsertClient(this.logoForm).subscribe(
@@ -157,6 +156,7 @@ export class InsertClientComponent implements OnInit {
   UpdateClient() {
 
     this.logoForm.append("Name", this.InsertForm.get('name').value)
+    this.logoForm.append("NameAR", this.InsertForm.get('Namear').value)
     this.logoForm.append("SourceImagePath", this.file)
     this.logoForm.append("ImageCode", this.InsertForm.get('imageCode').value)
 

@@ -1,0 +1,77 @@
+
+<div id="container">
+     <aside>
+       <header>
+         <input type="text" placeholder="search">
+       </header>
+       <ul >
+         <li (click)="getchat(item)" class="chat-items" *ngFor="let item of chatThredList" >
+           <img src="{{image_server_path}}/{{item.imagePath}}" width="50" height="50" alt=""
+           onerror="this.onerror=null; this.src='assets/images/statics/not_found.png'">
+           <div>
+             <h2 *ngIf="item.providerName !=null;else providerName">{{item.providerName}}</h2>
+             <ng-template #providerName>
+                <span style="color:white ;">
+                  <span>العميل رقم</span> 
+                  <span>
+                    {{item.serviceRequestId}}
+                  </span>
+              </span>
+            </ng-template>
+             <h3  *ngIf="item.isActive == true;else isActive">
+              <span class="status orange"></span>
+               مرئى
+               </h3>
+               <ng-template #isActive>
+                <span class="status black"></span>
+                غير مرئى
+              </ng-template>
+           </div>
+         </li>
+       </ul>
+     </aside>
+     <main>
+       <header>
+        <img src="{{imagePath}}" width="50" height="50" alt=""
+        onerror="this.onerror=null; this.src='assets/images/statics/not_found.png'">
+         <div >
+           <h2 >{{ChatTitle}}</h2>
+           <h3 *ngIf="message_number>0;else message_number_block">
+            هناك {{message_number}} رسائل فى المحادثة
+           </h3>
+           <ng-template #message_number_block> لا توجد رسائل  </ng-template>
+         </div>
+         <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png" alt="">
+       </header>
+       <ul id="chat">
+         <li class="you">
+           <div class="entete">
+             <span class="status green"></span>
+             <h2>test</h2>
+             <h3>10:12AM, Today</h3>
+           </div>
+           <div class="triangle"></div>
+           <div class="message">
+            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+           </div>
+         </li>
+         <li class="me">
+           <div class="entete">
+             <h3>10:12AM, Today</h3>
+             <h2>Vincent</h2>
+             <span class="status blue"></span>
+           </div>
+           <div class="triangle"></div>
+           <div class="message">
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb           
+</div>
+         </li>
+       </ul>
+       <footer>
+         <textarea placeholder="Type your message"></textarea>
+         <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_picture.png" alt="">
+         <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_file.png" alt="">
+         <a class="send-btn" (click)="sendmsg()" >إرسال</a>
+       </footer>
+     </main>
+   </div>

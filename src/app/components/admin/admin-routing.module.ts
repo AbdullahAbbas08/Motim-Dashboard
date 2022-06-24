@@ -25,6 +25,8 @@ import { GroupsComponent } from './lookups/Group/groups/groups.component';
 import { InsertGroupComponent } from './lookups/Group/insert-group/insert-group.component';
 import { DepartmentsComponent } from './lookups/ServiceProvider/Service-Provider/service-provider.component';
 import { InsertDepartmentComponent } from './lookups/ServiceProvider/insert-Service-Provider/insert-service-provider.component';
+import { ReasonsComponent } from './lookups/reasons/reason-list/reasons.component';
+import { InsertReasonComponent } from './lookups/reasons/insert-reason/insert-reason.component';
 
 const routes: Routes = [
   {
@@ -115,6 +117,15 @@ const routes: Routes = [
       },
       {
         path:'InsertGroup/:id', component: InsertGroupComponent
+      },
+      {
+        path:'Reasons', component: ReasonsComponent
+      },
+      {
+        path:'InsertReason', component: InsertReasonComponent
+      },
+      {
+        path:'InsertReason/:id', component: InsertReasonComponent
       },
       {
         path:'Department', component: DepartmentsComponent

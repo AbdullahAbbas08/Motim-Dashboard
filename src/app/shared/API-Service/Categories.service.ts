@@ -62,7 +62,7 @@ export class CategoriesService {
   }
 
   UpdateEmployee(
-    id: string,
+    id: any,
     data: any
   ): Observable<GenericResponseSingle<GetCategories>> {
     debugger
@@ -75,7 +75,7 @@ export class CategoriesService {
   DeleteEmployee(
     id: string
   ): Observable<GenericResponseSingle<InsertCategory>> {
-    return this.http.delete<GenericResponseSingle<InsertCategory>>(
+    return this.http.get<GenericResponseSingle<InsertCategory>>(
       `${environment.Server_URL}/Categories/${id}`
     );
   }

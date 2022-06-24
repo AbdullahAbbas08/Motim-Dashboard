@@ -44,11 +44,11 @@ export class CitiesApiService {
         return this.http.post<GenericResponseSingle<getCities>>(`${environment.Server_URL}/City`,Data);
       }
   
-      UpdateCities(id:number,Data:InsertCities): Observable<GenericResponseSingle<getCities>> {
+      UpdateCities(id:number,Data:any): Observable<GenericResponseSingle<getCities>> {
         return this.http.post<GenericResponseSingle<getCities>>(`${environment.Server_URL}/City/${id}`,Data);
       }
   
       DeleteCities(Id:number): Observable<GenericResponseSingle<InsertCities>> {
-        return this.http.delete<GenericResponseSingle<InsertCities>>(`${environment.Server_URL}/City/${Id}`);
+        return this.http.get<GenericResponseSingle<InsertCities>>(`${environment.Server_URL}/City/${Id}`);
       }
 }

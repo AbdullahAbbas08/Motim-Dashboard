@@ -34,9 +34,11 @@ import { LayoutService } from './services/layout.service';
 import { NavService } from './services/nav.service';
 import { SampleModule } from '../components/sample/sample.module';
 import { ServiceRequestComponent } from '../components/service-request/service-request.component';
+import { ChatComponent } from '../components/chat/chat.component';
 
 @NgModule({
   declarations: [
+    ChatComponent,
     HeaderComponent,
     FooterComponent,
     SidebarComponent,
@@ -58,7 +60,7 @@ import { ServiceRequestComponent } from '../components/service-request/service-r
     CartComponent,
     MessageBoxComponent,
     MyAccountComponent,
-    ServiceRequestComponent
+    ServiceRequestComponent,
 
   ],
   imports: [

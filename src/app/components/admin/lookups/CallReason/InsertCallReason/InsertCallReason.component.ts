@@ -14,6 +14,8 @@ import { Assign_ClientCustomer } from 'src/app/shared/Models/Assign_ClientCustom
 import { CallClient } from 'src/app/shared/Models/CallClient';
 import { InsertCallReason } from 'src/app/shared/Models/insert-call-reason';
 import Swal from 'sweetalert2';
+import { environment } from 'src/environments/environment.prod';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 
 @Component({
   selector: 'app-InsertCallReason',
@@ -39,6 +41,8 @@ export class InsertCallReasonComponent implements OnInit {
   packageCategoryUpdate:PackageCategory = {packageID:0, categories:[]}
   categoriesExtract:any[] = [];
   elements : any[] = [];
+  Image_URL:string = environment.Server_Image_URL
+  InsertForm = new FormData();
   
   //#endregion
 
@@ -63,6 +67,7 @@ export class InsertCallReasonComponent implements OnInit {
     if (this.route.snapshot.paramMap.get('id')) {
 
       this.ApiService.package = JSON.parse(localStorage.getItem("package")) ;
+      // console.log(this.ApiService.package);
       this.getClientTypeById(this.ApiService.package.packageID);
 
       this.InitForm(this.ApiService.package)
@@ -90,9 +95,12 @@ export class InsertCallReasonComponent implements OnInit {
 
   }
   //#endregion
-  onSelectFile(event) {
-
+  onSelectFile(event){
+    
     this.file = event.target.files[0]
+    this.InsertForm.append("PackageImagePath",this.file);
+   
+
   }
   preview(files: any) {
     if (files.length === 0)
@@ -110,22 +118,26 @@ export class InsertCallReasonComponent implements OnInit {
     reader.onload = (_event) => {
       this.imgURL = reader.result;
     }
+    this.InsertForm.append("PackageImagePath",this.file);    
   }
+  //#endregion
 
   //#region  Init Form
-  InitForm(packageUpdating:GetCallReason) {
+  InitForm(packageUpdating:GetCallReason) {    
     this.PackageForm = this._formBuilder.group({
       packageTitle: [packageUpdating.packageTitle, Validators.required],
       packageTitleAR: [packageUpdating.packageTitleAr, Validators.required],
       packageDescription: [packageUpdating.packageDescription, Validators.required],
       packageDescriptionAR: [packageUpdating.packageDescriptionAr, Validators.required],
-      packageImagePath: ['', Validators.required],
+      packageImagePath: [packageUpdating.packageImagePath, Validators.required],
       packagePrice: [packageUpdating.packagePrice, Validators.required],
-      packageOrder: [packageUpdating.packageOrder, Validators.required],
-      serviceRequestCount: [packageUpdating.serviceRequestCount, Validators.required],
+      packageOrder: [1, Validators.required],
+      serviceRequestCount: [packageUpdating.serviceRequestCount=-1?0:packageUpdating.serviceRequestCount, Validators.required],
       packageDuration: [packageUpdating.packageDuration, Validators.required],
       categoryTypes: [this.selectedItems]
     });
+    this.imgURL =environment.Server_Image_URL+packageUpdating.packageImagePath;
+    
   }
 
   _InitForm() {
@@ -147,7 +159,6 @@ export class InsertCallReasonComponent implements OnInit {
   //#endregion
   //#region  Insert Call Reason Method
   InsertPackage() {
-    debugger
     this.PackageFormPic.append('PackageTitle',this.PackageForm.get('packageTitle').value);
     this.PackageFormPic.append('PackageTitleAR',this.PackageForm.get('packageTitleAR').value);
     this.PackageFormPic.append('PackageDescription',this.PackageForm.get('packageDescription').value);
@@ -166,6 +177,8 @@ export class InsertCallReasonComponent implements OnInit {
         this.PackageForm.get('categoryTypes').value.forEach(element => {
 
           this.packageCategory.categories.push(element.id);
+          console.log("element.id : ",element.id);
+          
         });
         this.ApiService.CallReasonClientType(this.packageCategory).subscribe(
           (data) => {
@@ -178,34 +191,29 @@ export class InsertCallReasonComponent implements OnInit {
             this.router.navigateByUrl("content/admin/Get-Call-Reason");
           },
           (err) => {
-
+            Error_Message.Message();
           }
         )
         this.callClient = [];
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+      
       }
     )
   }
   //#endregion
 
+  
   //#region  Get Client Types
   getCategoryType() {
     this.categoryService.GetCategories().subscribe(
       response => {
+        console.log("categoryService : ",response);
+        
         this.dropdownList = response.data;
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -215,19 +223,19 @@ export class InsertCallReasonComponent implements OnInit {
   getClientTypeById(id: number) {
     // console.log(id);
     this.clientTypeApiService.GetClientTypeById(id).subscribe(
-      response => {
-        this.categoriesExtract = response.data;
+      response => {                
+        this.categoriesExtract = response["data"];
+        console.log("categoriesExtract : ",this.categoriesExtract);
+        
         this.categoriesExtract.forEach(element => {
           this.elements.push({id:element.category.id, titleAr:element.category.titleAr});
         })
         this.selectedItems = this.elements;
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        console.log(err);
+        
+        Error_Message.Message();
       }
     )
   }
@@ -237,18 +245,26 @@ export class InsertCallReasonComponent implements OnInit {
   //#region Update Call Reason
   UpdateCallReason() {
     let id = +this.route.snapshot.paramMap.get('id');
-    this.ApiService.UpdateCallReason(id, {PackageId :id,
-      PackageTitle: this.PackageForm.get('packageTitle').value,
-      PackageTitleAR :this.PackageForm.get('packageTitleAR').value,
-      PackageDescription :this.PackageForm.get('packageDescription').value,
-      PackageDescriptionAR :this.PackageForm.get('packageDescriptionAR').value,
-      PackageImagePath :this.file,
-      PackagePrice :this.PackageForm.get('packagePrice').value,
-      PackageOrder :this.PackageForm.get('packageOrder').value,
-      ServiceRequestCount :this.PackageForm.get('serviceRequestCount').value,
-      PackageDuration :this.PackageForm.get('packageDuration').value,
-     }).subscribe(
+    this.InsertForm.append("PackageId",id as unknown as Blob);    
+    this.InsertForm.append("PackageTitle",this.PackageForm.get('packageTitle').value);    
+    this.InsertForm.append("PackageTitleAR",this.PackageForm.get('packageTitleAR').value);    
+    this.InsertForm.append("PackageDescription",this.PackageForm.get('packageDescription').value);    
+    this.InsertForm.append("PackageDescriptionAR",this.PackageForm.get('packageDescriptionAR').value);    
+    // this.InsertForm.append("PackageImagePath",this.file);   
+    if( this.InsertForm.has("PackageImagePath")){
+
+    }else{
+      this.InsertForm.append("PackageImagePath",this.PackageForm.get('packageImagePath').value)
+    }
+    this.InsertForm.append("PackagePrice",this.PackageForm.get('packagePrice').value as unknown as Blob);   
+    this.InsertForm.append("PackageOrder",this.PackageForm.get('packageOrder').value as unknown as Blob);   
+    this.InsertForm.append("ServiceRequestCount",this.PackageForm.get('serviceRequestCount').value as unknown as Blob);   
+    this.InsertForm.append("PackageDuration",this.PackageForm.get('packageDuration').value as unknown as Blob);   
+    this.InsertForm.append("IsActive","true" as unknown as Blob)    
+    this.ApiService.UpdateCallReason(id,this.InsertForm ).subscribe(
       response => {
+        // console.log(response);
+        
         this.packageCategory.packageID = id;
         this.PackageForm.get('categoryTypes').value.forEach(element => {
           this.packageCategory.categories.push(element.id);
@@ -272,18 +288,16 @@ export class InsertCallReasonComponent implements OnInit {
 
           },
           (err) => {
-
+            console.log(err);
           }
         )
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
+
+    this.InsertForm.delete("PackageImagePath");
   }
   //#endregion
 
@@ -294,11 +308,7 @@ export class InsertCallReasonComponent implements OnInit {
         this.PackageForm.patchValue({ Order: response.data.length + 1 });
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }

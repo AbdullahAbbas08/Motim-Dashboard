@@ -150,6 +150,12 @@ export class NavService implements OnDestroy {
 			]
 		},
 		{
+			title: ' الأسباب', icon: 'home', type: 'sub', badgeType: 'success', active: true, children: [
+				{ path: 'admin/InsertReason', title: 'إضافة سبب', type: 'link' },
+				{ path: 'admin/Reasons', title: 'قائمة الأسباب', type: 'link' },
+			]
+		},
+		{
 			title: ' مقدمى الخدمة', icon: 'home', type: 'sub', badgeType: 'success', active: true, children: [
 				{ path: 'admin/Insertserviceprovider', title: 'إضافة مقدم خدمة', type: 'link' },
 				// { path: 'admin/Department', title: 'قائمة مقدمى الخدمة', type: 'link' },

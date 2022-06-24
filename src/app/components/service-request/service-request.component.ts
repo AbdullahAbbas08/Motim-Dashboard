@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import * as feather from "feather-icons";
 import { LayoutService } from "../../shared/services/layout.service";
@@ -13,6 +13,9 @@ import { LoginComponent } from "../authentication/login/login.component";
 import { environment } from "src/environments/environment.prod";
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
+import { ReasonService } from "src/app/shared/API-Service/reason.service";
+import { SignalRService } from "src/app/shared/API-Service/signal-r.service";
+import { ChatComponent } from "../chat/chat.component";
 
 @Component({
   selector: "app-service-request",
@@ -20,6 +23,9 @@ import * as moment from 'moment';
   styleUrls: ["./service-request.component.css"],
 })
 export class ServiceRequestComponent implements OnInit {
+
+  @ViewChild('displbl') display_lbl: ElementRef;
+  @ViewChild('chat_ref') Chat_Component:ChatComponent;
 
   ServiceRequestList: any[];
   ServiceRequest_New: any[];
@@ -43,6 +49,10 @@ export class ServiceRequestComponent implements OnInit {
  select_reason_lbl:string;
  reason_desc:string;
  reason_title:string;
+ flag:any;
+ obj:any;
+ selectedReason:number;
+ chatThredList:any[];
 
 
 
@@ -51,7 +61,9 @@ export class ServiceRequestComponent implements OnInit {
     private route: ActivatedRoute,
     public navServices: NavService,
     public layout: LayoutService,
+    private ApiService:ReasonService,
     private ServiceRequest: ServiceRequestApiService,
+    private signalRService: SignalRService,
   ) {    
     this.getServiceRequest();
     this.route.queryParams.subscribe((params) => {
@@ -59,9 +71,16 @@ export class ServiceRequestComponent implements OnInit {
         ? params.layout
         : this.layout.config.settings.layout;
     });
+    this.get_chat_thred();
+
+    setTimeout(() => {
+      // console.log(this.Chat_Component);
+      
+    }, 3000);
   }
 
   ngOnInit() {
+    this.chatThredList = [];
     this.ServiceRequestList = [];
     this.ServiceRequest_New = [];
     this.ServiceRequest_Hold = [];
@@ -87,10 +106,10 @@ export class ServiceRequestComponent implements OnInit {
     this.ServiceRequest_Obj.serviceRequestDate = new Date();
     this.ServiceRequest_Obj.serviceRequestEmployeeSummary = "";
     this.Reason_List = [];
-this.reason_Desc = "";
-this.select_reason_lbl = "";
-this.reason_desc = "";
-this.reason_title = "";
+    this.reason_Desc = "";
+    this.select_reason_lbl = "";
+    this.reason_desc = "";
+    this.reason_title = "";
     
   }
 
@@ -144,6 +163,20 @@ this.reason_title = "";
   }
 
 
+  getReasons(type:number) {
+    this.ApiService.Get().subscribe(
+      response => {
+        this.Reason_List = response.data.filter(x=>x.reasonType == type);
+      },
+      err => {
+        Swal.fire({
+          icon: 'error',
+          title: 'خطأ',
+          text: err.error,
+        })
+      }
+    )
+  }
 
 
 
@@ -157,7 +190,7 @@ this.reason_title = "";
         this.ServiceRequest_Hold = this.ServiceRequestList.filter((x) => x["orderType"] == OrderTypes.Hold);
         this.ServiceRequest_Closed = this.ServiceRequestList.filter((x) => x["orderType"] == OrderTypes.Closed);
         this.ServiceRequest_InProgress = this.ServiceRequestList.filter((x) => x["orderType"] == OrderTypes.InProgress);
-        console.log("--- : ",data);
+        // console.log("--- : ",data);
       },
       (err) => {
         // console.log(err);
@@ -165,19 +198,58 @@ this.reason_title = "";
     );
   }
 
-  getServiceRequestbyId(id: number) {
+  getServiceRequestbyId(id: number,userid:any) {
+    // console.log("------- : ",this.chatThredList);
+    
+    if(this.chatThredList.filter(x=>x.serviceRequestId == id).length ==0){
+      this.ServiceRequest.insert_ChatThread({
+        "id": 0,
+        "toID":userid ,
+        "isActive": true,
+        "imagePath": "",
+        "serviceRequestId":id
+      }).subscribe(
+        (res)=>{
+          // console.log(res);
+          this.get_chat_thred();
+        },
+        (err)=>{
+          // console.log(err);
+        }
+      )
+    }
     this.ServiceRequest.GetServiceById(id).subscribe(
       (data) => {
+        console.log("===== : ",data);
+        
         this.ServiceRequest_Obj = data[0];
 
         this.ServiceRequest_Obj.assignmentToEmpDate = new Date();
         this.GetProfile(data[0].userId);
-        // console.log(this.ServiceRequest_Obj);
       },
       (err) => {
         // console.log(err);
       }
     );
+  }
+
+  get_chat_thred(){
+    this.ServiceRequest.Get_ChatThread().subscribe(
+      (res)=>{
+        this.chatThredList = res["data"];
+        // localStorage.setItem("chatThredList",JSON.stringify(this.chatThredList))
+        console.log("-get_chat_thred--- : ",res["data"]);
+      },
+      (err)=>{}
+    )
+  }
+
+  display_block_ToolTip(){
+    this.display_lbl.nativeElement.setAttribute('style', 'display: block;');
+  }
+ 
+  display_none_ToolTip(){
+    this.display_lbl.nativeElement.setAttribute('style', 'display: none;');
   }
 
   GetProfile(id:any) {    
@@ -204,46 +276,79 @@ this.reason_title = "";
     );
   }
 
+  SaveChanges(){
+    let param =   {     
+      "orderType": this.flag,
+      "serviceRequestEmployeeSummary": this.reason_Desc,
+      "serviceRequestDate": "2022-05-14T04:32:27.449Z",
+      "assignmentToEmpDate": "2022-05-14T04:32:27.449Z",
+      "employeeId": "string",
+      "reasonId": +this.selectedReason
+  } 
+  let reaid = this.obj.serviceRequestID
+  // console.log("fdfdf : ",this.obj.serviceRequestID);
+  
+    this.ServiceRequest.Update(this.obj.serviceRequestID,param).subscribe(
+      (data) => {
+       this.getServiceRequest();
+       this.GetDtail(reaid,this.obj.userId) ;
+      //  console.log(data);
+       
+      },
+      (err) => {
+        // console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'خطأ',
+          text: "حدث خطأ ما برجاء المحاولة مرة أخرى",
+        })
+      }
+    );
 
+    this.flag = "";
+    this.obj = "";
+    // console.log(this.reason_Desc);
+  }
+
+  createThread(data:any){
+    this.signalRService.CraeteChatThread(data).subscribe(
+      (data) => {
+      //  console.log(data); 
+      },
+      (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'خطأ',
+          text: "حدث خطأ ما برجاء المحاولة مرة أخرى",
+        })
+      }
+    );
+  }
 
   UpdateServiceRequestby(obj: any,type:number) {
-    // console.log(obj);
-    
+  
     if(type == 3){
+      this.getReasons(0);
       this.reason_title = "سبب تعليق الخدمة";
       this.select_reason_lbl = "أختر سبب تعليق الخدمة";
     }
     else if(type == 2){
+      this.getReasons(1);
       this.reason_title = "سبب إنهاء الخدمة";
       this.select_reason_lbl = "أختر سبب إنهاء الخدمة";
-
     }
-    let param =   {     
-      "orderType": type,
-      "serviceRequestEmployeeSummary": "string",
-      "serviceRequestDate": "2022-05-14T04:32:27.449Z",
-      "assignmentToEmpDate": "2022-05-14T04:32:27.449Z",
-      "employeeId": "string"
-  } 
-    // this.ServiceRequest.Update(obj.serviceRequestID,param).subscribe(
-    //   (data) => {
-    //    this.getServiceRequest();
-    //    this.GetDtail(obj.serviceRequestID,obj.userId) ;
-    //   },
-    //   (err) => {
-    //     // console.log(err);
-    //   }
-    // );
+    this.flag = type;
+    this.obj = obj;
   }
 
 
 
-
+ 
   GetDtail(id: number,userid:any) {
     // console.log(id);
     this.serviceRequestId = id;
     
-    this.getServiceRequestbyId(id);
+    this.getServiceRequestbyId(id,userid);
     this.ServiceRequest_Obj.assignmentToEmpDate = new Date();
     this.GetAttachmentById(userid);
     this.GetHistory(userid);
@@ -279,6 +384,8 @@ this.reason_title = "";
   }
 
 
+
+
   displaySwal(url:string){
     Swal.fire({
       imageUrl: this.imgURL2+'/'+url, 
@@ -308,16 +415,12 @@ this.reason_title = "";
       this.Comment_Desc = "";
         }
     else{
-
     }
-   
   }
 
   SelectedReason(event:any){
-
+    this.selectedReason = event.target.value;
+    // console.log(this.selectedReason)
   }
-
-
-
 
 }

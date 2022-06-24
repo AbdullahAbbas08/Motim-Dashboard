@@ -8,6 +8,7 @@ import { CategoriesService } from 'src/app/shared/API-Service/Categories.service
 import { ClientApiService } from 'src/app/shared/API-Service/client-api.service';
 import { GroupService } from 'src/app/shared/API-Service/group.service';
 import { SourceMarketApiService } from 'src/app/shared/API-Service/source-market-api.service';
+import { environment } from 'src/environments/environment.prod';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-insert-source-market',
@@ -40,6 +41,8 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
   ServiceId:number = -1;
   groupService:any[]=[];
   serviceTitle:string="";
+  img_path:string = environment.Server_Image_URL
+
   //#endregion
 
   //#region  constructor
@@ -227,8 +230,9 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
       ServicePrice: [service.price, Validators.required],
       CategoriesIds: ['', Validators.required],
       PrerequistsIds: ['', Validators.required],
-      ServiceLink: ['', Validators.required],
+      ServiceLink: [service.ServiceOnlineUrl, Validators.required],
     });
+      this.imgURL = environment.Server_Image_URL+service.imagePath;
   }
 
 
@@ -270,6 +274,7 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
     this.serviceFormPic.append('ServiceImagePath', this.file)
     this.serviceFormPic.append('ServiceOrder', this.InsertForm.get('ServiceOrder').value)
     this.serviceFormPic.append('ServicePrice', this.InsertForm.get('ServicePrice').value)
+    this.serviceFormPic.append('ServiceOnlineUrl', this.InsertForm.get('ServiceLink').value)
     
     this.ApiService.Insert(this.serviceFormPic).subscribe(
       response => {
@@ -308,7 +313,7 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
      imageRefIds.push(element.id)
      this.serviceFormPic.append('PrerequistsIds', element.id)
      });
-     this.serviceFormPic.append('ServiceID', id.toString())
+     this.serviceFormPic.append('ServiceID', id as unknown as Blob)
      this.serviceFormPic.append('ServiceTitle', this.InsertForm.get('ServiceTitle').value)
      this.serviceFormPic.append('ServiceTitleAR', this.InsertForm.get('ServiceTitleAR').value)
      this.serviceFormPic.append('ServiceDescription', this.InsertForm.get('ServiceDescription').value)
@@ -316,6 +321,8 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
      this.serviceFormPic.append('ServiceImagePath', this.file)
      this.serviceFormPic.append('ServiceOrder', this.InsertForm.get('ServiceOrder').value)
      this.serviceFormPic.append('ServicePrice', this.InsertForm.get('ServicePrice').value)
+     this.serviceFormPic.append('ServiceOnlineUrl', this.InsertForm.get('ServiceLink').value)
+
     this.ApiService.Update(id, this.serviceFormPic).subscribe(
       response => {
         Swal.fire({

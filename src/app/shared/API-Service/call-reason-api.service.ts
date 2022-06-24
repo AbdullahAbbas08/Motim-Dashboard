@@ -15,6 +15,7 @@ export class CallReasonApiService {
       //#region Declare variables
       title:string;
       order:number;
+      
 
       package:GetCallReason;
       //#endregion
@@ -24,7 +25,7 @@ export class CallReasonApiService {
       //#endregion
     
         //#region Options
-        httpOptionsWithTocken = { headers: new HttpHeaders({ 'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhaG1lZGFiZHVsbGFoMjUwIiwianRpIjoiZDIwZjU0MGUtMjhiNy00YmNjLWE4ZDgtNzkxNzA2YzJmZDRhIiwiZW1haWwiOiJhaG1lZGFiZHVsbGFoQHlhaG9vLmNvbSIsInVpZCI6IjBiMzg5N2FiLTQ2ZmMtNGM0Yy04MTYyLTRiNDExZTY4OWE1NCIsInJvbGVzIjoiVVNFUiIsImV4cCI6MTYzODM2OTM3NSwiaXNzIjoiU2VjdXJlQXBpIiwiYXVkIjoiU2VjdXJlQXBpVXNlciJ9.55LorE6Fclj3buy1Qw8wZ6CEe_ifW5jxwHe25wHRWsQ', 'Accept': ' */*' }) };
+        httpOptionsWithTocken = { headers: new HttpHeaders({ 'Authorization': environment.Toaken, 'Accept': ' */*' }) };
         //#endregion
     
         GetCallReason(): Observable<GenericResponse<GetCallReason>> {
@@ -45,12 +46,12 @@ export class CallReasonApiService {
           return this.http.post<any>(`${environment.Server_URL}/PackageCategory`,Data);
         }
     
-        UpdateCallReason(id:number,Data:any): Observable<GenericResponseSingle<any>> {
-          return this.http.post<GenericResponseSingle<getCities>>(`${environment.Server_URL}/Package/${id}`,Data);
+        UpdateCallReason(id:number,Data:any): Observable<any> {
+          return this.http.post<any>(`${environment.Server_URL}/Package/${id}`,Data);
         }
     
         DeleteCallReason(Id:number): Observable<GenericResponseSingle<any>> {
-          return this.http.delete<GenericResponseSingle<any>>(`${environment.Server_URL}/Package/${Id}`);
+          return this.http.get<GenericResponseSingle<any>>(`${environment.Server_URL}/Package/${Id}`);
         }
         DeleteAllCategories(Id:number): Observable<GenericResponseSingle<any>> {
           return this.http.delete<GenericResponseSingle<any>>(`${environment.Server_URL}/PackageCategory/Delete/${Id}`);

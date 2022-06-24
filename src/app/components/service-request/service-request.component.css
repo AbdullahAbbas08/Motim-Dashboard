@@ -2,6 +2,23 @@
      width: 85%;
 }
 
+.chat {
+  position: fixed;
+  bottom: 50px;
+  left: 50px;
+}
+
+.chat .icon{
+  font-size: 40px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.chat .icon:hover{
+  font-size: 50px;
+  color: #D3AF37;
+}
+
 .srl:hover{
   background-color: #d1bf83 !important;
   border-color: transparent !important;
@@ -228,3 +245,21 @@ font-size: 16px;
   padding: 5px;
 
 }
+
+.displayToolTip {
+  position: fixed;
+  bottom: 100px;
+  left: 54px;
+  display: none;
+  padding: 3px;
+  border-radius: 10px;
+  background-color: #D3AF37;
+}
+
+
+
+
+
+
+
+

@@ -1,43 +1,41 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ClientApiService } from 'src/app/shared/API-Service/client-api.service';
+import { ReasonService } from 'src/app/shared/API-Service/reason.service';
 import { GenericResponse } from 'src/app/shared/Models/GenericResponse';
-import { GetClient } from 'src/app/shared/Models/GetClient';
+import { GetGovernorate } from 'src/app/shared/Models/GetGovernorate';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-Client',
-  templateUrl: './Client.component.html',
-  styleUrls: ['./Client.component.css']
+  selector: 'app-reasons',
+  templateUrl: './reasons.component.html',
+  styleUrls: ['./reasons.component.css']
 })
-export class ClientComponent implements OnInit {
-
+export class ReasonsComponent implements OnInit {
   //#region  Declare Variables
-  response: GenericResponse<GetClient>;
-  Client_List: any[];
+  response: GenericResponse<GetGovernorate>;
+  Response_List: GetGovernorate[];
   //#endregion
 
   //#region constructor
-  constructor(private ApiService: ClientApiService , private router:Router) { }
+  constructor( private ApiService:ReasonService , private router:Router) { }
   //#endregion
 
   //#region  ng OnInit
   ngOnInit(): void {
-    this.Client_List = [];
-    this.GetClient();
+    this.Response_List = [];
+    this.get();
   }
   //#endregion
 
   //#region Consume API's
 
-  //#region  Get Client
-  GetClient() {
-    this.ApiService.GetClient().subscribe(
+  //#region  get Governoate
+  get() {
+    this.ApiService.Get().subscribe(
       response => {
+        // console.log(response);
         this.response = response;
-        this.Client_List = response.data;
-        console.log(this.Client_List);
-        
+        this.Response_List = response.data;
       },
       err => {
         Swal.fire({
@@ -50,8 +48,8 @@ export class ClientComponent implements OnInit {
   }
   //#endregion
 
-  //#region  Delete Client 
-  DeleteClient(id:string){    
+  //#region  Delete Governoate
+  Delete(id:number){
     Swal.fire({
       title: ' تحذير !',
       text: "هل انت متأكد من حذف هذا العنصر ؟ ",
@@ -65,12 +63,12 @@ export class ClientComponent implements OnInit {
     .then((result) => {
 
       if (result.isConfirmed) {
-          this.ApiService.DeleteClient(id).subscribe(
+          this.ApiService.Delete(id).subscribe(
             response=>{
-              this.GetClient();
+              this.get();
                Swal.fire({
                     icon: 'success',
-                    title: "تم حذف متطلب الخدمة بنجاح",
+                    title: "تم حذف السبب بنجاح",
                     showConfirmButton: false,
                     timer: 1500}) 
                   },
@@ -94,22 +92,18 @@ export class ClientComponent implements OnInit {
   
   //#endregion
 
-  //#region Add New
-  NavigateToInsertClient(){
-    this.router.navigateByUrl("content/admin/InsertClient");
+  //#region AddNew
+  AddNew(){
+    this.router.navigateByUrl("content/admin/InsertReason");
   }
   //#endregion
-  AddNew() {
-    this.router.navigateByUrl("content/admin/InsertClient");
-  }
-  //#region update Client
-  updateClient(ClientId:any, Client:any){
-    this.ApiService.Client = Client;
-    // console.log("Client : ",Client);
-    
-    localStorage.setItem("RequirementClientData",JSON.stringify(Client));
-    
-    this.router.navigate(['content/admin/updateClient',Client.id]);
+
+  //#region Governoate
+  update(obj:any){     
+    localStorage.setItem("ReasonTypeTitle",obj.reasonMessage)
+    localStorage.setItem("ReasonTypeId",obj.reasonType)
+    this.router.navigate(['content/admin/InsertReason',obj.id]);
   }
   //#endregion
+
 }

@@ -21,18 +21,20 @@
             <table class="table" style="width: 100%;">
               <thead>
                 <tr class="bg-darkk ">
-                  <th scope="col" class="f-16 text-center text-white" style="width: 12%;">#</th>
-                  <th scope="col" class="f-16 text-center text-white" style="width: 22%;">أسم متطلب الخدمة</th>
-                  <th scope="col" class="f-16 text-center text-white" style="width: 22%;">كود متطلب الخدمة </th>
-                  <th scope="col" class="f-16 text-center text-white" style="width: 22%;">إعدادت</th>
+                  <th scope="col" class="f-16 text-center text-white" style="width: 5%;">#</th>
+                  <th scope="col" class="f-16 text-center text-white" style="width: 30%;"> متطلب الخدمة</th>
+                  <th scope="col" class="f-16 text-center text-white" style="width: 30%;"> متطلب الخدمة</th>
+                  <th scope="col" class="f-16 text-center text-white" style="width: 10%;">الكود  </th>
+                  <th scope="col" class="f-16 text-center text-white" style="width: 25%;">إعدادت</th>
                 </tr>
               </thead>
               <tbody >
                 <tr *ngFor="let item of Client_List;let i=index">
-                  <th scope="row" class="font-style" style="width: 12%;">{{i+1}}</th>
-                  <td style="width: 22%;" class="font-style">{{item.name}}</td>
-                  <td style="width: 22%;" class="font-style">{{item.imageCode}}</td>
-                  <td class="font-style" style="width: 22%;">
+                  <th scope="row" class="font-style" style="width: 5%;">{{i+1}}</th>
+                  <td style="width: 30%;" class="font-style">{{item.name}}</td>
+                  <td style="width: 30%;" class="font-style">{{item.nameAr}}</td>
+                  <td style="width: 10%;" class="font-style">{{item.imageCode}}</td>
+                  <td class="font-style" style="width: 25%;">
                         <button class="btn btn-danger mx-1"
                                 (click)="DeleteClient(item.id)">حذف</button>
                         <button class="btn btn-success" (click)="updateClient(item.id, item)">تعديل</button>

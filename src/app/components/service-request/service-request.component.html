@@ -32,9 +32,12 @@
                          </a>
                     </div>
 
+                   
+
                     <nav class="sidebar-main">
                          <div class="servReqSt">
                               <label>طلبات الخدمات</label>
+                            
                          </div>
 
                          <!-- ServiceRequest_New -->
@@ -462,13 +465,12 @@
                                                                            <div class="modal-body">
                                                                                 <div class="row">
                                                                                      <div class="col-12">
-                                                                                          <!-- <label>{{select_reason_lbl}}</label> -->
                                                                                           <Select class="form-control" aria-label="Default select example"
                                                                                             (change)="SelectedReason($event)">
                                                                           
                                                                                             <option value="" selected disabled> {{reason}} </option>
-                                                                                            <option *ngFor="let obj of Reason_List" value="">
-                                                                                              <h3 class="selected-value">  </h3>
+                                                                                            <option *ngFor="let obj of Reason_List" value="{{obj.id}}">
+                                                                                              <h3 class="selected-value">{{obj.reasonMessage}}  </h3>
                                                                                             </option>
                                                                                           </Select>
                                                                                      </div>
@@ -487,7 +489,7 @@
                                                                            </div>
                                                                            <div class="modal-footer">
                                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">إلغاء</button>
-                                                                                <button type="button" class="btn btn-primary">حفظ التغيرات </button>
+                                                                                <button type="button" class="btn btn-primary" (click)="SaveChanges()">حفظ التغيرات </button>
                                                                            </div>
                                                                            </div>
                                                                            </div>
@@ -495,6 +497,10 @@
 
                                                                  </div>
                                                                  <ng-template #elseblock_ServiceRequest_Obj>
+                                                                      <div class="container alert alert-primary "
+                                                                      style="text-align:center ;">
+                                                                      أختر الخدمة أولا لعرض تفاصيل الطلب    
+                                                                      </div>
                                                                  </ng-template>
                                                             </ng-template>
                                                        </ngb-tab>
@@ -504,7 +510,7 @@
                                                             <ng-template ngbTabContent style="font-size: 16px;">
 
                                                                  <div class="row">
-                                                                      <div class="col-12">
+                                                                      <div class="col-12" *ngIf="this.ServiceRequest_Obj.orderType != ''; else elseblock_userDetail">
                                                                            <div
                                                                                 class="row d-flex align-items-center p-2 pb-4">
                                                                                 <div class="col-12 col-md-6">
@@ -740,6 +746,13 @@
                                                                            </div>
 
                                                                       </div>
+                                                                      <ng-template #elseblock_userDetail >
+                                                                           <div class="container alert alert-primary "
+                                                                           style="text-align:center ;">
+                                                                           أختر الخدمة أولا لعرض بيانات المستخدم   
+                                                                           </div>
+                                                                          
+                                                                      </ng-template>
 
                                                                  </div>
 
@@ -1107,6 +1120,30 @@
                <!-- footer End-->
           </div>
           <!-- Page Body End-->
+
+          <i class="displayToolTip" #displbl>(أسم مقدم الخدمة هنا )بدأ المحادثة مع </i>
+          <div class="chat" (pointerenter)="display_block_ToolTip()"
+                              (pointerleave)="display_none_ToolTip()"
+                              (click)="get_chat_thred()"
+                              >
+               <i class="fas fa-comments icon"   
+                    data-toggle="modal" 
+                    data-target="#chatmodal"></i>
+          </div>
+
+           <!-- Modal chat-->
+           <div class="modal fade" id="chatmodal" 
+                tabindex="-1" role="dialog" aria-hidden="true">
+                
+                    <div class="modal-dialog modal-dialog-centered" 
+                         role="document">
+                         <div class="modal-content">
+                              <div class="modal-body p-0">
+                                   <app-chat [chatThredList]="chatThredList" #chat_ref></app-chat>
+                              </div>
+                         </div>
+                    </div>
+          </div>
      </div>
 </div>
 <!-- page-wrapper End-->
