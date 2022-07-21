@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { GovernorateApiService } from 'src/app/shared/API-Service/governorate-api.service';
 import { GroupService } from 'src/app/shared/API-Service/group.service';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 import { GetGovernorate } from 'src/app/shared/Models/GetGovernorate';
 import { InsertCities } from 'src/app/shared/Models/InsertCities';
 import Swal from 'sweetalert2';
@@ -55,11 +56,7 @@ this.getAllDepartment();
           this.DepartmentTitle = response.data[0].name;
         },
         err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
            
@@ -116,11 +113,7 @@ this.getAllDepartment();
           this.router.navigateByUrl("content/admin/Groups");
         },
         err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
     }
@@ -151,11 +144,7 @@ this.getAllDepartment();
         localStorage.removeItem("deptID");
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -177,11 +166,7 @@ this.getAllDepartment();
           });
         },
         err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
     }
@@ -195,11 +180,7 @@ this.getAllDepartment();
           this.Dept_List = response.data;
         },
         err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
     }

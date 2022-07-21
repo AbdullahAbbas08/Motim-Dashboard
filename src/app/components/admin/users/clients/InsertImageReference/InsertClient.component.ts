@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ClientApiService } from 'src/app/shared/API-Service/client-api.service';
 import { ClientTypeApiService } from 'src/app/shared/API-Service/client-type-api.service';
 import { GovernorateApiService } from 'src/app/shared/API-Service/governorate-api.service';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 import { getCities } from 'src/app/shared/Models/getCities';
 import { GetClient } from 'src/app/shared/Models/GetClient';
 import { GetClientType } from 'src/app/shared/Models/GetClientType';
@@ -44,7 +45,7 @@ export class InsertClientComponent implements OnInit {
   Client_Type_List: GetClientType[];
   logoForm = new FormData();
   pass: string;
-  file: File;
+  file: File = null;
   id:string
   //#endregion
 
@@ -87,9 +88,9 @@ export class InsertClientComponent implements OnInit {
     
     this.InsertForm = this._formBuilder.group({
       name: [client.name, Validators.required],
-      Namear: [client.NameAR, Validators.required],
+      Namear: [client.NameAR, Validators.nullValidator],
       imageCode: [client.imageCode, Validators.required],
-      sourceImagePath: ['', Validators.required],
+      sourceImagePath: [client.sourceImagePath, Validators.required],
     });
     this.imgURL =environment.Server_Image_URL+ client.sourceImagePath;
   }
@@ -100,7 +101,7 @@ export class InsertClientComponent implements OnInit {
   _InitForm() {
     this.InsertForm = this._formBuilder.group({
       name: ['', Validators.required],
-      Namear: ['', Validators.required],
+      Namear: ['', Validators.nullValidator],
       imageCode: [, Validators.required],
       sourceImagePath: ['', Validators.required],
     });
@@ -140,11 +141,7 @@ export class InsertClientComponent implements OnInit {
           }, 1000)
         },
         err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error.error.message,
-          })
+          Error_Message.Message();
         }
       )
     }
@@ -176,11 +173,7 @@ export class InsertClientComponent implements OnInit {
       },
       err => {
         // console.log(err.error);
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: "هناك خطأ ما برجاء المحاولة مرة اخرى",
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -220,11 +213,7 @@ export class InsertClientComponent implements OnInit {
         });
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -239,11 +228,7 @@ export class InsertClientComponent implements OnInit {
         // this.Filtered_cities_List = response.data;
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -258,11 +243,7 @@ export class InsertClientComponent implements OnInit {
 
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }

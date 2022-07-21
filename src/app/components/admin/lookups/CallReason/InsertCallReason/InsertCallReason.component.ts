@@ -2,7 +2,7 @@ import { CategoryExtract } from './../../../../../shared/Models/CategoryExtract'
 import { GetCallReason } from 'src/app/shared/Models/get-call-reason';
 import { PackageCategory } from './../../../../../shared/Models/packageCategory';
 import { CategoriesService } from './../../../../../shared/API-Service/Categories.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
@@ -22,7 +22,7 @@ import { Error_Message } from 'src/app/shared/Constants/Error_Message';
   templateUrl: './InsertCallReason.component.html',
   styleUrls: ['./InsertCallReason.component.css']
 })
-export class InsertCallReasonComponent implements OnInit {
+export class InsertCallReasonComponent implements OnInit,OnDestroy {
 
   //#region Decalre varaibles
   PackageForm: FormGroup;
@@ -36,7 +36,7 @@ export class InsertCallReasonComponent implements OnInit {
   imgURL: any;
   imagePath: any;
   message: string;
-  file: File;
+  file: File = null;
   packageCategory:PackageCategory = {packageID:0, categories:[]}
   packageCategoryUpdate:PackageCategory = {packageID:0, categories:[]}
   categoriesExtract:any[] = [];
@@ -53,35 +53,30 @@ export class InsertCallReasonComponent implements OnInit {
     private categoryService : CategoriesService,
     private clientTypeApiService: ClientTypeApiService,
     private router: Router,
-    private route: ActivatedRoute) {
-    this.maxDate = new Date();
-
+    private route: ActivatedRoute) 
+    {
+        this.maxDate = new Date();
+        if (this.route.snapshot.paramMap.get('id'))
+        {
+          this.ApiService.package = JSON.parse(localStorage.getItem("package")) ;
+          this.selectedItems = JSON.parse(localStorage.getItem("packagecategories")) ;        
+          this.InitForm(this.ApiService.package)
+          this.update = true;
+        } else {
+          this.update = false;
+          this._InitForm();
+        }
+  }
+  ngOnDestroy(): void {
+    localStorage.removeItem("package") ;
+    localStorage.removeItem("packagecategories") ;
   }
   //#endregion
 
   //#region  ng OnInit
   ngOnInit(): void {
     this.getCategoryType();
-    this.imgURL = "assets/images/statics/personAvatar.png";
-
-    if (this.route.snapshot.paramMap.get('id')) {
-
-      this.ApiService.package = JSON.parse(localStorage.getItem("package")) ;
-      // console.log(this.ApiService.package);
-      this.getClientTypeById(this.ApiService.package.packageID);
-
-      this.InitForm(this.ApiService.package)
-      this.update = true;
-      // console.log(this.update);
-      //this.getClientTypeById(+this.route.snapshot.paramMap.get('id'));
-
-    } else {
-      this.update = false;
-      // console.log(this.update);
-
-      this._InitForm();
-    }
-
+    // this.imgURL = "assets/images/statics/personAvatar.png";
 
     this.dropdownSettings = {
       singleSelection: false,
@@ -132,11 +127,12 @@ export class InsertCallReasonComponent implements OnInit {
       packageImagePath: [packageUpdating.packageImagePath, Validators.required],
       packagePrice: [packageUpdating.packagePrice, Validators.required],
       packageOrder: [1, Validators.required],
-      serviceRequestCount: [packageUpdating.serviceRequestCount=-1?0:packageUpdating.serviceRequestCount, Validators.required],
+      serviceRequestCount: [packageUpdating.serviceRequestCount, Validators.required],
       packageDuration: [packageUpdating.packageDuration, Validators.required],
       categoryTypes: [this.selectedItems]
     });
     this.imgURL =environment.Server_Image_URL+packageUpdating.packageImagePath;
+    
     
   }
 
@@ -157,7 +153,6 @@ export class InsertCallReasonComponent implements OnInit {
 
   }
   //#endregion
-  //#region  Insert Call Reason Method
   InsertPackage() {
     this.PackageFormPic.append('PackageTitle',this.PackageForm.get('packageTitle').value);
     this.PackageFormPic.append('PackageTitleAR',this.PackageForm.get('packageTitleAR').value);
@@ -171,14 +166,9 @@ export class InsertCallReasonComponent implements OnInit {
     
     this.ApiService.InsertCallReason(this.PackageFormPic).subscribe(
       (response:any) => {
-        // console.log(response);
         this.packageCategory.packageID = response.packageID;
-
         this.PackageForm.get('categoryTypes').value.forEach(element => {
-
           this.packageCategory.categories.push(element.id);
-          console.log("element.id : ",element.id);
-          
         });
         this.ApiService.CallReasonClientType(this.packageCategory).subscribe(
           (data) => {
@@ -197,19 +187,14 @@ export class InsertCallReasonComponent implements OnInit {
         this.callClient = [];
       },
       err => {
-      
+        Error_Message.Message();
       }
     )
   }
-  //#endregion
-
-  
-  //#region  Get Client Types
+ 
   getCategoryType() {
     this.categoryService.GetCategories().subscribe(
-      response => {
-        console.log("categoryService : ",response);
-        
+      response => {                
         this.dropdownList = response.data;
       },
       err => {
@@ -219,43 +204,16 @@ export class InsertCallReasonComponent implements OnInit {
   }
   //#endregion
 
-  //#region  Get Client Types
-  getClientTypeById(id: number) {
-    // console.log(id);
-    this.clientTypeApiService.GetClientTypeById(id).subscribe(
-      response => {                
-        this.categoriesExtract = response["data"];
-        console.log("categoriesExtract : ",this.categoriesExtract);
-        
-        this.categoriesExtract.forEach(element => {
-          this.elements.push({id:element.category.id, titleAr:element.category.titleAr});
-        })
-        this.selectedItems = this.elements;
-      },
-      err => {
-        console.log(err);
-        
-        Error_Message.Message();
-      }
-    )
-  }
-  //#endregion
-
 
   //#region Update Call Reason
-  UpdateCallReason() {
+  UpdateCallReason() {    
     let id = +this.route.snapshot.paramMap.get('id');
     this.InsertForm.append("PackageId",id as unknown as Blob);    
     this.InsertForm.append("PackageTitle",this.PackageForm.get('packageTitle').value);    
     this.InsertForm.append("PackageTitleAR",this.PackageForm.get('packageTitleAR').value);    
     this.InsertForm.append("PackageDescription",this.PackageForm.get('packageDescription').value);    
     this.InsertForm.append("PackageDescriptionAR",this.PackageForm.get('packageDescriptionAR').value);    
-    // this.InsertForm.append("PackageImagePath",this.file);   
-    if( this.InsertForm.has("PackageImagePath")){
-
-    }else{
-      this.InsertForm.append("PackageImagePath",this.PackageForm.get('packageImagePath').value)
-    }
+    this.InsertForm.append("PackageImagePath",this.file);   
     this.InsertForm.append("PackagePrice",this.PackageForm.get('packagePrice').value as unknown as Blob);   
     this.InsertForm.append("PackageOrder",this.PackageForm.get('packageOrder').value as unknown as Blob);   
     this.InsertForm.append("ServiceRequestCount",this.PackageForm.get('serviceRequestCount').value as unknown as Blob);   
@@ -263,18 +221,14 @@ export class InsertCallReasonComponent implements OnInit {
     this.InsertForm.append("IsActive","true" as unknown as Blob)    
     this.ApiService.UpdateCallReason(id,this.InsertForm ).subscribe(
       response => {
-        // console.log(response);
-        
         this.packageCategory.packageID = id;
         this.PackageForm.get('categoryTypes').value.forEach(element => {
           this.packageCategory.categories.push(element.id);
         });
         // console.log(response);
         this.ApiService.DeleteAllCategories(id).subscribe(
-          response => {
-           
-          }
-        )
+          response => {})
+
         this.ApiService.CallReasonClientType(this.packageCategory).subscribe(
           (data) => {
             Swal.fire({
@@ -284,11 +238,9 @@ export class InsertCallReasonComponent implements OnInit {
               timer: 1500
             })
             this.router.navigateByUrl("content/admin/Get-Call-Reason");
-            localStorage.removeItem("package");
-
           },
           (err) => {
-            console.log(err);
+            Error_Message.Message();
           }
         )
       },
@@ -317,11 +269,9 @@ export class InsertCallReasonComponent implements OnInit {
 
 
   onItemSelect(item: any) {
-    // console.log("---",this.EmployeeForm.get('Clients').value)
   }
 
   onSelectAll(items: any) {
-    // console.log(items);
   }
 
 

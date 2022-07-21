@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ClientApiService } from 'src/app/shared/API-Service/client-api.service';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 import { GenericResponse } from 'src/app/shared/Models/GenericResponse';
 import { GetClient } from 'src/app/shared/Models/GetClient';
 import Swal from 'sweetalert2';
@@ -40,11 +41,7 @@ export class ClientComponent implements OnInit {
         
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }

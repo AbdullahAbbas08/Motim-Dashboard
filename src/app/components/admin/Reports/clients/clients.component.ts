@@ -12,6 +12,7 @@ import { IdName } from 'src/app/shared/Models/IdName';
 import { ClientTypeApiService } from 'src/app/shared/API-Service/client-type-api.service';
 import { GetClientType } from 'src/app/shared/Models/GetClientType';
 import { Client_Report } from 'src/app/shared/Models/Client_Report';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 
 @Component({
   selector: 'app-clients',
@@ -52,11 +53,7 @@ export class ClientsComponent implements OnInit {
         this.Filtered_List = response.data;
       },
       err => {        
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -88,11 +85,7 @@ export class ClientsComponent implements OnInit {
   
         },
         err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
     }

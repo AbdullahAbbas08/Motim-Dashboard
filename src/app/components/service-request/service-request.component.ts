@@ -16,6 +16,7 @@ import * as moment from 'moment';
 import { ReasonService } from "src/app/shared/API-Service/reason.service";
 import { SignalRService } from "src/app/shared/API-Service/signal-r.service";
 import { ChatComponent } from "../chat/chat.component";
+import { Error_Message } from "src/app/shared/Constants/Error_Message";
 
 @Component({
   selector: "app-service-request",
@@ -158,6 +159,7 @@ export class ServiceRequestComponent implements OnInit {
     }
   }
 
+
   sidebarToggle() {
     this.navServices.collapseSidebar = !this.navServices.collapseSidebar;
   }
@@ -169,11 +171,7 @@ export class ServiceRequestComponent implements OnInit {
         this.Reason_List = response.data.filter(x=>x.reasonType == type);
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -182,6 +180,7 @@ export class ServiceRequestComponent implements OnInit {
 
 
   getServiceRequest() {
+   
     this.ServiceRequest.Get().subscribe(
       (data) => {
 
@@ -194,12 +193,14 @@ export class ServiceRequestComponent implements OnInit {
       },
       (err) => {
         // console.log(err);
+        Error_Message.Message();
+        window.location.reload();
       }
     );
   }
 
   getServiceRequestbyId(id: number,userid:any) {
-    // console.log("------- : ",this.chatThredList);
+    // console.log("userid------- : ",userid);
     
     if(this.chatThredList.filter(x=>x.serviceRequestId == id).length ==0){
       this.ServiceRequest.insert_ChatThread({
@@ -215,20 +216,20 @@ export class ServiceRequestComponent implements OnInit {
         },
         (err)=>{
           // console.log(err);
+          Error_Message.Message();
         }
       )
     }
     this.ServiceRequest.GetServiceById(id).subscribe(
       (data) => {
-        console.log("===== : ",data);
-        
+         
         this.ServiceRequest_Obj = data[0];
-
         this.ServiceRequest_Obj.assignmentToEmpDate = new Date();
         this.GetProfile(data[0].userId);
       },
       (err) => {
         // console.log(err);
+        Error_Message.Message();
       }
     );
   }
@@ -238,9 +239,11 @@ export class ServiceRequestComponent implements OnInit {
       (res)=>{
         this.chatThredList = res["data"];
         // localStorage.setItem("chatThredList",JSON.stringify(this.chatThredList))
-        console.log("-get_chat_thred--- : ",res["data"]);
+        // console.log("-get_chat_thred--- : ",res["data"]);
       },
-      (err)=>{}
+      (err)=>{
+        Error_Message.Message();
+      }
     )
   }
 
@@ -260,6 +263,7 @@ export class ServiceRequestComponent implements OnInit {
       },
       (err) => {
         // console.log(err);
+        Error_Message.Message();
       }
     );
   }
@@ -272,6 +276,7 @@ export class ServiceRequestComponent implements OnInit {
       },
       (err) => {
         // console.log(err);
+        Error_Message.Message();
       }
     );
   }
@@ -297,11 +302,7 @@ export class ServiceRequestComponent implements OnInit {
       },
       (err) => {
         // console.log(err);
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: "حدث خطأ ما برجاء المحاولة مرة أخرى",
-        })
+        Error_Message.Message();
       }
     );
 
@@ -316,11 +317,7 @@ export class ServiceRequestComponent implements OnInit {
       //  console.log(data); 
       },
       (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: "حدث خطأ ما برجاء المحاولة مرة أخرى",
-        })
+        Error_Message.Message();
       }
     );
   }
@@ -365,6 +362,7 @@ export class ServiceRequestComponent implements OnInit {
       },
       (err) => {
         // console.log(err);
+        Error_Message.Message();
       }
     );
   }
@@ -379,6 +377,7 @@ export class ServiceRequestComponent implements OnInit {
         // console.log("comment : ",this.comment);
       },
       (err) => {
+        Error_Message.Message();
       }
     );
   }

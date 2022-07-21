@@ -232,6 +232,13 @@
      cursor: pointer;
    }
 
-   .send-btn{
-     cursor: pointer;
+   .btn-send{
+    /* width: 50px; */
+    cursor: pointer;
+    display: inline-block;
+    font-size: 18px;
+    color: #000;
+    background-color: #fff;
+    padding: 7px;
+    border-radius: 10px;
    }

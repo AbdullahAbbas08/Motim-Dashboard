@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { CitiesApiService } from 'src/app/shared/API-Service/cities-api.service';
 import { GovernorateApiService } from 'src/app/shared/API-Service/governorate-api.service';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 import { GenericResponse } from 'src/app/shared/Models/GenericResponse';
 import { getCities } from 'src/app/shared/Models/getCities';
 import { getCitiesWithGovernorate } from 'src/app/shared/Models/getCitiesWithGovernorate';
@@ -77,11 +78,7 @@ export class ListCitiesComponent implements OnInit {
         this.Filtered_List = response.data;
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -114,11 +111,7 @@ export class ListCitiesComponent implements OnInit {
               })
             },
             err => {
-              Swal.fire({
-                icon: 'error',
-                title: 'خطأ',
-                text: err.error,
-              })
+              Error_Message.Message();
             }
           )
 
@@ -169,11 +162,7 @@ export class ListCitiesComponent implements OnInit {
         // });
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }

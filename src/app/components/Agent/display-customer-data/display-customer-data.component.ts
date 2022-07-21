@@ -20,6 +20,7 @@ import { InsertClientType } from 'src/app/shared/Models/insert-client-type';
 import { InsertCall } from 'src/app/shared/Models/InsertCall';
 import { Roles } from 'src/app/shared/Models/Roles';
 import Swal from 'sweetalert2';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 
 @Component({
   selector: 'app-display-customer-data',
@@ -253,11 +254,7 @@ export class DisplayCustomerDataComponent implements OnInit {
           });
         },
         err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
     }
@@ -328,11 +325,7 @@ export class DisplayCustomerDataComponent implements OnInit {
         // this.EmployeeForm.patchValue({CityId:obj[0].title})
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -373,11 +366,7 @@ export class DisplayCustomerDataComponent implements OnInit {
             // console.log("call reason : ",response.data);    
           },
           err => {
-            Swal.fire({
-              icon: 'error',
-              title: 'خطأ',
-              text: err.error,
-            })
+            Error_Message.Message();
           }
         )
       }
@@ -391,11 +380,7 @@ export class DisplayCustomerDataComponent implements OnInit {
           this.SourceMarket_List = response.data;
         },
         err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
     }

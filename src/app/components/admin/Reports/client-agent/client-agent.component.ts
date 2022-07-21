@@ -9,6 +9,7 @@ import { getCitiesWithGovernorate } from 'src/app/shared/Models/getCitiesWithGov
 import { GetGovernorate } from 'src/app/shared/Models/GetGovernorate';
 import Swal from 'sweetalert2';
 import { IdName } from 'src/app/shared/Models/IdName';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 
 @Component({
   selector: 'app-client-agent',
@@ -43,11 +44,7 @@ export class ClientAgentComponent implements OnInit {
         this.Client_Agent_Report = response.data;
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -60,11 +57,7 @@ export class ClientAgentComponent implements OnInit {
         this.ClientList = response.data;
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }

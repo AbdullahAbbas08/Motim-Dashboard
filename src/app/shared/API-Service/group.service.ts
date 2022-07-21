@@ -27,6 +27,10 @@ export class GroupService {
      Get(): Observable<any> {
        return this.http.get<any>(`${environment.Server_URL}/Group`);
      }
+    
+     Getallgroup(): Observable<any> {
+       return this.http.get<any>(`${environment.Server_URL}/GroupService`);
+     }
      
      GetDepartment(id:any): Observable<any> {
        return this.http.get<any>(`${environment.Server_URL}/Department?id=${id}`);

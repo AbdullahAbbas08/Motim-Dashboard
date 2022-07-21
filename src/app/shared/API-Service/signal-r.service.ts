@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { environment } from '../../../environments/environment';
+import * as signalR from '@microsoft/signalr';
 
 
 @Injectable({
@@ -14,7 +15,6 @@ export class SignalRService {
   private readonly http: HttpClient;
   // private readonly _baseUrl: string = "http://localhost:7071/api/";
   private readonly _baseUrl: string = environment.Server_URL;
-  private hubConnection: HubConnection;
   messages: Subject<string> = new Subject();
 
   constructor(_http: HttpClient) {
@@ -23,31 +23,41 @@ export class SignalRService {
 
   httpOptionsWithTocken = { headers: new HttpHeaders({ 'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxNzBkZTM1MS1mNDAxLTQxMmEtODJkOC03OTljM2JkYjUxNmMiLCJzdWIiOiIwMTAwMDk1NzI4Nzc4Iiwicm9sZXMiOiJDVVNUT01FUiIsImV4cCI6MTY1NDk3NTk5MiwiaXNzIjoiU2VjdXJlQXBpIiwiYXVkIjoiU2VjdXJlQXBpVXNlciJ9.5a3LGN5Rf24iXr79XzFYSYc9FH6pRKrDnw9FgpVcnOc', 'Accept': ' */*' }) };
 
-
-  // private getConnectionInfo(): Observable<any> {
-  //   let requestUrl = `${this._baseUrl}/ChatThread`;
-  //   return this._http.get<any>(requestUrl);
-  // }
-
-  init() {
-    // this.getConnectionInfo().subscribe((info) => {
-    //   let options = {
-    //     accessTokenFactory: () => info.accessToken,
-    //   };
-
-    //   this.hubConnection = new signalR.HubConnectionBuilder()
-    //     .withUrl(info.url, options)
-    //     .configureLogging(signalR.LogLevel.Information)
-    //     .build();
-
-    //   this.hubConnection.start().catch((err) => console.error(err.toString()));
-
-    //   this.hubConnection.on("ChatThread", (data: any) => {
-    //     this.messages.next(data);
-    //   });
-    // });
-}
 CraeteChatThread( data:any): Observable<any> {
   return this.http.post<any>(`${environment.Server_URL}/ChatThread`,data,this.httpOptionsWithTocken);
 }
+
+hubConnection:signalR.HubConnection;
+
+startConnection = () => {
+    this.hubConnection = new signalR.HubConnectionBuilder()
+    .withUrl('https://motimappapi.wecancity.com/chatsocket', {
+        skipNegotiation: true,
+        transport: signalR.HttpTransportType.WebSockets
+    })
+    .build();
+
+    this.hubConnection
+    .start()
+    .then(() => {
+        console.log('Hub Connection Started!');
+    })
+    .catch(err => console.log('Error while starting connection: ' + err))
+}
+
+
+askServer() {
+    this.hubConnection.invoke("ChatMsg", "hi")
+        .catch(err => console.log("err"));
+}
+
+askServerListener() {
+    this.hubConnection.on("ChatMsg", (someText) => {
+        console.log(someText);
+        console.log("success");
+        
+    })
+}
+
+
 }

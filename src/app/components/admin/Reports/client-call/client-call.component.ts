@@ -17,6 +17,7 @@ import { Client_Call_Report } from 'src/app/shared/Models/Client_Call_Report';
 import { CallReasonApiService } from 'src/app/shared/API-Service/call-reason-api.service';
 import { GetCallReason } from 'src/app/shared/Models/get-call-reason';
 import { Client_Call_Report_input } from 'src/app/shared/Models/Client_Call_Report_input';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 
 @Component({
   selector: 'app-client-call',
@@ -94,11 +95,7 @@ export class ClientCallComponent implements OnInit {
       },
       err => {
         
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -111,11 +108,7 @@ export class ClientCallComponent implements OnInit {
         this.CallReason_List = response.data;        
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -133,11 +126,7 @@ export class ClientCallComponent implements OnInit {
         },
         err => {
           
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
     }
@@ -165,11 +154,7 @@ export class ClientCallComponent implements OnInit {
   
         },
         err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
     }
@@ -185,11 +170,7 @@ export class ClientCallComponent implements OnInit {
         // });
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -203,11 +184,7 @@ export class ClientCallComponent implements OnInit {
         // this.City_Filtered_List = response.data;
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }

@@ -8,6 +8,7 @@ import { CategoriesService } from 'src/app/shared/API-Service/Categories.service
 import { ClientApiService } from 'src/app/shared/API-Service/client-api.service';
 import { GroupService } from 'src/app/shared/API-Service/group.service';
 import { SourceMarketApiService } from 'src/app/shared/API-Service/source-market-api.service';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 import { environment } from 'src/environments/environment.prod';
 import Swal from 'sweetalert2';
 @Component({
@@ -24,7 +25,7 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
   imgURL: any;
   imagePath: any;
   message: string;
-  file:File;
+  file:File = null;
   serviceFormPic = new FormData();
   dropdownSettings: IDropdownSettings = {};
   dropdownList: any = [];
@@ -61,6 +62,7 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
     localStorage.removeItem("MARKETTitle");
     localStorage.removeItem("ServiceId")
     localStorage.removeItem("serviceTitleAR")
+    localStorage.removeItem("selectedItemsgroup")
   }
   //#endregion
 
@@ -76,9 +78,10 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
     if (this.route.snapshot.paramMap.get('id')) {
 
       let id = + this.route.snapshot.paramMap.get('id')
-      this.GetGroupService(id);
+      // this.GetGroupService(id);
       this.getServiceWithId(id);
       this.ApiService.service = JSON.parse(localStorage.getItem("service"))
+     
 
       this.InitForm(this.ApiService.service)
       this.update = true;
@@ -112,7 +115,7 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
     this.dropdownSettingsGroup = {
       singleSelection: false,
       idField: 'id',
-      textField: 'name',
+      textField: 'nameAr',
       selectAllText: 'اختر الكل',
       unSelectAllText: 'الغاء اختر الكل',
       itemsShowLimit: 5,
@@ -123,6 +126,8 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
 
   getServiceWithId(id:number){
     this.ApiService.GetServiceById(id).subscribe((res:any) => {
+      // console.log(res);
+      
       this.serviceToUpdate = res.data[0];
       this.selectedItems = res.data[0].categories;
       this.selectedItemsImage = res.data[0].prerequists;
@@ -140,27 +145,26 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
     return id;
   }
 
-  GetGroupService(id:any){
-    this.ApiService.GetGroupService().subscribe(
-      (res) => {
-      this.selectedItemsgroup.push({"id":1,"titleAr":"element.groupNameAR"})
-      this.groups.push({"id":2,"titleAr":"element.groupNameAR"})     
-    },err => {
-    })
-  }
+  // GetGroupService(id:any){
+  //   this.ApiService.GetGroupService().subscribe(
+  //     (res) => {
+  //       console.log(res);
+        
+  //     this.selectedItemsgroup.push({"id":1,"titleAr":"element.groupNameAR"})
+  //     this.groups.push({"id":2,"titleAr":"element.groupNameAR"})     
+  //   },err => {
+  //   })
+  // }
 
   GetImageReference() {
     this.ImageReferenceService.GetClient().subscribe(
       response => {
+        console.log("prerequst : ",response);
         this.dropdownListImage = response.data;
         
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -171,27 +175,20 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
         this.dropdownList = response.data;
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
 
   get() {
     this.GroupService.Get().subscribe(
-      response => {                
-        this.groups = response.data;  
-              
+      response => {  
+        // console.log("rr : ",response);
+                              
+        this.groups = response.data;       
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -207,13 +204,7 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
         })
       },
       err => {
-        console.log(err);
-        
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -225,15 +216,19 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
       ServiceTitleAR: [service.titleAr, Validators.required],
       ServiceDescription: [service.description, Validators.required],
       ServiceDescriptionAR: [service.descriptionAr, Validators.required],
-      ServiceImagePath: ["", Validators.required],
+      ServiceImagePath: [service.imagePath, Validators.required],
       ServiceOrder: [service.order, Validators.required],
       ServicePrice: [service.price, Validators.required],
       CategoriesIds: ['', Validators.required],
       PrerequistsIds: ['', Validators.required],
-      ServiceLink: [service.ServiceOnlineUrl, Validators.required],
+      ServiceLink: [service.serviceOnlineUrl, Validators.required],
     });
+    this.serviceTitle = service.title;
       this.imgURL = environment.Server_Image_URL+service.imagePath;
-  }
+      this.selectedItemsgroup = JSON.parse(localStorage.getItem("selectedItemsgroup"))
+  // console.log(this.selectedItemsgroup);
+  
+    }
 
 
   _InitForm() {
@@ -275,7 +270,7 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
     this.serviceFormPic.append('ServiceOrder', this.InsertForm.get('ServiceOrder').value)
     this.serviceFormPic.append('ServicePrice', this.InsertForm.get('ServicePrice').value)
     this.serviceFormPic.append('ServiceOnlineUrl', this.InsertForm.get('ServiceLink').value)
-    
+                                
     this.ApiService.Insert(this.serviceFormPic).subscribe(
       response => {
             this.serviceTitle = response["serviceTitleAR"];
@@ -289,11 +284,7 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
         })
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -313,6 +304,9 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
      imageRefIds.push(element.id)
      this.serviceFormPic.append('PrerequistsIds', element.id)
      });
+
+    //  console.log("this.InsertForm.get('ServiceLink').value :",this.InsertForm.get('ServiceLink').value);
+     
      this.serviceFormPic.append('ServiceID', id as unknown as Blob)
      this.serviceFormPic.append('ServiceTitle', this.InsertForm.get('ServiceTitle').value)
      this.serviceFormPic.append('ServiceTitleAR', this.InsertForm.get('ServiceTitleAR').value)
@@ -337,11 +331,7 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
 
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -354,11 +344,7 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
         this.InsertForm.patchValue({ Order: response.data.length + 1 });
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }

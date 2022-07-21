@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 import { GetClient } from 'src/app/shared/Models/GetClient';
 import { Roles } from 'src/app/shared/Models/Roles';
 import { Assign_ClientCustomer } from 'src/app/shared/Models/Assign_ClientCustomer';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 
 @Component({
   selector: 'app-InsertCustomerService',
@@ -229,11 +230,7 @@ export class InsertCustomerServiceComponent implements OnInit {
         //  });  
         },
         err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
     }

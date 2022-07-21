@@ -21,6 +21,7 @@ import { Roles } from 'src/app/shared/Models/Roles';
 import Swal from 'sweetalert2';
 import { InsertCall } from 'src/app/shared/Models/InsertCall';
 import { CallReasonApiService } from 'src/app/shared/API-Service/call-reason-api.service';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 
 @Component({
   selector: 'app-deal-with-customer',
@@ -277,11 +278,7 @@ export class DealWithCustomerComponent implements OnInit {
           });
         },
         err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
     }
@@ -298,11 +295,7 @@ export class DealWithCustomerComponent implements OnInit {
         
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -345,11 +338,7 @@ export class DealWithCustomerComponent implements OnInit {
           // console.log("call reason : ", this.CallReason_List);    
         },
         err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
     }
@@ -363,11 +352,7 @@ export class DealWithCustomerComponent implements OnInit {
         this.SourceMarket_List = response.data;
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }

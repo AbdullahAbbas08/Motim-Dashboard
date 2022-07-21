@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CallReasonApiService } from 'src/app/shared/API-Service/call-reason-api.service';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 import { GenericResponse } from 'src/app/shared/Models/GenericResponse';
 import { GetCallReason } from 'src/app/shared/Models/get-call-reason';
 import Swal from 'sweetalert2';
@@ -16,6 +17,7 @@ export class CallReasonComponent implements OnInit {
   response: GenericResponse<GetCallReason>;
   Response_List: GetCallReason[];
   isSearching: string = '';
+  elements : any[] = [];
 
   //#endregion
 
@@ -44,11 +46,7 @@ export class CallReasonComponent implements OnInit {
           
         },
         err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+         Error_Message.Message();
         }
       )
     }else{
@@ -60,11 +58,7 @@ export class CallReasonComponent implements OnInit {
           
         },
         err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
     }
@@ -74,15 +68,11 @@ export class CallReasonComponent implements OnInit {
       response => {
         this.response = response;
         this.Response_List = response.data;
-        // console.log(response);
+        console.log("--- : ",response);
         
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -116,11 +106,7 @@ export class CallReasonComponent implements OnInit {
               })
             },
             err => {
-              Swal.fire({
-                icon: 'error',
-                title: 'خطأ',
-                text: err.error,
-              })
+              Error_Message.Message();
             }
           )
 
@@ -142,10 +128,21 @@ export class CallReasonComponent implements OnInit {
   //#endregion
 
   //#region Governoate
-  update(packageUpdating:GetCallReason) {
-    this.ApiService.package = packageUpdating;
+  update(packageUpdating:any) {
+    this.ApiService.GetPackageWithId(packageUpdating.packageID).subscribe(
+      (res)=>{        
+        res["data"][0]["categories"].forEach(element => {                    
+          this.elements.push({id:element.id, titleAr:element.categoryTitle});
+        })
+        localStorage.setItem("packagecategories",JSON.stringify(this.elements))
+      },
+      (err)=>{Error_Message.Message();}
+    )
     localStorage.setItem("package",JSON.stringify(packageUpdating))
-    this.router.navigate(['content/admin/update-call-reason', packageUpdating.packageID]);
+    setTimeout(() => {
+      this.router.navigate(['content/admin/update-call-reason', packageUpdating.packageID]);
+    }, 2000);
+
   }
   //#endregion
 

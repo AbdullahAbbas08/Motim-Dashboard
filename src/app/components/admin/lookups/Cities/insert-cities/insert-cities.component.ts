@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { GovernorateApiService } from 'src/app/shared/API-Service/governorate-api.service';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 import { GetGovernorate } from 'src/app/shared/Models/GetGovernorate';
 import { InsertCities } from 'src/app/shared/Models/InsertCities';
 import Swal from 'sweetalert2';
@@ -53,11 +54,7 @@ export class InsertCitiesComponent implements OnInit {
           this.Governorate = response.data.find(x=>x.regionID == this.Governorateobj.regionId)?.regionName;
         },
         err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
            
@@ -125,11 +122,7 @@ export class InsertCitiesComponent implements OnInit {
           this.router.navigateByUrl("content/admin/Get-cities");
         },
         err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
     }
@@ -163,11 +156,7 @@ export class InsertCitiesComponent implements OnInit {
           localStorage.removeItem("Governorate");
         },
         err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
     }
@@ -208,11 +197,7 @@ export class InsertCitiesComponent implements OnInit {
           //  });
         },
         err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
     }

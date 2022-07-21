@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ClientTypeApiService } from 'src/app/shared/API-Service/client-type-api.service';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 import { GenericResponse } from 'src/app/shared/Models/GenericResponse';
 import { GetClientType } from 'src/app/shared/Models/GetClientType';
 import Swal from 'sweetalert2';
@@ -38,11 +39,7 @@ export class ListClientTypeComponent implements OnInit {
         this.Client_Type_List = response.data;
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }

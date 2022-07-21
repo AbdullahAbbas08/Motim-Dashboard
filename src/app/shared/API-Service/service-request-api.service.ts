@@ -31,7 +31,7 @@ export class ServiceRequestApiService {
             }
             
             Get_ChatThread(): Observable<any[]> {
-              return this.http.get<any[]>(`${environment.Server_URL}/ChatThread`,this.httpOptionsWithTocken);
+              return this.http.get<any[]>(`${environment.Server_URL}/ChatThread/provider`,this.httpOptionsWithTocken);
             }
             
             insert_ChatThread(data:any): Observable<any[]> {
@@ -44,6 +44,10 @@ export class ServiceRequestApiService {
             
             get_Message_user(id:any): Observable<any[]> {
               return this.http.get<any[]>(`${environment.Server_URL}/Chat/user/${id}`,this.httpOptionsWithTocken);
+            }
+
+            SendMeaasge(data:any): Observable<any> {
+              return this.http.post<any>(`${environment.Server_URL}/Chat`,data,this.httpOptionsWithTocken);
             }
 
             GetProfile(id:any): Observable<any> {

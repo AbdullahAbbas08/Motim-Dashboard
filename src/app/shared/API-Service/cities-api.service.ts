@@ -49,6 +49,6 @@ export class CitiesApiService {
       }
   
       DeleteCities(Id:number): Observable<GenericResponseSingle<InsertCities>> {
-        return this.http.get<GenericResponseSingle<InsertCities>>(`${environment.Server_URL}/City/${Id}`);
+        return this.http.get<GenericResponseSingle<InsertCities>>(`${environment.Server_URL}/City/delete/${Id}`);
       }
 }

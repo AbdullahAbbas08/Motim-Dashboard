@@ -24,6 +24,8 @@ export class ReasonService {
          return this.http.get<any>(`${environment.Server_URL}/Reason`);
        }
        
+      
+       
        GetDepartment(id:any): Observable<any> {
          return this.http.get<any>(`${environment.Server_URL}/Reason?id=${id}`);
        }

@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { GovernorateApiService } from 'src/app/shared/API-Service/governorate-api.service';
 import { ReasonService } from 'src/app/shared/API-Service/reason.service';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 import { ReasonsType } from 'src/app/shared/Constants/ReasonsType';
 import { GetGovernorate } from 'src/app/shared/Models/GetGovernorate';
 import { InsertCities } from 'src/app/shared/Models/InsertCities';
@@ -63,11 +64,7 @@ export class InsertReasonComponent implements OnInit,OnDestroy {
           this.DepartmentTitle = response.data[0].name;
         },
         err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
            
@@ -134,11 +131,7 @@ export class InsertReasonComponent implements OnInit,OnDestroy {
           this.router.navigateByUrl("content/admin/Reasons");
         },
         err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
     }
@@ -167,11 +160,7 @@ export class InsertReasonComponent implements OnInit,OnDestroy {
         localStorage.removeItem("deptID");
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }

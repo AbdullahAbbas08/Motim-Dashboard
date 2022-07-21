@@ -56,6 +56,6 @@ export class SourceMarketApiService {
           }
       
           Delete(Id:number): Observable<GenericResponseSingle<InsertSourceMarket>> {
-            return this.http.delete<GenericResponseSingle<InsertSourceMarket>>(`${environment.Server_URL}/Service/${Id}`);
+            return this.http.get<GenericResponseSingle<InsertSourceMarket>>(`${environment.Server_URL}/Service/${Id}`);
           }
 }

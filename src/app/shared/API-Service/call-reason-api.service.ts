@@ -17,7 +17,7 @@ export class CallReasonApiService {
       order:number;
       
 
-      package:GetCallReason;
+      package:any;
       //#endregion
       
       //#region  constructor
@@ -30,6 +30,10 @@ export class CallReasonApiService {
     
         GetCallReason(): Observable<GenericResponse<GetCallReason>> {
           return this.http.get<GenericResponse<GetCallReason>>(`${environment.Server_URL}/Package/dashboard`);
+        }
+        
+        GetPackageWithId(id:any): Observable<any[]> {
+          return this.http.get<any[]>(`${environment.Server_URL}/Package/${id}`);
         }
         GetPackageByName(name:string): Observable<GenericResponse<GetCallReason>> {
           return this.http.get<GenericResponse<GetCallReason>>(`${environment.Server_URL}/Package/search/${name}`);
@@ -54,6 +58,6 @@ export class CallReasonApiService {
           return this.http.get<GenericResponseSingle<any>>(`${environment.Server_URL}/Package/${Id}`);
         }
         DeleteAllCategories(Id:number): Observable<GenericResponseSingle<any>> {
-          return this.http.delete<GenericResponseSingle<any>>(`${environment.Server_URL}/PackageCategory/Delete/${Id}`);
+          return this.http.get<GenericResponseSingle<any>>(`${environment.Server_URL}/PackageCategory/Delete/${Id}`);
         }
 }

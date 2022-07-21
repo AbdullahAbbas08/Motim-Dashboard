@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import { GenericResponse } from 'src/app/shared/Models/GenericResponse';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { environment } from 'src/environments/environment.prod';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 
 @Component({
   selector: 'app-insert-category',
@@ -24,15 +25,15 @@ export class InsertCategoryComponent implements OnInit {
   _InsertClientType:InsertClientType;
   maxDate: Date;
   update:boolean;
-  pass:string;
-  imgURL: any;
-  imagePath: any;
-  message: string;
-  file:File;
+  pass:string="";
+  imgURL: any = "";
+  imagePath: any = "";
+  message: string ="";
+  file:File = null;
   categoryId:string ='0';
-  Governorate:string;
-  response: GenericResponse<GetCategories>;
-  categories: GetCategories[];
+  Governorate:string="";
+  response: GenericResponse<GetCategories> = new GenericResponse<GetCategories>() ;
+  categories: GetCategories[] = [];
   categoryFormPic = new FormData();
   dropdownSettings: IDropdownSettings = {};
   dropdownList: any = [];
@@ -115,7 +116,7 @@ export class InsertCategoryComponent implements OnInit {
 
   //#region  Init Form
   InitForm(category:GetCategories){
-    console.log(category);
+    // console.log(category);
     
     this.Governorate = category.parentTitle;
     this.CategoryForm = this._formBuilder.group({
@@ -126,7 +127,7 @@ export class InsertCategoryComponent implements OnInit {
       categoryDescriptionAR: [category.descriptionAr, Validators.required],
       servicesAvgTime: [category.servicesAvgTime, Validators.nullValidator],
       categoryParentId: ['',  Validators.required],
-      order: [category.order, Validators.required],
+      // order: [category.order, Validators.required],
     });
     this.imgURL = environment.Server_Image_URL+category.imagePath;
   }
@@ -140,7 +141,7 @@ export class InsertCategoryComponent implements OnInit {
       categoryDescriptionAR : ['', Validators.required],
       servicesAvgTime: ['', Validators.required],
       categoryParentId: ['',[Validators.required]],
-      order: ['', Validators.required],
+      // order: ['', Validators.required],
     });
     this.imgURL = "assets/images/statics/personAvatar.png";
   }
@@ -154,11 +155,7 @@ export class InsertCategoryComponent implements OnInit {
         this.dropdownList = response.data;
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -171,7 +168,7 @@ export class InsertCategoryComponent implements OnInit {
     this.categoryFormPic.append('CategoryDescriptionAR',this.CategoryForm.get('categoryDescriptionAR').value)
     this.categoryFormPic.append('ServicesAvgTime',this.CategoryForm.get('servicesAvgTime').value)
     this.categoryFormPic.append('CategoryParentId',this.categoryId)
-    this.categoryFormPic.append('Order',this.CategoryForm.get('order').value)
+    // this.categoryFormPic.append('Order',this.CategoryForm.get('order').value)
       this.ApiService.InsertEmployee(this.categoryFormPic).subscribe(
       response=>{
         Swal.fire({
@@ -199,16 +196,16 @@ export class InsertCategoryComponent implements OnInit {
     
     let id = +this.route.snapshot.paramMap.get('id');
 
+    // console.log(this.file);
     this.categoryFormPic.append('CategoryID', id as unknown as Blob)
     this.categoryFormPic.append('CategoryTitle',this.CategoryForm.get('categoryTitleEN').value)
     this.categoryFormPic.append('CategoryTitleAR',this.CategoryForm.get('categoryTitleAR').value)
-    if(!this.file == null)
     this.categoryFormPic.append('CategoryImagePath',this.file)
     this.categoryFormPic.append('CategoryDescription',this.CategoryForm.get('categoryDescriptionEN').value)
     this.categoryFormPic.append('CategoryDescriptionAR',this.CategoryForm.get('categoryDescriptionAR').value)
     this.categoryFormPic.append('ServicesAvgTime',this.CategoryForm.get('servicesAvgTime').value)
     this.categoryFormPic.append('CategoryParentId',this.categoryId)
-    this.categoryFormPic.append('Order',this.CategoryForm.get('order').value)
+    // this.categoryFormPic.append('Order',this.CategoryForm.get('order').value)
 
     this.ApiService.UpdateEmployee(id, this.categoryFormPic).subscribe(
       response=>{
@@ -222,13 +219,9 @@ export class InsertCategoryComponent implements OnInit {
         localStorage.removeItem("RiskEmployeeData")
       },
       err=>{
-        console.log(err);
+        // console.log(err);
         
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.message,
-        })
+        Error_Message.Message();
       }
     )
 

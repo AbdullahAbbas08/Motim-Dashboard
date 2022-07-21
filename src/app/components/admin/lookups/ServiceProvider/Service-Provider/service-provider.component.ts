@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DepartmentService } from 'src/app/shared/API-Service/department.service';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 import { GenericResponse } from 'src/app/shared/Models/GenericResponse';
 import { GetGovernorate } from 'src/app/shared/Models/GetGovernorate';
 import Swal from 'sweetalert2';
@@ -41,11 +42,7 @@ export class DepartmentsComponent implements OnInit {
         this.Response_List = response.data;
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }

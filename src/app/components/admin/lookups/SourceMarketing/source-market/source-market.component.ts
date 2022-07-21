@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { GroupService } from 'src/app/shared/API-Service/group.service';
 import { SourceMarketApiService } from 'src/app/shared/API-Service/source-market-api.service';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 import { GenericResponse } from 'src/app/shared/Models/GenericResponse';
 import { GetServices } from 'src/app/shared/Models/getServices';
 import Swal from 'sweetalert2';
@@ -15,12 +17,14 @@ export class SourceMarketComponent implements OnInit {
   //#region  Declare Variables
   response: GenericResponse<GetServices>;
   Response_List: GetServices[];
+  selectedItemsgroup:any[]=[];
 
   //#endregion
 
   //#region constructor
   constructor(private ApiService: SourceMarketApiService,
-    private router: Router) { }
+    private router: Router,private GroupService:GroupService) { }
+
   //#endregion
 
   //#region  ng OnInit
@@ -40,11 +44,7 @@ export class SourceMarketComponent implements OnInit {
         this.Response_List = response.data;
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -77,11 +77,7 @@ export class SourceMarketComponent implements OnInit {
               })
             },
             err => {
-              Swal.fire({
-                icon: 'error',
-                title: 'خطأ',
-                text: err.error,
-              })
+              Error_Message.Message();
             }
           )
 
@@ -105,8 +101,22 @@ export class SourceMarketComponent implements OnInit {
   //#region Governoate
   update(id: number,service: any) {
     this.ApiService.service = service;
+    this.GroupService.Getallgroup().subscribe(
+      response => {  
+        response.data.filter(x=>x.serviceID == id).forEach(element => {
+            this.selectedItemsgroup.push({"id":element.groupId,"nameAr":element.nameAR})
+        });  
+            localStorage.setItem("selectedItemsgroup",JSON.stringify(this.selectedItemsgroup))
+      },
+      err => {
+        Error_Message.Message();
+      }
+    ) 
+
     localStorage.setItem("service",JSON.stringify(service))
-    this.router.navigate(['content/admin/updateSourceMarket', id]);
+    setTimeout(() => {
+      this.router.navigate(['content/admin/updateSourceMarket', id]);
+    }, 3000);
   }
   //#endregion
 

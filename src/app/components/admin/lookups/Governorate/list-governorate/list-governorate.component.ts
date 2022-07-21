@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GovernorateApiService } from 'src/app/shared/API-Service/governorate-api.service';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 import { GenericResponse } from 'src/app/shared/Models/GenericResponse';
 import { GetGovernorate } from 'src/app/shared/Models/GetGovernorate';
 import Swal from 'sweetalert2';
@@ -40,11 +41,7 @@ export class ListGovernorateComponent implements OnInit {
         this.Response_List = response.data;
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -66,7 +63,6 @@ export class ListGovernorateComponent implements OnInit {
     .then((result) => {
 
       if (result.isConfirmed) {
-        debugger
           this.governorateApiService.DeleteGovernorate(id).subscribe(
             response=>{
               debugger

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CategoriesService } from 'src/app/shared/API-Service/Categories.service';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 import { GenericResponse } from 'src/app/shared/Models/GenericResponse';
 import { GetCategories } from 'src/app/shared/Models/GetCategories';
 import { Roles } from 'src/app/shared/Models/Roles';
@@ -42,11 +43,7 @@ export class CategoriesComponent implements OnInit {
         },
         err => {
 
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
     }else{
@@ -57,11 +54,7 @@ export class CategoriesComponent implements OnInit {
         },
         err => {
 
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
     }
@@ -78,11 +71,7 @@ export class CategoriesComponent implements OnInit {
       },
       err => {
 
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
@@ -114,11 +103,7 @@ export class CategoriesComponent implements OnInit {
               })
             },
             err => {
-              Swal.fire({
-                icon: 'error',
-                title: 'خطأ',
-                text: err.error,
-              })
+              Error_Message.Message();
             }
           )
 

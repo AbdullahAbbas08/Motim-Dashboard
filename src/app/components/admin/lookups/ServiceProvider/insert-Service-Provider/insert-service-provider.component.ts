@@ -7,6 +7,7 @@ import { ClientApiService } from 'src/app/shared/API-Service/client-api.service'
 import { ClientTypeApiService } from 'src/app/shared/API-Service/client-type-api.service';
 import { GovernorateApiService } from 'src/app/shared/API-Service/governorate-api.service';
 import { GroupService } from 'src/app/shared/API-Service/group.service';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 import { getCities } from 'src/app/shared/Models/getCities';
 import { GetClient } from 'src/app/shared/Models/GetClient';
 import { GetClientType } from 'src/app/shared/Models/GetClientType';
@@ -211,11 +212,7 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
           },1000)
         },
         err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: err.error,
-          })
+          Error_Message.Message();
         }
       )
     }
@@ -304,7 +301,7 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
         );
       },
       err => {
-       
+        Error_Message.Message();
       }
     )
   }
@@ -321,7 +318,7 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
         );
       },
       err => {
-       
+        Error_Message.Message();
       }
     )
   }
@@ -373,11 +370,7 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
 
       },
       err => {
-        // Swal.fire({
-        //   icon: 'error',
-        //   title: 'خطأ',
-        //   text: err.error,
-        // })
+        Error_Message.Message();
       }
     )
   }

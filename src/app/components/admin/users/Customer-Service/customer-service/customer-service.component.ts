@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EmployeeApiService } from 'src/app/shared/API-Service/employee-api.service';
+import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 import { GenericResponse } from 'src/app/shared/Models/GenericResponse';
 import { GetClient } from 'src/app/shared/Models/GetClient';
 import { GetEmployee } from 'src/app/shared/Models/GetEmployee';
@@ -41,11 +42,7 @@ export class CustomerServiceComponent implements OnInit {
         this.Employee_List = response.data;        
       },
       err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: err.error,
-        })
+        Error_Message.Message();
       }
     )
   }
