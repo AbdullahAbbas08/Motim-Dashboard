@@ -104,7 +104,9 @@ export class SourceMarketComponent implements OnInit {
     this.GroupService.Getallgroup().subscribe(
       response => {  
         response.data.filter(x=>x.serviceID == id).forEach(element => {
-            this.selectedItemsgroup.push({"id":element.groupId,"nameAr":element.nameAR})
+            // this.selectedItemsgroup.push({"id":element.groupId,"nameAr":element.nameAR})
+            this.selectedItemsgroup.push(element)
+            
         });  
             localStorage.setItem("selectedItemsgroup",JSON.stringify(this.selectedItemsgroup))
       },

@@ -42,6 +42,7 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
   ServiceId:number = -1;
   groupService:any[]=[];
   serviceTitle:string="";
+  serviceGroup:any[]=[];
   img_path:string = environment.Server_Image_URL
 
   //#endregion
@@ -59,6 +60,7 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
   }
   ngOnDestroy(): void {
     localStorage.removeItem("ServiceId");
+    localStorage.removeItem("service");
     localStorage.removeItem("MARKETTitle");
     localStorage.removeItem("ServiceId")
     localStorage.removeItem("serviceTitleAR")
@@ -131,6 +133,10 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
       this.serviceToUpdate = res.data[0];
       this.selectedItems = res.data[0].categories;
       this.selectedItemsImage = res.data[0].prerequists;
+      res.data[0]["categories"].forEach(element => {
+        this.selectedItemsImage.push({"id":element.id,"name":element.titleAr})
+      });
+      
     },err => {} ) 
   }
  
@@ -159,7 +165,7 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
   GetImageReference() {
     this.ImageReferenceService.GetClient().subscribe(
       response => {
-        console.log("prerequst : ",response);
+        // console.log("prerequst : ",response);
         this.dropdownListImage = response.data;
         
       },
@@ -169,10 +175,12 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
     )
   }
   //#endregion
+
   getCategoryType() {
     this.categoryService.GetCategories().subscribe(
       response => {
         this.dropdownList = response.data;
+        // console.log(this.dropdownList);        
       },
       err => {
         Error_Message.Message();
@@ -194,6 +202,7 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
   }
 
   InsertGroupServ(data:any) {
+    // console.log(data);
     this.ApiService.InsertGroupService(data).subscribe(
       response => {
         Swal.fire({
@@ -225,9 +234,10 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
     });
     this.serviceTitle = service.title;
       this.imgURL = environment.Server_Image_URL+service.imagePath;
-      this.selectedItemsgroup = JSON.parse(localStorage.getItem("selectedItemsgroup"))
-  // console.log(this.selectedItemsgroup);
-  
+      this.serviceGroup = JSON.parse(localStorage.getItem("selectedItemsgroup"));
+      this.serviceGroup.forEach(element => {
+        this.selectedItemsgroup.push({"id":element.groupId,"nameAr":element.nameAR});
+      });  
     }
 
 
@@ -262,6 +272,7 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
     imageRefIds.push(element.id)
     this.serviceFormPic.append('PrerequistsIds', element.id)
     });
+    
     this.serviceFormPic.append('ServiceTitle', this.InsertForm.get('ServiceTitle').value)
     this.serviceFormPic.append('ServiceTitleAR', this.InsertForm.get('ServiceTitleAR').value)
     this.serviceFormPic.append('ServiceDescription', this.InsertForm.get('ServiceDescription').value)
@@ -384,29 +395,24 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
   }
 
   InsertGroupService(){
-    this.ServiceId = +localStorage.getItem("ServiceId")??-1
+    this.ServiceId = +this.route.snapshot.paramMap.get('id')??-1
     if(this.ServiceId !=-1){
-    // console.log(this.selectedItemsgroup);
+      this.ApiService.GetGroupService().subscribe(
+        res=>{
+          res.data.forEach(element => {
+            if(+element["serviceID"] == this.ServiceId){
+              this.ApiService.DeleteGroupService(+element["id"]).subscribe(res=>{},err=>{})
+            }
+          });          
+        },err=>{ } )
 
     this.selectedItemsgroup.forEach(element => {
-      this.groupService.push({
-        "groupId": element.id,
-        "serviceID":this.ServiceId
-      })
+      this.InsertGroupServ({
+        "groupId": +element.id,
+        "serviceID":+this.ServiceId
+      });
     });
-
-    if(this.selectedItemsgroup.length !=0  ){
-         this.InsertGroupServ(this.groupService[0]);
-
-    }else{
-      Swal.fire({
-        icon: 'error',
-        title: 'خطأ',
-        text: " يجب إضافة الخدمة أولا ثم أختيار المجموعات من القائمة",
-      })
     }
-    }
-
   }
 
 }
