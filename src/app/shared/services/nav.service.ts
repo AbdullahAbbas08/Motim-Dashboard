@@ -125,15 +125,15 @@ export class NavService implements OnDestroy {
 			]
 		},
 		{
-			title: 'إدارة المتطلبات ', icon: 'home', type: 'sub', badgeType: 'success', active: true, children: [
+			title: 'إدارة متطلبات الخدمة ', icon: 'home', type: 'sub', badgeType: 'success', active: true, children: [
 				{ path: 'admin/InsertClient', title: 'إضافة متطلب خدمة', type: 'link' },
 				{ path: 'admin/GetClient', title: 'قائمة متطلبات الخدمة', type: 'link' },
 			]
 		},
 		{
-			title: 'إدارة المحافظات', icon: 'home', type: 'sub', badgeType: 'success', active: true, children: [
-				{ path: 'admin/insert-governorate', title: 'إضافة محافظة', type: 'link' },
-				{ path: 'admin/Get-governorate', title: 'قائمة المحافظات', type: 'link' },
+			title: 'إدارة الإمارات', icon: 'home', type: 'sub', badgeType: 'success', active: true, children: [
+				{ path: 'admin/insert-governorate', title: 'إضافة إمارة', type: 'link' },
+				{ path: 'admin/Get-governorate', title: 'قائمة الإمارات', type: 'link' },
 			]
 		},
 		{

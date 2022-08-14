@@ -49,6 +49,6 @@ export class GroupService {
      }
  
      Delete(ClientId:any): Observable<any> {
-       return this.http.get<any>(`${environment.Server_URL}/GroupService/delete/${ClientId}`);
+       return this.http.get<any>(`${environment.Server_URL}/Group/delete/${ClientId}`);
      }
 }

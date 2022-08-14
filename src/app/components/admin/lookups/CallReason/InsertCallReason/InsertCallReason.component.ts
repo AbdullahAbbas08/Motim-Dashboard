@@ -118,7 +118,8 @@ export class InsertCallReasonComponent implements OnInit,OnDestroy {
   //#endregion
 
   //#region  Init Form
-  InitForm(packageUpdating:GetCallReason) {    
+  InitForm(packageUpdating:GetCallReason) {  
+      
     this.PackageForm = this._formBuilder.group({
       packageTitle: [packageUpdating.packageTitle, Validators.required],
       packageTitleAR: [packageUpdating.packageTitleAr, Validators.required],

@@ -1,16 +1,16 @@
-<app-breadcrumb [title]="'إدارة المحافظات'" [active_item]="'Form Wizard'"></app-breadcrumb>
+<app-breadcrumb [title]="'إدارة الإمارات'" [active_item]="'Form Wizard'"></app-breadcrumb>
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
       <div class="card">
         <div class="card-header" style="padding-bottom:5px !important ;">
           <div *ngIf="update; else elseBlock1">
-            <h5 class="pb-2">تعديل محافظة موجودة</h5>
-            يمكنك تعديل محافظة أو أكثر فى قائمة المحافظات
+            <h5 class="pb-2">تعديل إمارة موجودة</h5>
+            يمكنك تعديل إمارة أو أكثر فى قائمة الإمارات
           </div>
           <ng-template #elseBlock1>
-            <h5 class="pb-2">إضافة محافظة جديد</h5>
-            يمكنك إضافة محافظة أو أكثر فى قائمة المحافظات
+            <h5 class="pb-2">إضافة إمارة جديدة</h5>
+            يمكنك إضافة إمارة أو أكثر فى قائمة الإمارات
           </ng-template>
 
         </div>
@@ -19,42 +19,42 @@
             <div class="row">
               
               <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                <label for="nameA"> أسم المحافظة باللغة العرببة</label>
+                <label for="nameA"> أسم الإمارة باللغة العرببة</label>
                 <input class="form-control" id="nameA" type="text" placeholder="المنطقة" required="required"
                   formControlName="regionNameAR"><!-- onlyAlphabets -->
 
                 <ng-container class="invalid" style="color: red;"
                   *ngIf="InsertForm.get('regionNameAR').hasError('required') && InsertForm.get('regionNameAR').touched">
-                 <span class="text-danger"> أسم المحافظة باللغة العرببة مطلوب</span> </ng-container>
+                 <span class="text-danger"> أسم الإمارة باللغة العرببة مطلوب</span> </ng-container>
               </div>
               <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                <label for="name">أسم المحافظة باللغة الانجليزية</label>
+                <label for="name">أسم الإمارة باللغة الانجليزية</label>
                 <input class="form-control" id="name" type="text" placeholder="Area" required="required"
                   formControlName="regionName"><!-- onlyAlphabets -->
 
                 <ng-container class="invalid" style="color: red;"
                   *ngIf="InsertForm.get('regionName').hasError('required') && InsertForm.get('regionName').touched">
-                  <span class="text-danger">أسم المحافظة باللغة الانجليزية مطلوب</span>
+                  <span class="text-danger">أسم الإمارة باللغة الانجليزية مطلوب</span>
                 </ng-container>
 
               </div>
               <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                <label for="code">كود المحافظة</label>
+                <label for="code">كود الإمارة</label>
                 <input class="form-control" id="code" type="text" placeholder="0" required="required"
                   formControlName="regionCode"><!-- onlyAlphabets -->
 
                 <ng-container class="invalid" style="color: red;"
                   *ngIf="InsertForm.get('regionCode').hasError('required') && InsertForm.get('regionCode').touched">
-                  <span class="text-danger">أسم المحافظة مطلوب</span> </ng-container>
+                  <span class="text-danger">أسم الإمارة مطلوب</span> </ng-container>
               </div>
               <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                <label for="order">ترتيب المحافظة</label>
+                <label for="order">ترتيب الإمارة</label>
                 <input class="form-control" id="order" type="number" placeholder="0" required="required"
                   formControlName="regionOrder"><!-- onlyAlphabets -->
 
                 <ng-container class="invalid" style="color: red;"
                   *ngIf="InsertForm.get('regionOrder').hasError('required') && InsertForm.get('regionOrder').touched">
-                  <span class="text-danger">أسم المحافظة مطلوب</span> </ng-container>
+                  <span class="text-danger">أسم الإمارة مطلوب</span> </ng-container>
               </div>
             </div>
 

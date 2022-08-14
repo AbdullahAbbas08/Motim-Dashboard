@@ -20,3 +20,7 @@
     color: white;
     cursor: pointer;
 }
+
+.table td,th{
+    text-align: right;
+}

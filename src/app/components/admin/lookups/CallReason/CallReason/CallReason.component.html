@@ -10,7 +10,13 @@
               <span > إعدادت الباقات الموجودة بالنظام ( عرض - تعديل - حذف ) </span>
             </div>
             <div class="align-items-center col-4 col-md-4 d-flex">
-              <input type="text" name="isSearching" class="form-control m-1" placeholder="يمكنك البحث بالاسم" [(ngModel)]="isSearching" id="">
+              <input type="text" 
+                      name="isSearching" 
+                      class="form-control m-1" 
+                      placeholder="يمكنك البحث بالاسم" 
+                      [(ngModel)]="isSearching" 
+                      id=""
+                      (keyup.enter)="getPackage()">
               <h5 class="py-2"><button class="btn btn-warning" (click)="getPackage()" style="background-color: #D3AF37 !important;">بحث</button></h5>
             </div>
             <div class="col-4 col-md-4 d-flex justify-content-end align-items-center p-0">
@@ -25,13 +31,13 @@
           <table class="table" style="width: 100%;">
             <thead>
               <tr class="bg-darkk ">
-                <th scope="col" class="f-16 text-center text-white" style="width: 10%;">#</th>
-                <th scope="col" class="f-16 text-center text-white" style="width: 15%;">اسم الباقة بالعربية </th>
-                <th scope="col" class="f-16 text-center text-white" style="width: 15%;">اسم الباقة بالانجليزية </th>
-                <th scope="col" class="f-16 text-center text-white" style="width: 10%;">سعر الباقة </th>
-                <th scope="col" class="f-16 text-center text-white" style="width: 13%;">عدد طلبات الباقة</th>
-                <th scope="col" class="f-16 text-center text-white" style="width: 10%;">مدة الباقة </th>
-                <th scope="col" class="f-16 text-center text-white" style="width: 25%;">إعدادت</th>
+                <th scope="col" class="f-16  text-white" style="width: 10%;">#</th>
+                <th scope="col" class="f-16  text-white" style="width: 15%;">اسم الباقة بالعربية </th>
+                <th scope="col" class="f-16  text-white" style="width: 15%;">اسم الباقة بالانجليزية </th>
+                <th scope="col" class="f-16  text-white" style="width: 10%;">سعر الباقة </th>
+                <th scope="col" class="f-16  text-white" style="width: 13%;">عدد طلبات الباقة</th>
+                <th scope="col" class="f-16  text-white" style="width: 10%;">مدة الباقة </th>
+                <th scope="col" class="f-16  text-white" style="width: 25%;">إعدادت</th>
               </tr>
             </thead>
             <tbody>

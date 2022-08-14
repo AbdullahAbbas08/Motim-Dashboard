@@ -37,7 +37,6 @@ export class ClientComponent implements OnInit {
       response => {
         this.response = response;
         this.Client_List = response.data;
-        console.log(this.Client_List);
         
       },
       err => {

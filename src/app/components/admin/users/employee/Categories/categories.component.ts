@@ -91,7 +91,7 @@ export class CategoriesComponent implements OnInit {
     })
       .then((result) => {
 
-        if (result.isConfirmed) {
+        if (result.isConfirmed) {          
           this.ApiService.DeleteEmployee(id).subscribe(
             response => {
               this.GetEmployee();

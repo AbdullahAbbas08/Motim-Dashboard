@@ -9,8 +9,9 @@ import { Router } from '@angular/router';
 export class MyAccountComponent implements OnInit {
 
   constructor(private router:Router) { }
-
+  username:string="";
   ngOnInit() {
+this.username = localStorage.getItem("username");
   }
   logout(){
     // localStorage.removeItem("RiskAuthorization");

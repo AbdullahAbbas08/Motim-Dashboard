@@ -74,9 +74,9 @@ export class CategoriesService {
 
   DeleteEmployee(
     id: string
-  ): Observable<GenericResponseSingle<InsertCategory>> {
-    return this.http.get<GenericResponseSingle<InsertCategory>>(
-      `${environment.Server_URL}/Categories/${id}`
+  ): Observable<any> {
+    return this.http.get<any>(
+      `${environment.Server_URL}/Categories/delete/${id}`
     );
   }
 }

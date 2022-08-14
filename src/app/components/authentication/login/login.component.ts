@@ -59,6 +59,7 @@ export class LoginComponent implements OnInit {
         } else {
           localStorage.setItem("token", response.data[0].token);
           localStorage.setItem("role", response.data[0].roles[0]);
+          localStorage.setItem("username", response.data[0].username);
           this.toastr.success("تم تسجيل الدخول بنجاح", "الحالة");
           if(response.data[0].roles[0] == Roles.SERVICEPROVIDER){
             this.router.navigateByUrl("/ServiceRequest");

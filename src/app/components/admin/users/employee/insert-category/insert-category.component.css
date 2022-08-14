@@ -18,3 +18,7 @@
   color: white;
   font-size: 14px;
 }
+
+span .selected-item{
+  max-width:max-content !important;
+}

@@ -63,7 +63,7 @@ export class ServiceRequestApiService {
             }
 
             Gethistory(id:any): Observable<any> {
-              return this.http.get<any>(`https://motimappapi.wecancity.com/history/service/userId?userId=${id}`,this.httpOptionsWithTocken);
+              return this.http.get<any>(`https://motimdevapi.wecancity.com/history/service/userId?userId=${id}`,this.httpOptionsWithTocken);
             }
 
             ServiceRequestComment(id:any): Observable<any> {

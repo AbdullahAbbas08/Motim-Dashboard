@@ -108,7 +108,7 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
       lname: ['', Validators.required],
       lnameEn: ['', Validators.required],
       email: ['', Validators.required],
-      nid: ['', Validators.required],
+      nid: ['', Validators.required,Validators.min(14),Validators.max(14)],
       mobile: ['', Validators.required],
       address: ['', Validators.required],
       addressEn: ['', Validators.required],
@@ -375,6 +375,7 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
     )
   }
   //#endregion
+
 
 
 }

@@ -83,7 +83,7 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
       // this.GetGroupService(id);
       this.getServiceWithId(id);
       this.ApiService.service = JSON.parse(localStorage.getItem("service"))
-     
+     localStorage.setItem("ServiceId",this.ApiService.service["id"])        
 
       this.InitForm(this.ApiService.service)
       this.update = true;
@@ -132,10 +132,10 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
       
       this.serviceToUpdate = res.data[0];
       this.selectedItems = res.data[0].categories;
-      this.selectedItemsImage = res.data[0].prerequists;
-      res.data[0]["categories"].forEach(element => {
-        this.selectedItemsImage.push({"id":element.id,"name":element.titleAr})
-      });
+      // this.selectedItemsImage = res.data[0].prerequists;
+      // res.data[0]["categories"].forEach(element => {
+      //   this.selectedItemsImage.push({"id":element.id,"name":element.titleAr})
+      // });
       
     },err => {} ) 
   }
@@ -272,7 +272,7 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
     imageRefIds.push(element.id)
     this.serviceFormPic.append('PrerequistsIds', element.id)
     });
-    
+
     this.serviceFormPic.append('ServiceTitle', this.InsertForm.get('ServiceTitle').value)
     this.serviceFormPic.append('ServiceTitleAR', this.InsertForm.get('ServiceTitleAR').value)
     this.serviceFormPic.append('ServiceDescription', this.InsertForm.get('ServiceDescription').value)
@@ -314,6 +314,8 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
     this.InsertForm.get('PrerequistsIds').value.forEach(element => {
      imageRefIds.push(element.id)
      this.serviceFormPic.append('PrerequistsIds', element.id)
+     console.log(element.id);
+
      });
 
     //  console.log("this.InsertForm.get('ServiceLink').value :",this.InsertForm.get('ServiceLink').value);
@@ -395,7 +397,7 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
   }
 
   InsertGroupService(){
-    this.ServiceId = +this.route.snapshot.paramMap.get('id')??-1
+    this.ServiceId = +localStorage.getItem("ServiceId")
     if(this.ServiceId !=-1){
       this.ApiService.GetGroupService().subscribe(
         res=>{
@@ -409,7 +411,7 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
     this.selectedItemsgroup.forEach(element => {
       this.InsertGroupServ({
         "groupId": +element.id,
-        "serviceID":+this.ServiceId
+        "serviceID":this.ServiceId
       });
     });
     }

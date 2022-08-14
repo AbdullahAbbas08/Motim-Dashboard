@@ -55,7 +55,7 @@ export class CallReasonApiService {
         }
     
         DeleteCallReason(Id:number): Observable<GenericResponseSingle<any>> {
-          return this.http.get<GenericResponseSingle<any>>(`${environment.Server_URL}/Package/${Id}`);
+          return this.http.get<GenericResponseSingle<any>>(`${environment.Server_URL}/Package/delete/${Id}`);
         }
         DeleteAllCategories(Id:number): Observable<GenericResponseSingle<any>> {
           return this.http.get<GenericResponseSingle<any>>(`${environment.Server_URL}/PackageCategory/Delete/${Id}`);

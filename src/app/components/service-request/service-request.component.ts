@@ -222,6 +222,7 @@ export class ServiceRequestComponent implements OnInit {
     }
     this.ServiceRequest.GetServiceById(id).subscribe(
       (data) => {
+         console.log("GetServiceById");
          
         this.ServiceRequest_Obj = data[0];
         this.ServiceRequest_Obj.assignmentToEmpDate = new Date();
@@ -272,7 +273,7 @@ export class ServiceRequestComponent implements OnInit {
     this.ServiceRequest.Gethistory(id).subscribe(
       (res) => {
         this.History = res["data"];
-        // console.log(res["data"]);
+        console.log(res["data"]);
       },
       (err) => {
         // console.log(err);
@@ -290,11 +291,16 @@ export class ServiceRequestComponent implements OnInit {
       "employeeId": "string",
       "reasonId": +this.selectedReason
   } 
+  
   let reaid = this.obj.serviceRequestID
   // console.log("fdfdf : ",this.obj.serviceRequestID);
   
     this.ServiceRequest.Update(this.obj.serviceRequestID,param).subscribe(
       (data) => {
+        Swal.fire('تم سحب الخدمة بنجاح')
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
        this.getServiceRequest();
        this.GetDtail(reaid,this.obj.userId) ;
       //  console.log(data);
@@ -309,6 +315,31 @@ export class ServiceRequestComponent implements OnInit {
     this.flag = "";
     this.obj = "";
     // console.log(this.reason_Desc);
+  }
+
+  pullRequest(ServiceRequest_Obj:any){
+    let param =   {
+      "orderType": 4,
+      "serviceRequestEmployeeSummary": "string",
+      "serviceRequestDate": "2022-08-11T18:23:09.705Z",
+      "assignmentToEmpDate": "2022-08-11T18:23:09.705Z",
+      "employeeId": "string",
+      "reasonId": 14
+    }
+    this.ServiceRequest.Update(ServiceRequest_Obj.serviceRequestID,param).subscribe(
+      (data) => {
+        Swal.fire('تم سحب الخدمة بنجاح')
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+       this.getServiceRequest();
+       this.GetDtail(+ServiceRequest_Obj.serviceRequestID,ServiceRequest_Obj.obj.userId) ;       
+      },
+      (err) => {
+        Error_Message.Message();
+      }
+    );
+
   }
 
   createThread(data:any){

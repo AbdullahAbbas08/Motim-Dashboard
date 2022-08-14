@@ -1,5 +1,5 @@
 import { InsertCategory } from './../../../../../shared/Models/InsertCategory';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -16,7 +16,8 @@ import { Error_Message } from 'src/app/shared/Constants/Error_Message';
 @Component({
   selector: 'app-insert-category',
   templateUrl: './insert-category.component.html',
-  styleUrls: ['./insert-category.component.css']
+  styleUrls: ['./insert-category.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class InsertCategoryComponent implements OnInit {
 
@@ -130,6 +131,8 @@ export class InsertCategoryComponent implements OnInit {
       // order: [category.order, Validators.required],
     });
     this.imgURL = environment.Server_Image_URL+category.imagePath;
+    console.log(this.imgURL);
+    
   }
 
   _InitForm(){

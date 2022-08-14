@@ -51,11 +51,20 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-6">
+                                <div class="col-12 ">
                                     <div class="form-group">
                                         <label for="descAr">وصف الخدمة باللغة العربية</label>
-                                        <input class="form-control" id="descAr" type="text"
-                                            placeholder="وصف الخدمة هنا " formControlName="ServiceDescriptionAR" />
+                                        <!-- <input class="form-control" id="descAr" type="text"
+                                            placeholder="وصف الخدمة هنا " formControlName="ServiceDescriptionAR" /> -->
+                                            <textarea
+                                            id="descAr"
+                                            class="form-control p-3 "
+                                            placeholder="وصف الخدمة هنا "
+                                            name="w3review"
+                                            rows="3"
+                                            cols="50"
+                                            formControlName="ServiceDescriptionAR">
+                                        </textarea>
 
                                         <ng-container class="invalid" style="color: red" *ngIf="
                       InsertForm.get('ServiceDescriptionAR').hasError('required') &&
@@ -66,12 +75,22 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-6">
+                                <div class="col-12 ">
                                     <div class="form-group">
                                         <label for="descEn">وصف الخدمة باللغة الانجليزية </label>
-                                        <input class="form-control" id="descEn" type="text"
+                                        <!-- <input class="form-control" id="descEn" type="text"
                                             placeholder="Service Description here"
-                                            formControlName="ServiceDescription" />
+                                            formControlName="ServiceDescription" /> -->
+
+                                            <textarea
+                                            id="descEn"
+                                            class="form-control p-3 "
+                                            placeholder="Service Description here"
+                                            name="w3review"
+                                            rows="3"
+                                            cols="50"
+                                            formControlName="ServiceDescription">
+                                        </textarea>
 
                                         <ng-container class="invalid" style="color: red" *ngIf="
                       InsertForm.get('ServiceDescription').hasError('required') &&
@@ -85,7 +104,7 @@
 
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
-                                        <label for="averg">سعر الخدمة </label>
+                                        <label for="averg">   سعر الخدمة - ( ريال سعودى  )   </label>
                                         <input class="form-control" id="averg" type="number" placeholder="1"
                                             formControlName="ServicePrice" />
 

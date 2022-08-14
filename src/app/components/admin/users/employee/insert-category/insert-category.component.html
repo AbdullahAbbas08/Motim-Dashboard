@@ -146,6 +146,7 @@
                                 <div class="form-group col-lg-12 col-md-12 col-sm-12">
                                     <label>اختر التصنيف</label>
                                     <ng-multiselect-dropdown formControlName="categoryParentId"
+                                    
                                         placeholder="اختر تصنيف" [settings]="dropdownSettings"
                                         [data]="dropdownList" [(ngModel)]="selectedItem"
                                         (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">

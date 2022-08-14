@@ -60,7 +60,7 @@ export class ClientApiService {
     return this.http.post<GenericResponseSingle<any>>(`${environment.Server_URL}/ImageReference/${id}`, form);
   }
 
-  DeleteClient(ClientId: string): Observable<GenericResponseSingle<InsertClient>> {
-    return this.http.delete<GenericResponseSingle<InsertClient>>(`${environment.Server_URL}/ImageReference/${ClientId}`);
+  DeleteClient(ClientId: string): Observable<any> {
+    return this.http.get<any>(`${environment.Server_URL}/ImageReference/delete/${ClientId}`);
   }
 }

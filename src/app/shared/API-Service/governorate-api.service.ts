@@ -32,11 +32,11 @@ export class GovernorateApiService {
       return this.http.post<GenericResponseSingle<GetGovernorate>>(`${environment.Server_URL}/Region`,Data);
     }
 
-    UpdateGovernorate(id:number,Data:InsertGovernorate): Observable<GenericResponseSingle<GetGovernorate>> {
-      return this.http.post<GenericResponseSingle<GetGovernorate>>(`${environment.Server_URL}/Region/${id}`,Data);
+    UpdateGovernorate(id:number,Data:any): Observable<any> {
+      return this.http.post<any>(`${environment.Server_URL}/Region/${id}`,Data);
     }
 
-    DeleteGovernorate(ClientId:number): Observable<GenericResponseSingle<InsertGovernorate>> {
-      return this.http.delete<GenericResponseSingle<InsertGovernorate>>(`${environment.Server_URL}/Region/${ClientId}`);
+    DeleteGovernorate(ClientId:number): Observable<any> {
+      return this.http.get<any>(`${environment.Server_URL}/Region/delete/${ClientId}`);
     }
 }

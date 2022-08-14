@@ -68,7 +68,6 @@ export class InsertClientComponent implements OnInit {
 
     if (this.route.snapshot.paramMap.get('id')) {
       this.ApiService.Client = JSON.parse(localStorage.getItem("RequirementClientData"));
-      console.log( this.ApiService.Client);
       
       this.InitForm(this.ApiService.Client);
       this.update = true;
@@ -88,7 +87,7 @@ export class InsertClientComponent implements OnInit {
     
     this.InsertForm = this._formBuilder.group({
       name: [client.name, Validators.required],
-      Namear: [client.NameAR, Validators.nullValidator],
+      Namear: [client.nameAr, Validators.nullValidator],
       imageCode: [client.imageCode, Validators.required],
       sourceImagePath: [client.sourceImagePath, Validators.required],
     });

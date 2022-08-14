@@ -62,7 +62,7 @@ export class InsertCitiesComponent implements OnInit {
     } else {
       this.update = false;
       this._InitForm();
-      this.Governorate = "أختر المحافظة";
+      this.Governorate = "أختر الإمارة";
     }
   }
   //#endregion
@@ -98,7 +98,7 @@ export class InsertCitiesComponent implements OnInit {
       Swal.fire({
         icon: 'error',
         title: 'خطأ',
-        text: "أختر المحافظة أولا",
+        text: "أختر الإمارة أولا",
       })
     }else
     {

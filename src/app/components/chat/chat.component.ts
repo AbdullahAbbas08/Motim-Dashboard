@@ -178,8 +178,7 @@ export class ChatComponent implements OnInit {
     this.ChatTitle = `العميل رقم ${item.serviceRequestId}`;
     this.phone_user = item.userName;
     this.chatThredID = item.id;
-    this.imagePath = this.image_server_path+'/'+item.imagePath;
-    // console.log(item.id);
+    this.imagePath = this.image_server_path+item.imagePath;
     this.userid= item.id;
     this.getchatdata(item.id);
   }

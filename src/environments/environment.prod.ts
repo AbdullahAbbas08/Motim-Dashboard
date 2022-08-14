@@ -8,8 +8,8 @@ export const environment = {
     storageBucket: "Your StorageBucket url",
     messagingSenderId: "Your Sender Id"
   },
-  Server_URL:'https://motimappapi.wecancity.com/api',
-  Server_Image_URL:'https://motimappapi.wecancity.com/images/',
+  Server_URL:'https://motimdevapi.wecancity.com/api',
+  Server_Image_URL:'https://motimdevapi.wecancity.com/images/',
   Image:'../assets/images/dashboard',
   ErrorMessage_Header:"حدث خطأ فنى !!",
   ErrorMessage:"برجاء المحاولة مرة أخرى أول الإتصال بالدعم الفنى",
