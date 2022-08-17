@@ -73,10 +73,10 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
     this.group_List = [];
     this.Region_List = [];
     this.getGovernoate();
-    this.GetCities();
+    // this.GetCities();
     this.getGroup();
     this.GetRegion();
-    this.GetCities();
+    // this.GetCities();
 
     if (this.route.snapshot.paramMap.get('id')) {
       this.ApiService.Client=JSON.parse(localStorage.getItem("RiskClientData"));
@@ -108,8 +108,8 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
       lname: ['', Validators.required],
       lnameEn: ['', Validators.required],
       email: ['', Validators.required],
-      nid: ['', Validators.required,Validators.min(14),Validators.max(14)],
-      mobile: ['', Validators.required],
+      nid: ['', Validators.required,Validators.minLength(14),Validators.maxLength(14)],
+      mobile: ['', Validators.required,Validators.minLength(13),Validators.maxLength(13)],
       address: ['', Validators.required],
       addressEn: ['', Validators.required],
       cityId: ['-1', Validators.required],
@@ -129,8 +129,8 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
       lname: ['', Validators.required],
       lnameEn: ['', Validators.required],
       email: ['', Validators.required],
-      nid: ['', Validators.required],
-      mobile: ['', Validators.required],
+      nid: ['', Validators.required,Validators.minLength(14),Validators.maxLength(14)],
+      mobile: ['', Validators.required ,Validators.required,Validators.minLength(13),Validators.maxLength(13)],
       address: ['', Validators.required],
       addressEn: ['', Validators.required],
       cityId: ['-1', Validators.required],
@@ -190,7 +190,7 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
       this.logoForm.append("AddressAR", this.InsertForm.get('address').value)
       this.logoForm.append("Address", this.InsertForm.get('addressEn').value)
       this.logoForm.append("CityId", this.InsertForm.get('cityId').value)
-      this.logoForm.append("GroupId", this.InsertForm.get('groupid').value)
+     
       this.logoForm.append("RegionID", this.InsertForm.get('regionId').value)
       this.logoForm.append("Password", this.InsertForm.get('password').value)
       this.logoForm.append("PassportID", this.InsertForm.get('pid').value)
@@ -270,6 +270,7 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
 
   //#region Selected Governorate
   SelectedGroup(event: any) {
+    this.logoForm.append("GroupId",+event.target.value as unknown as Blob )
     this.InsertForm.patchValue({
       groupid: +event.target.value
     })
@@ -283,22 +284,30 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
   }
 
   Selectedregion(event: any) {
+    console.log(+event.target.value);
+    
+    this. GetCities( +event.target.value) ;
     this.InsertForm.patchValue({
       regionId: +event.target.value
     })
   }
 
-
+  isFieldValid(field): boolean {
+    return (
+      this.InsertForm.get(field).invalid && this.InsertForm.get(field).touched
+    )
+   }
 
   //#region  get Governoate
   getGovernoate() {
     this.governorateApiService.GetGovernorate().subscribe(
       response => {
         this.Governorate_List = response.data;
-        response.data.forEach(element => {
-          // this.Governorate_Dictionary[element.id] = element.title;
-        }
-        );
+        
+        // response.data.forEach(element => {
+        //   // this.Governorate_Dictionary[element.id] = element.title;
+        // }
+        // );
       },
       err => {
         Error_Message.Message();
@@ -312,10 +321,10 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
     this.groupService.Get().subscribe(
       response => {
         this.group_List = response.data;
-        response.data.forEach(element => {
-          // this.Governorate_Dictionary[element.id] = element.title;
-        }
-        );
+        // response.data.forEach(element => {
+        //   // this.Governorate_Dictionary[element.id] = element.title;
+        // }
+        // );
       },
       err => {
         Error_Message.Message();
@@ -325,12 +334,13 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
   //#endregion
 
   //#region Get Cities
-  GetCities() {
+  GetCities(id) {
     this.citiesApiService.GetCities().subscribe(
       response => {
-        // console.log(response);
-        this.cities_List = response.data;
+        // console.log(response);regionId
+        this.cities_List = response.data.filter(x=>x.regionId == id);
         // this.Filtered_cities_List = response.data;
+        
       },
       err => {
         // Swal.fire({
@@ -349,6 +359,7 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
       response => {
         this.Region_List = response.data;
         // this.Filtered_cities_List = response.data;
+        
       },
       err => {
         // Swal.fire({

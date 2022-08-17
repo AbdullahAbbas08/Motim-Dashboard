@@ -42,6 +42,7 @@ export class CallReasonComponent implements OnInit {
         response => {
           this.response = response;
           this.Response_List = response.data;
+          console.log(response.data);
           
         },
         err => {
@@ -53,6 +54,7 @@ export class CallReasonComponent implements OnInit {
         response => {
           this.response = response;
           this.Response_List = response.data;
+          console.log(response);
           
         },
         err => {

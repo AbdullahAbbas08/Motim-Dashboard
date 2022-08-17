@@ -26,10 +26,11 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
   imagePath: any;
   message: string;
   file:File = null;
-  serviceFormPic = new FormData();
+  
   dropdownSettings: IDropdownSettings = {};
   dropdownList: any = [];
   selectedItems: any[] = [];
+  ListById :any[]=[];
 
   dropdownSettingsImage: IDropdownSettings = {};
   dropdownSettingsGroup: IDropdownSettings = {};
@@ -44,6 +45,7 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
   serviceTitle:string="";
   serviceGroup:any[]=[];
   img_path:string = environment.Server_Image_URL
+  GSER:any[]=[];
 
   //#endregion
 
@@ -78,7 +80,7 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
     this.GetImageReference();
     this.get();
     if (this.route.snapshot.paramMap.get('id')) {
-
+      this. Getbyid(+this.route.snapshot.paramMap.get('id'));
       let id = + this.route.snapshot.paramMap.get('id')
       // this.GetGroupService(id);
       this.getServiceWithId(id);
@@ -191,9 +193,23 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
   get() {
     this.GroupService.Get().subscribe(
       response => {  
-        // console.log("rr : ",response);
+        console.log("rr : ",response);
                               
         this.groups = response.data;       
+      },
+      err => {
+        Error_Message.Message();
+      }
+    )
+  }
+
+  Getbyid(id) {
+    this.ApiService.Getbyid(id).subscribe(
+      res => {
+        // this.ListById = res["data"][0].prerequists;
+        this.selectedItemsImage = res["data"][0].prerequists;
+        console.log(this.selectedItemsImage);
+        
       },
       err => {
         Error_Message.Message();
@@ -261,28 +277,25 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
 
   //#region  Insert Call Reason Method
   Insert() {
-    let categoriesIds :number[] = []
-   this.InsertForm.get('CategoriesIds').value.forEach(element => {
-      categoriesIds.push(element.id)
-      this.serviceFormPic.append('CategoriesIds',element.id)
+   const serviceFormPic = new FormData();
+    this.selectedItems.forEach(element => {
+      serviceFormPic.append('CategoriesIds',element.id)
     });
 
-    let imageRefIds :number[] = []
-   this.InsertForm.get('PrerequistsIds').value.forEach(element => {
-    imageRefIds.push(element.id)
-    this.serviceFormPic.append('PrerequistsIds', element.id)
+   this.selectedItemsImage.forEach(element => {
+    serviceFormPic.append('PrerequistsIds', element.id)
     });
 
-    this.serviceFormPic.append('ServiceTitle', this.InsertForm.get('ServiceTitle').value)
-    this.serviceFormPic.append('ServiceTitleAR', this.InsertForm.get('ServiceTitleAR').value)
-    this.serviceFormPic.append('ServiceDescription', this.InsertForm.get('ServiceDescription').value)
-    this.serviceFormPic.append('ServiceDescriptionAR', this.InsertForm.get('ServiceDescriptionAR').value)
-    this.serviceFormPic.append('ServiceImagePath', this.file)
-    this.serviceFormPic.append('ServiceOrder', this.InsertForm.get('ServiceOrder').value)
-    this.serviceFormPic.append('ServicePrice', this.InsertForm.get('ServicePrice').value)
-    this.serviceFormPic.append('ServiceOnlineUrl', this.InsertForm.get('ServiceLink').value)
+    serviceFormPic.append('ServiceTitle', this.InsertForm.get('ServiceTitle').value)
+    serviceFormPic.append('ServiceTitleAR', this.InsertForm.get('ServiceTitleAR').value)
+    serviceFormPic.append('ServiceDescription', this.InsertForm.get('ServiceDescription').value)
+    serviceFormPic.append('ServiceDescriptionAR', this.InsertForm.get('ServiceDescriptionAR').value)
+    serviceFormPic.append('ServiceImagePath', this.file)
+    serviceFormPic.append('ServiceOrder', this.InsertForm.get('ServiceOrder').value)
+    serviceFormPic.append('ServicePrice', this.InsertForm.get('ServicePrice').value)
+    serviceFormPic.append('ServiceOnlineUrl', this.InsertForm.get('ServiceLink').value)
                                 
-    this.ApiService.Insert(this.serviceFormPic).subscribe(
+    this.ApiService.Insert(serviceFormPic).subscribe(
       response => {
             this.serviceTitle = response["serviceTitleAR"];
             localStorage.setItem("serviceTitleAR",response["serviceTitleAR"])        
@@ -302,35 +315,31 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
   //#endregion
 
   //#region Update Call Reason
-  Update() {
+  Update() {  
+    const serviceFormPic = new FormData();
+      
     let id = +this.route.snapshot.paramMap.get('id');
-    let categoriesIds :number[] = []
-    this.InsertForm.get('CategoriesIds').value.forEach(element => {
-       categoriesIds.push(element.id)
-       this.serviceFormPic.append('CategoriesIds',element.id)
-     });
+    this.selectedItems.forEach(element => {
+      serviceFormPic.append('CategoriesIds',element.id)
+    });
  
-     let imageRefIds :number[] = []
-    this.InsertForm.get('PrerequistsIds').value.forEach(element => {
-     imageRefIds.push(element.id)
-     this.serviceFormPic.append('PrerequistsIds', element.id)
-     console.log(element.id);
-
-     });
+    this.selectedItemsImage.forEach(element => {
+      serviceFormPic.append('PrerequistsIds', element.id)
+      });
 
     //  console.log("this.InsertForm.get('ServiceLink').value :",this.InsertForm.get('ServiceLink').value);
      
-     this.serviceFormPic.append('ServiceID', id as unknown as Blob)
-     this.serviceFormPic.append('ServiceTitle', this.InsertForm.get('ServiceTitle').value)
-     this.serviceFormPic.append('ServiceTitleAR', this.InsertForm.get('ServiceTitleAR').value)
-     this.serviceFormPic.append('ServiceDescription', this.InsertForm.get('ServiceDescription').value)
-     this.serviceFormPic.append('ServiceDescriptionAR', this.InsertForm.get('ServiceDescriptionAR').value)
-     this.serviceFormPic.append('ServiceImagePath', this.file)
-     this.serviceFormPic.append('ServiceOrder', this.InsertForm.get('ServiceOrder').value)
-     this.serviceFormPic.append('ServicePrice', this.InsertForm.get('ServicePrice').value)
-     this.serviceFormPic.append('ServiceOnlineUrl', this.InsertForm.get('ServiceLink').value)
+     serviceFormPic.append('ServiceID', id as unknown as Blob)
+     serviceFormPic.append('ServiceTitle', this.InsertForm.get('ServiceTitle').value)
+     serviceFormPic.append('ServiceTitleAR', this.InsertForm.get('ServiceTitleAR').value)
+     serviceFormPic.append('ServiceDescription', this.InsertForm.get('ServiceDescription').value)
+     serviceFormPic.append('ServiceDescriptionAR', this.InsertForm.get('ServiceDescriptionAR').value)
+     serviceFormPic.append('ServiceImagePath', this.file)
+     serviceFormPic.append('ServiceOrder', this.InsertForm.get('ServiceOrder').value)
+     serviceFormPic.append('ServicePrice', this.InsertForm.get('ServicePrice').value)
+     serviceFormPic.append('ServiceOnlineUrl', this.InsertForm.get('ServiceLink').value)
 
-    this.ApiService.Update(id, this.serviceFormPic).subscribe(
+    this.ApiService.Update(id, serviceFormPic).subscribe(
       response => {
         Swal.fire({
           icon: 'success',
@@ -347,6 +356,8 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
         Error_Message.Message();
       }
     )
+
+    
   }
   //#endregion
 
@@ -398,23 +409,12 @@ export class InsertSourceMarketComponent implements OnInit,OnDestroy {
 
   InsertGroupService(){
     this.ServiceId = +localStorage.getItem("ServiceId")
-    if(this.ServiceId !=-1){
-      this.ApiService.GetGroupService().subscribe(
-        res=>{
-          res.data.forEach(element => {
-            if(+element["serviceID"] == this.ServiceId){
-              this.ApiService.DeleteGroupService(+element["id"]).subscribe(res=>{},err=>{})
-            }
-          });          
-        },err=>{ } )
-
+   
     this.selectedItemsgroup.forEach(element => {
-      this.InsertGroupServ({
+      this.GSER.push({
         "groupId": +element.id,
         "serviceID":this.ServiceId
-      });
+      })
+      this.InsertGroupServ(this.GSER);
     });
-    }
-  }
-
-}
+}}

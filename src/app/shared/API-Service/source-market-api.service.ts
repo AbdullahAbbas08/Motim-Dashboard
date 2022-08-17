@@ -31,6 +31,10 @@ export class SourceMarketApiService {
             return this.http.get<GenericResponse<GetServices>>(`${environment.Server_URL}/Service/services`);
           }
          
+          Getbyid(id): Observable<any> {
+            return this.http.get<any>(`${environment.Server_URL}/Service/services?id=${id}`);
+          }
+         
           GetGroupService(): Observable<any> {
             return this.http.get<any>(`${environment.Server_URL}/GroupService`);
           }

@@ -127,7 +127,7 @@ export class InsertCallReasonComponent implements OnInit,OnDestroy {
       packageDescriptionAR: [packageUpdating.packageDescriptionAr, Validators.required],
       packageImagePath: [packageUpdating.packageImagePath, Validators.required],
       packagePrice: [packageUpdating.packagePrice, Validators.required],
-      packageOrder: [1, Validators.required],
+      // packageOrder: [packageUpdating.packageOrder, Validators.required],
       serviceRequestCount: [packageUpdating.serviceRequestCount, Validators.required],
       packageDuration: [packageUpdating.packageDuration, Validators.required],
       categoryTypes: [this.selectedItems]
@@ -146,7 +146,7 @@ export class InsertCallReasonComponent implements OnInit,OnDestroy {
       packageDescriptionAR: ['', Validators.required],
       packageImagePath: ['', Validators.required],
       packagePrice: ['', Validators.required],
-      packageOrder: ['', Validators.required],
+      // packageOrder: ['', Validators.required],
       serviceRequestCount: ['', Validators.required],
       packageDuration: ['', Validators.required],
       categoryTypes: ['']
@@ -161,7 +161,7 @@ export class InsertCallReasonComponent implements OnInit,OnDestroy {
     this.PackageFormPic.append('PackageDescriptionAR',this.PackageForm.get('packageDescriptionAR').value);
     this.PackageFormPic.append('PackageImagePath',this.file);
     this.PackageFormPic.append('PackagePrice',this.PackageForm.get('packagePrice').value);
-    this.PackageFormPic.append('PackageOrder',this.PackageForm.get('packageOrder').value);
+    // this.PackageFormPic.append('PackageOrder',this.PackageForm.get('packageOrder').value);
     this.PackageFormPic.append('ServiceRequestCount',this.PackageForm.get('serviceRequestCount').value);
     this.PackageFormPic.append('PackageDuration',this.PackageForm.get('packageDuration').value);
     
@@ -216,7 +216,7 @@ export class InsertCallReasonComponent implements OnInit,OnDestroy {
     this.InsertForm.append("PackageDescriptionAR",this.PackageForm.get('packageDescriptionAR').value);    
     this.InsertForm.append("PackageImagePath",this.file);   
     this.InsertForm.append("PackagePrice",this.PackageForm.get('packagePrice').value as unknown as Blob);   
-    this.InsertForm.append("PackageOrder",this.PackageForm.get('packageOrder').value as unknown as Blob);   
+    // this.InsertForm.append("PackageOrder",this.PackageForm.get('packageOrder').value as unknown as Blob);   
     this.InsertForm.append("ServiceRequestCount",this.PackageForm.get('serviceRequestCount').value as unknown as Blob);   
     this.InsertForm.append("PackageDuration",this.PackageForm.get('packageDuration').value as unknown as Blob);   
     this.InsertForm.append("IsActive","true" as unknown as Blob)    

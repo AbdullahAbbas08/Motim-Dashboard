@@ -9,6 +9,7 @@ export const environment = {
     messagingSenderId: "Your Sender Id"
   },
   Server_URL:'https://motimdevapi.wecancity.com/api',
+  // Server_URL:'http://localhost:55463/api',
   Server_Image_URL:'https://motimdevapi.wecancity.com/images/',
   Image:'../assets/images/dashboard',
   ErrorMessage_Header:"حدث خطأ فنى !!",

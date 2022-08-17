@@ -34,6 +34,7 @@ import { DepartmentsComponent } from './lookups/ServiceProvider/Service-Provider
 import { InsertDepartmentComponent } from './lookups/ServiceProvider/insert-Service-Provider/insert-service-provider.component';
 import { InsertReasonComponent } from './lookups/reasons/insert-reason/insert-reason.component';
 import { ReasonsComponent } from './lookups/reasons/reason-list/reasons.component';
+import { FielderrorModule } from './Shared/fielderror/fielderror.module';
 
 
 
@@ -74,6 +75,7 @@ import { ReasonsComponent } from './lookups/reasons/reason-list/reasons.componen
     ArchwizardModule,
     SweetAlert2Module,
     RouterModule,
+    FielderrorModule,
     NgxPrintElementModule,
     NgMultiSelectDropDownModule.forRoot()
   ],

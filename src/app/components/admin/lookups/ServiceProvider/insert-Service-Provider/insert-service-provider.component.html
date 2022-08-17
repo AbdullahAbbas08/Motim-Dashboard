@@ -129,6 +129,10 @@
                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" 
                           maxlength="14"
                           minlength="14" />
+                          <app-fielderror 
+                          [displayError]="isFieldValid('nid')"
+                          errorMsg="يجب ان يحتوى الرقم القومى على 14 رقم"
+                        ></app-fielderror>
                   <ng-container class="invalid" style="color: red" *ngIf="
                       InsertForm.get('nid').hasError('required') &&
                       InsertForm.get('nid').touched">
@@ -150,10 +154,15 @@
                         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" 
                           maxlength="13"
                           minlength="13" />
+                          <app-fielderror 
+                        [displayError]="isFieldValid('mobile')"
+                        errorMsg="يجب ان يحتوى رقم الموبايل على 13 رقم"
+                      ></app-fielderror>
 
                   <ng-container class="invalid" style="color: red" *ngIf="
                       InsertForm.get('mobile').hasError('required') &&
-                      InsertForm.get('mobile').touched">
+                      InsertForm.get('mobile').touched && 
+                      InsertForm.get('mobile').hasError('min')">
                     <span style="color: red;">
                       رقم الموبايل مطلوب
                     </span>
@@ -174,6 +183,22 @@
                 </div>
               </div>
 
+          
+              <!-- cityId -->
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label>أختر المنطقة</label>
+                  <Select class="form-control" formControlName="regionId" aria-label="Default select example"
+                    (change)="Selectedregion($event)">
+                    <option value="" selected disabled>
+                      {{ region }}
+                    </option>
+                    <option *ngFor="let obj of Region_List" value="{{ obj.regionID }}">
+                      <h3 class="selected-value">{{ obj.regionName }}</h3>
+                    </option>
+                  </Select>
+                </div>
+              </div>
 
               <!-- cityId -->
               <div class="col-12 col-md-6">
@@ -188,22 +213,6 @@
                     </option>
                     <option *ngFor="let obj of cities_List" value="{{ obj.id }}">
                       <h3 class="selected-value">{{ obj.nameAr }}</h3>
-                    </option>
-                  </Select>
-                </div>
-              </div>
-          
-              <!-- cityId -->
-              <div class="col-12 col-md-6">
-                <div class="form-group">
-                  <label>أختر المنطقة</label>
-                  <Select class="form-control" formControlName="regionId" aria-label="Default select example"
-                    (change)="Selectedregion($event)">
-                    <option value="" selected disabled>
-                      {{ region }}
-                    </option>
-                    <option *ngFor="let obj of Region_List" value="{{ obj.regionID }}">
-                      <h3 class="selected-value">{{ obj.regionName }}</h3>
                     </option>
                   </Select>
                 </div>
