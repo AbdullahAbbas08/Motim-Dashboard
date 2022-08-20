@@ -27,6 +27,7 @@ import { DepartmentsComponent } from './lookups/ServiceProvider/Service-Provider
 import { InsertDepartmentComponent } from './lookups/ServiceProvider/insert-Service-Provider/insert-service-provider.component';
 import { ReasonsComponent } from './lookups/reasons/reason-list/reasons.component';
 import { InsertReasonComponent } from './lookups/reasons/insert-reason/insert-reason.component';
+import { ServiceProviderDataComponent } from './lookups/ServiceProvider/service-provider-data/service-provider-data.component';
 
 const routes: Routes = [
   {
@@ -132,6 +133,9 @@ const routes: Routes = [
       },
       {
         path:'Insertserviceprovider', component: InsertDepartmentComponent
+      },
+      {
+        path:'getServiceProvider', component: ServiceProviderDataComponent
       },
       {
         path:'Insertserviceprovider/:id', component: InsertDepartmentComponent

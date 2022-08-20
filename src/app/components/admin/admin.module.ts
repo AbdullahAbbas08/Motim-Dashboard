@@ -35,6 +35,7 @@ import { InsertDepartmentComponent } from './lookups/ServiceProvider/insert-Serv
 import { InsertReasonComponent } from './lookups/reasons/insert-reason/insert-reason.component';
 import { ReasonsComponent } from './lookups/reasons/reason-list/reasons.component';
 import { FielderrorModule } from './Shared/fielderror/fielderror.module';
+import { ServiceProviderDataComponent } from './lookups/ServiceProvider/service-provider-data/service-provider-data.component';
 
 
 
@@ -66,7 +67,8 @@ import { FielderrorModule } from './Shared/fielderror/fielderror.module';
     DepartmentsComponent,
     InsertDepartmentComponent,
     InsertReasonComponent,
-    ReasonsComponent
+    ReasonsComponent,
+    ServiceProviderDataComponent
   ],
   imports: [
     CommonModule,

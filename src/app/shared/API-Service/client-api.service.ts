@@ -54,6 +54,11 @@ export class ClientApiService {
     
     return this.http.post<any>(`${environment.Server_URL}/User/register/administrators`, form);
   }
+ 
+  GetAllProfile(): Observable<any[]> {
+    
+    return this.http.get<any[]>(`${environment.Server_URL}/User/GetAllProfile`);
+  }
 
   UpdateClient(id: string, form: any): Observable<GenericResponseSingle<any>> {
     

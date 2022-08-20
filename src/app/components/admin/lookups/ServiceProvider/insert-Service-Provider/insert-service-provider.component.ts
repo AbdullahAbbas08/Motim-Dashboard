@@ -46,7 +46,7 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
   cities_List: getCities[];
   Filtered_cities_List: getCities[];
   Client_Type_List: GetClientType[];
-  logoForm = new FormData();
+  groupID:any = -1;
   pass: string;
   //#endregion
 
@@ -162,6 +162,13 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
         text: "أختر المنطقة أولا",
       })
     }
+    else if (this.groupID == -1) {
+      Swal.fire({
+        icon: 'error',
+        title: 'خطأ',
+        text: "أختر المجموعة أولا",
+      })
+    }
     // else if (this.InsertForm.get('groupid').value == -1) {
     //   Swal.fire({
     //     icon: 'error',
@@ -177,28 +184,28 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
       })
     }
     else {
-
-      this.logoForm.append("FirstNameAr", this.InsertForm.get('name').value)
-      this.logoForm.append("FirstName", this.InsertForm.get('nameEn').value)
-      this.logoForm.append("MiddleNameAr", this.InsertForm.get('mname').value)
-      this.logoForm.append("MiddleName", this.InsertForm.get('mnameEn').value)
-      this.logoForm.append("LastNameAr", this.InsertForm.get('lname').value)
-      this.logoForm.append("LastName", this.InsertForm.get('lnameEn').value)
-      this.logoForm.append("Email", this.InsertForm.get('email').value)
-      this.logoForm.append("NationalID", this.InsertForm.get('nid').value)
-      this.logoForm.append("PhoneNumber", this.InsertForm.get('mobile').value)
-      this.logoForm.append("AddressAR", this.InsertForm.get('address').value)
-      this.logoForm.append("Address", this.InsertForm.get('addressEn').value)
-      this.logoForm.append("CityId", this.InsertForm.get('cityId').value)
+      let logoForm = new FormData();
+      logoForm.append("FirstNameAr", this.InsertForm.get('name').value)
+      logoForm.append("FirstName", this.InsertForm.get('nameEn').value)
+      logoForm.append("MiddleNameAr", this.InsertForm.get('mname').value)
+      logoForm.append("MiddleName", this.InsertForm.get('mnameEn').value)
+      logoForm.append("LastNameAr", this.InsertForm.get('lname').value)
+      logoForm.append("LastName", this.InsertForm.get('lnameEn').value)
+      logoForm.append("Email", this.InsertForm.get('email').value)
+      logoForm.append("NationalID", this.InsertForm.get('nid').value)
+      logoForm.append("PhoneNumber","966"+this.InsertForm.get('mobile').value)
+      logoForm.append("AddressAR", this.InsertForm.get('address').value)
+      logoForm.append("Address", this.InsertForm.get('addressEn').value)
+      logoForm.append("CityId", this.InsertForm.get('cityId').value)
      
-      this.logoForm.append("RegionID", this.InsertForm.get('regionId').value)
-      this.logoForm.append("Password", this.InsertForm.get('password').value)
-      this.logoForm.append("PassportID", this.InsertForm.get('pid').value)
-      this.logoForm.append("BorderNumber", this.InsertForm.get('pordid').value)
-      this.logoForm.append("Gender", "1")
-  
+      logoForm.append("RegionID", this.InsertForm.get('regionId').value)
+      logoForm.append("Password", this.InsertForm.get('password').value)
+      logoForm.append("PassportID", this.InsertForm.get('pid').value)
+      logoForm.append("BorderNumber", this.InsertForm.get('pordid').value)
+      logoForm.append("Gender", "1")
+      logoForm.append("GroupId",this.groupID as unknown as Blob )
 
-      this.ApiService.InsertServiceProvider(this.logoForm).subscribe(
+      this.ApiService.InsertServiceProvider(logoForm).subscribe(
         response => {
           Swal.fire({
             icon: 'success',
@@ -206,13 +213,19 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
             showConfirmButton: false,
             timer: 1500
           })
-          // this.router.navigateByUrl("content/admin/GetClient");
+          this.router.navigateByUrl("content/admin/getServiceProvider");
           window.setInterval(()=>{
             window.location.reload;
           },1000)
+          this.groupID = -1;
         },
         err => {
-          Error_Message.Message();
+          // Error_Message.Message();
+          Swal.fire({
+            icon: 'error',
+            title: "هناك خطأ",
+            text: err.error,
+       });
         }
       )
     }
@@ -227,20 +240,20 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
       this.pass = this.InsertForm.get('password').value;
     else
       this.pass = "*";
-
-    this.logoForm.append("Id", this.ApiService.Client.clientId)
-    this.logoForm.append("Name", this.InsertForm.get('name').value)
-    this.logoForm.append("CityId", this.InsertForm.get('cityId').value)
-    this.logoForm.append("ClientTypeId", this.InsertForm.get('clientTypeId').value)
-    this.logoForm.append("UserName", this.InsertForm.get('username').value)
-    this.logoForm.append("Password", this.pass)
-    this.logoForm.append("Mobile", this.InsertForm.get('mobile').value)
-    this.logoForm.append("Address", this.InsertForm.get('address').value)
-    this.logoForm.append("LogoPath", this.ApiService.Client.logoPath)
-    this.logoForm.append("Role", Roles.Client)
-
-    if (!this.logoForm.has("Logo"))
-      this.logoForm.append("Logo", null)
+      let logoForm = new FormData();
+   logoForm.append("Id", this.ApiService.Client.clientId)
+   logoForm.append("Name", this.InsertForm.get('name').value)
+   logoForm.append("CityId", this.InsertForm.get('cityId').value)
+   logoForm.append("ClientTypeId", this.InsertForm.get('clientTypeId').value)
+   logoForm.append("UserName", this.InsertForm.get('username').value)
+   logoForm.append("Password", this.pass)
+   logoForm.append("Mobile", this.InsertForm.get('mobile').value)
+   logoForm.append("Address", this.InsertForm.get('address').value)
+   logoForm.append("LogoPath", this.ApiService.Client.logoPath)
+   logoForm.append("Role", Roles.Client)
+   logoForm.append("GroupId",this.groupID as unknown as Blob )
+    if (!logoForm.has("Logo"))
+      logoForm.append("Logo", null)
 
     // this.ApiService.UpdateClient(this.logoForm).subscribe(
     //   response => {
@@ -270,7 +283,7 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
 
   //#region Selected Governorate
   SelectedGroup(event: any) {
-    this.logoForm.append("GroupId",+event.target.value as unknown as Blob )
+    this.groupID = +event.target.value ;
     this.InsertForm.patchValue({
       groupid: +event.target.value
     })
