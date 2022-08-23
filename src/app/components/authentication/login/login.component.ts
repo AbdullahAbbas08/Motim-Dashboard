@@ -60,14 +60,16 @@ export class LoginComponent implements OnInit {
           localStorage.setItem("token", response.data[0].token);
           localStorage.setItem("role", response.data[0].roles[0]);
           localStorage.setItem("username", response.data[0].username);
-          this.toastr.success("تم تسجيل الدخول بنجاح", "الحالة");
-          if(response.data[0].roles[0] == Roles.SERVICEPROVIDER){
+         
+          if(response.data[0].roles.includes(Roles.SERVICEPROVIDER)){
+            this.toastr.success("تم تسجيل الدخول بنجاح", "الحالة");
             this.router.navigateByUrl("/ServiceRequest");
           }
-          else if(response.data[0].roles[0] == Roles.ADMINISTRATOR){
+          else if(response.data[0].roles.includes(Roles.ADMINISTRATOR)){
             this.router.navigateByUrl("/content/admin/GetCategories");
           }
           else{
+            this.toastr.success("عفوا لا تمتلك صلاحية مقدم خدمة", "الحالة");
             this.router.navigateByUrl("/login");
           }
         }

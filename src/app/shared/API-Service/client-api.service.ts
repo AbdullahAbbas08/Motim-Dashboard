@@ -60,12 +60,26 @@ export class ClientApiService {
     return this.http.get<any[]>(`${environment.Server_URL}/User/GetAllProfile`);
   }
 
+  GetUserProfile(userid): Observable<any> {
+    
+    return this.http.get<any>(`${environment.Server_URL}/User/profile/${userid}`);
+  }
+
   UpdateClient(id: string, form: any): Observable<GenericResponseSingle<any>> {
     
     return this.http.post<GenericResponseSingle<any>>(`${environment.Server_URL}/ImageReference/${id}`, form);
   }
 
+  UpdateuserSr( form: any): Observable<any> {
+    
+    return this.http.post<any>(`${environment.Server_URL}/User/UpdateProfileSR`, form);
+  }
+
   DeleteClient(ClientId: string): Observable<any> {
     return this.http.get<any>(`${environment.Server_URL}/ImageReference/delete/${ClientId}`);
+  }
+ 
+  DeleteUser(ClientId: string): Observable<any> {
+    return this.http.get<any>(`${environment.Server_URL}/User/${ClientId}`);
   }
 }

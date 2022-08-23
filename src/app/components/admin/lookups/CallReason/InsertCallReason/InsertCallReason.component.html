@@ -55,29 +55,6 @@
 
                 <div class="col-12">
                   <div class="form-group">
-                    <label for="packageDescription">وصف الباقة باللغة الانجليزية </label>
-                      <textarea
-                      id="packageDescription"
-                      class="form-control p-3 "
-                      placeholder="package Description"
-                      name="w3review"
-                      rows="3"
-                      cols="50"
-                      formControlName="packageDescription">
-                  </textarea>
-
-                    <ng-container class="invalid" style="color: red" *ngIf="
-                      PackageForm.get('packageDescription').hasError('required') &&
-                      PackageForm.get('packageDescription').touched">
-                      <span style="color: red;">
-                        وصف الباقة باللغة الانجليزية مطلوب
-                      </span>
-                    </ng-container>
-                  </div>
-                </div>
-
-                <div class="col-12">
-                  <div class="form-group">
                     <label for="packageDescriptionAR">وصف الباقة باللغة العربية</label>
 
                       <textarea
@@ -100,6 +77,29 @@
                   </div>
                 </div>
 
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="packageDescription">وصف الباقة باللغة الانجليزية </label>
+                      <textarea
+                      id="packageDescription"
+                      class="form-control p-3 "
+                      placeholder="package Description"
+                      name="w3review"
+                      rows="3"
+                      cols="50"
+                      formControlName="packageDescription">
+                  </textarea>
+
+                    <ng-container class="invalid" style="color: red" *ngIf="
+                      PackageForm.get('packageDescription').hasError('required') &&
+                      PackageForm.get('packageDescription').touched">
+                      <span style="color: red;">
+                        وصف الباقة باللغة الانجليزية مطلوب
+                      </span>
+                    </ng-container>
+                  </div>
+                </div>
+                
 
 
                 <div class="col-12+">

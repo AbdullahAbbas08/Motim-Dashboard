@@ -28,12 +28,11 @@ export class ServiceProviderDataComponent implements OnInit {
   }
 
   get() {
-    debugger
+
     this.ApiService.GetAllProfile().subscribe(
       response => {
-        debugger
         this.Response_List = response;
-        console.log(response);
+        // console.log(response);
         
       },
       err => {
@@ -41,51 +40,46 @@ export class ServiceProviderDataComponent implements OnInit {
       }
     )
   }
+
+  
   //#endregion
 
   //#region  Delete Governoate
-  // Delete(id:number){
-  //   debugger
-  //   Swal.fire({
-  //     title: ' تحذير !',
-  //     text: "هل انت متأكد من حذف هذا العنصر ؟ ",
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonColor: '#F00',
-  //     cancelButtonColor: '#d33',
-  //     confirmButtonText: 'حذف',
-  //     cancelButtonText: 'إنهاء',
-  //   })
-  //   .then((result) => {
+  Delete(id:any){
+    Swal.fire({
+      title: ' تحذير !',
+      text: "هل انت متأكد من عملية الحذف  ؟ ",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#F00',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'حذف',
+      cancelButtonText: 'إنهاء',
+    })
+    .then((result) => {
 
-  //     if (result.isConfirmed) {
-  //         this.ApiService.GetAllProfile(id).subscribe(
-  //           response=>{
-  //             debugger
-  //             this.getGovernoate();
-  //              Swal.fire({
-  //                   icon: 'success',
-  //                   title: "تم حذف المحافظة بنجاح",
-  //                   showConfirmButton: false,
-  //                   timer: 1500}) 
-  //                 },
-  //           err=>{
-  //             debugger
-  //             Swal.fire({
-  //               icon: 'error',
-  //               title: 'خطأ',
-  //               text: err.error,
-  //             })
-  //           }
-  //         )
+      if (result.isConfirmed) {
+          this.ApiService.DeleteUser(id).subscribe(
+            response=>{
+              this.get()
+               Swal.fire({
+                    icon: 'success',
+                    title: "تمت عملية الحذف  بنجاح",
+                    showConfirmButton: false,
+                    timer: 1500}) 
+                  },
+            err=>{
+              Error_Message.Message();
+            }
+          )
         
-  //     } else {
-  //       // Swal.fire(
-  //       //   'Your appointment still active ',
-  //       // );
-  //     }
-  //   }); 
-  // }
+      } else {
+        // Swal.fire(
+        //   'Your appointment still active ',
+        // );
+      }
+    }); 
+  }
   //#endregion
   
   //#endregion
@@ -96,14 +90,9 @@ export class ServiceProviderDataComponent implements OnInit {
   }
   //#endregion
 
-  //#region Governoate
-  // update(id:number,title:any){
-  //   debugger
-  //   this.governorateApiService.title = title;
-  //   localStorage.setItem("riskgovernorate",JSON.stringify(title))
-  //   this.router.navigate(['content/admin/update-governorate',id]);
-  // }
-  //#endregion
+  update(id:string){
+    this.router.navigate(['content/admin/Insertserviceprovider',id]);
+  }
 
 
 }

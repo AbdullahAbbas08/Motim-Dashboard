@@ -23,10 +23,10 @@
               <div class="col-12 col-md-6">
                 <div class="form-group">
                   <label for="name">الأسم الأول  </label>
-                  <input class="form-control" id="name" type="text" placeholder="أكتب الأسم هنا" formControlName="name" />
-                  <ng-container class="invalid" style="color: red" *ngIf="
-                      InsertForm.get('name').hasError('required') &&
-                      InsertForm.get('name').touched">
+                  <input class="form-control" 
+                        type="text" placeholder="أكتب الأسم هنا" 
+                        formControlName="name" />
+                  <ng-container class="invalid" style="color: red" *ngIf="InsertForm.get('name').hasError('required') &&InsertForm.get('name').touched">
                     <span style="color: red;">
                       الأسم الأول مطلوب
                     </span>
@@ -37,7 +37,9 @@
               <div class="col-12 col-md-6">
                 <div class="form-group">
                   <label for="nameEn"> الأسم الأول ( إنجليزى )  </label>
-                  <input class="form-control" id="nameEn" type="text" placeholder="Enter Name Here" formControlName="nameEn" />
+                  <input class="form-control" 
+                   type="text" placeholder="Enter Name Here" 
+                   formControlName="nameEn" />
                   <ng-container class="invalid" style="color: red" *ngIf="
                       InsertForm.get('nameEn').hasError('required') &&
                       InsertForm.get('nameEn').touched">
@@ -50,8 +52,10 @@
               
               <div class="col-12 col-md-6">
                 <div class="form-group">
-                  <label for="mname">الأسم الأوسط  </label>
-                  <input class="form-control" id="mname" type="text" placeholder="أكتب الأسم هنا" formControlName="mname" />
+                  <label >الأسم الأوسط  </label>
+                  <input class="form-control" 
+                   type="text" placeholder="أكتب الأسم هنا" 
+                   formControlName="mname" />
                   <ng-container class="invalid" style="color: red" *ngIf="
                       InsertForm.get('mname').hasError('required') &&
                       InsertForm.get('mname').touched">
@@ -64,8 +68,9 @@
              
               <div class="col-12 col-md-6">
                 <div class="form-group">
-                  <label for="mnameEn"> الأسم الأوسط ( إنجليزى )  </label>
-                  <input class="form-control" id="mnameEn" type="text" placeholder="Enter Name Here" formControlName="nameEn" />
+                  <label > الأسم الأوسط ( إنجليزى )  </label>
+                  <input class="form-control"  type="text" 
+                  placeholder="Enter Name Here" formControlName="nameEn" />
                   <ng-container class="invalid" style="color: red" *ngIf="
                       InsertForm.get('mnameEn').hasError('required') &&
                       InsertForm.get('mnameEn').touched">
@@ -78,8 +83,9 @@
               
               <div class="col-12 col-md-6">
                 <div class="form-group">
-                  <label for="lname">الأسم الأخير  </label>
-                  <input class="form-control" id="lname" type="text" placeholder="أكتب الأسم هنا" formControlName="lname" />
+                  <label >الأسم الأخير  </label>
+                  <input class="form-control" 
+                   type="text" placeholder="أكتب الأسم هنا" formControlName="lname" />
                   <ng-container class="invalid" style="color: red" *ngIf="
                       InsertForm.get('lname').hasError('required') &&
                       InsertForm.get('lname').touched">
@@ -92,8 +98,9 @@
              
               <div class="col-12 col-md-6">
                 <div class="form-group">
-                  <label for="lnameEn"> الأسم الأخير ( إنجليزى )  </label>
-                  <input class="form-control" id="lnameEn" type="text" placeholder="Enter Name Here" formControlName="lnameEn" />
+                  <label > الأسم الأخير ( إنجليزى )  </label>
+                  <input class="form-control" 
+                   type="text" placeholder="Enter Name Here" formControlName="lnameEn" />
                   <ng-container class="invalid" style="color: red" *ngIf="
                       InsertForm.get('lnameEn').hasError('required') &&
                       InsertForm.get('lnameEn').touched">
@@ -107,7 +114,8 @@
               <div class="col-12 col-md-6">
                 <div class="form-group">
                   <label for="email">البريد الإلكترونى   </label>
-                  <input class="form-control" id="email" type="email" placeholder="example@abc123.com" formControlName="email" />
+                  <input class="form-control" 
+                   type="email" placeholder="example@abc123.com" formControlName="email" />
                   <ng-container class="invalid" style="color: red" *ngIf="
                       InsertForm.get('email').hasError('required') &&
                       InsertForm.get('email').touched">
@@ -120,9 +128,9 @@
              
               <div class="col-12 col-md-6">
                 <div class="form-group">
-                  <label for="nid"> الرقم القومى  </label>
+                  <label > الرقم القومى  </label>
                   <input class="form-control" 
-                          id="nid" 
+                           
                           type="text" 
                           placeholder="أكتب الرقم القومى هنا (14 أكتب رقم)" 
                           formControlName="nid"
@@ -143,7 +151,6 @@
                 </div>
               </div>
              
-               <!-- mobile -->
                <div class="col-12 col-md-6">
                 <div class="form-group">
                   <label>رقم الموبايل </label>
@@ -174,21 +181,40 @@
                 </div>
               </div>
              
-              <!-- password -->
               <div class="col-12 col-md-6">
                 <div class="form-group">
                   <div *ngIf="update; else elseBlock12">
-                    <label> تعديل كلمة المرور </label>
+                    <label>  كلمة المرور </label>
                   </div>
                   <ng-template #elseBlock12>
                     <label>كلمة المرور </label>
                   </ng-template>
-                  <input class="form-control" type="password" formControlName="password" placeholder="***********" />
+
+                  <div class="row" *ngIf="update == true;else notupdate">
+                    <div class="col-11">
+                      <input class="form-control" 
+                      type="password"
+                      formControlName="password" 
+                      placeholder="***********" 
+                      [readonly]="!updatepass"/>
+                    </div>
+                    <div class="col-1 mr-10" 
+                        (click)="updatepassword()"
+                        style="cursor:pointer ;" 
+                        [hidden]="!update">
+                        <i class='fa fa-edit st-font' ></i>
+                    </div>
+                  </div>
+                  <ng-template #notupdate>
+                    <input class="form-control" 
+                    type="password"
+                    formControlName="password" 
+                    placeholder="***********" />
+                  </ng-template>       
                 </div>
               </div>
 
           
-              <!-- cityId -->
               <div class="col-12 col-md-6">
                 <div class="form-group">
                   <label>أختر المنطقة</label>
@@ -197,6 +223,7 @@
                     <option value="" selected disabled>
                       {{ region }}
                     </option>
+                    <!-- <option selected></option> -->
                     <option *ngFor="let obj of Region_List" value="{{ obj.regionID }}">
                       <h3 class="selected-value">{{ obj.regionName }}</h3>
                     </option>
@@ -204,7 +231,6 @@
                 </div>
               </div>
 
-              <!-- cityId -->
               <div class="col-12 col-md-6">
                 <div class="form-group">
                   <label>أختر المدينة</label>
@@ -250,7 +276,6 @@
                 </div>
               </div>
 
-              <!-- address -->
               <div class="col-12 col-md-6">
                 <div class="form-group">
                   <label for="address">العنوان   </label>
@@ -260,7 +285,6 @@
                 </div>
               </div>
               
-              <!-- address en -->
               <div class="col-12 col-md-6">
                 <div class="form-group">
                   <label for="addressEn"> العنوان باللغة الانجليزية  </label>
@@ -279,7 +303,7 @@
                       {{ group }}
                     </option>
                     <option *ngFor="let obj of group_List" value="{{ obj.id }}">
-                      <h3 class="selected-value">{{ obj.name }}</h3>
+                      <h3 class="selected-value">{{ obj.nameAr }}</h3>
                     </option>
                   </Select>
                 </div>

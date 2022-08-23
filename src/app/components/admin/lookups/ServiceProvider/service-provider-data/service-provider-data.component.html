@@ -21,26 +21,26 @@
             <table class="table" style="width: 100%;">
               <thead>
                 <tr class="bg-darkk">
-                  <th scope="col" class="f-16 text-white" style="width: 5%;">#</th>
-                  <th scope="col" class="f-16 text-white" style="width: 25%;">الاسم  </th>
-                  <th scope="col" class="f-16 text-white" style="width: 22.5%;"> البريد الإلكترونى</th>
-                  <th scope="col" class="f-16 text-white" style="width: 22.5%;">  الرقم القومى</th>
-                  <th scope="col" class="f-16 text-white" style="width: 20%;"> رقم الموبايل</th>
-                  <!-- <th scope="col" class="f-16 text-white" style="width: 30%;">إعدادت</th> -->
+                  <th scope="col" class="f-16 text-white" style="width: 1%;">#</th>
+                  <th scope="col" class="f-16 text-white" style="width: 20%;">الاسم  </th>
+                  <th scope="col" class="f-16 text-white" style="width: 19%;"> البريد الإلكترونى</th>
+                  <th scope="col" class="f-16 text-white" style="width: 15%;">  الرقم القومى</th>
+                  <th scope="col" class="f-16 text-white" style="width: 15%;"> رقم الموبايل</th>
+                  <th scope="col" class="f-16 text-white" style="width: 30%;">إعدادت</th>
                 </tr>
               </thead>
               <tbody >
                 <tr *ngFor="let item of Response_List;let i=index">
-                  <th scope="row" class="font-style" style="width: 5%;text-align: right;">{{i+1}}</th>
-                  <td style="width: 25%;" class="font-style">  {{item.firstNameAr}}  {{item.middleNameAr}}</td>
-                  <td style="width: 22.5%;" class="font-style">  {{item.email}}</td>
-                  <td style="width: 22.5%;" class="font-style">  {{item.nationalID}}</td>
-                  <td style="width: 20%;" class="font-style">  {{item.phoneNumber}}</td>
-                  <!-- <td class="font-style" style="width: 30%;">
+                  <th scope="row" class="font-style" style="width: 1%;text-align: right;">{{i+1}}</th>
+                  <td style="width: 20%;" class="font-style">  {{item.firstNameAr}}  {{item.middleNameAr}}</td>
+                  <td style="width: 19%;" class="font-style">  {{item.email}}</td>
+                  <td style="width: 15%;" class="font-style">  {{item.nationalID}}</td>
+                  <td style="width: 15%;" class="font-style">  {{item.phoneNumber}}</td>
+                  <td class="font-style" style="width: 30%;">
                         <button class="btn btn-danger mx-1"
-                                (click)="Delete(item.regionID)">حذف</button>
-                        <button class="btn btn-success" (click)="update(item.regionID, item)">تعديل</button>
-                    </td> -->
+                                (click)="Delete(item.userID)">حذف</button>
+                        <button class="btn btn-success" (click)="update(item.userID)">تعديل</button>
+                    </td>
                 </tr>
               </tbody>
             </table>

@@ -48,6 +48,28 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
   Client_Type_List: GetClientType[];
   groupID:any = -1;
   pass: string;
+  userData:any={
+    "userName": "",
+    "firstName": "",
+    "firstNameAr": "",
+    "middleName": "",
+    "middleNameAr": "",
+    "lastName": "",
+    "lastNameAr": "",
+    "phoneNumber": "",
+    "nationalID": "",
+    "passportID": "",
+    "borderNumber": "",
+    "region": "",
+    "regionId": 0,
+    "city": "",
+    "cityId": 0,
+    "address": "",
+    "addressAr": "",
+    "email": "",
+    "gender": "Male",
+  };
+  updatepass:boolean;
   //#endregion
 
   //#region  constructor
@@ -59,7 +81,9 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
     private groupService: GroupService,
     private clientTypeApiService: ClientTypeApiService,
     private router: Router,
-    private route: ActivatedRoute) { this.maxDate = new Date() }
+    private route: ActivatedRoute) { this.maxDate = new Date() 
+     
+    }
   ngOnDestroy(): void {
     
   }
@@ -67,8 +91,8 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
 
   //#region  ng OnInit
   ngOnInit(): void {
-    this.imgURL = "./assets/images/statics/personAvatar.png";
-
+    this.updatepass = false;
+   this._InitForm();
     this.Govern_id = -1;
     this.group_List = [];
     this.Region_List = [];
@@ -77,48 +101,72 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
     this.getGroup();
     this.GetRegion();
     // this.GetCities();
-
-    if (this.route.snapshot.paramMap.get('id')) {
-      this.ApiService.Client=JSON.parse(localStorage.getItem("RiskClientData"));
-      this.InitForm(this.ApiService.Client)
-      this.update = true;
-    } else {
-      this.update = false;
-      this._InitForm();
-      this.Governorate = "أختر المحافظة";
-      this.City = "أختر المدينة";
-      this.region = "أختر المنطقة";
-      this.group = "أختر المجموعة";
-    }
+    if (this.route.snapshot.paramMap.get('id')) {  
+      this.GetUserProfile(this.route.snapshot.paramMap.get('id')) 
+        // this.InitForm( this.userData); 
+     this.update = true;
+   } else {
+     this.update = false;
+    //  this._InitForm();
+     this.Governorate = "أختر المحافظة";
+     this.City = "أختر المدينة";
+     this.region = "أختر المنطقة";
+     this.group = "أختر المجموعة";
+   }
+  
 
   }
   //#endregion
 
   //#region  Init Form
-  InitForm(client: GetClient) {
-    this.Governorate = client.governorateTitle;
-    this.City = client.cityTitle;
-    this.imgURL = "./assets/images/MainDirectory/" + client.logoPath;
+  
+  InitForm(data: any) {
+    // this.Governorate = data.governorateTitle;
+    // this.City = data.cityTitle; 
+    this.GetCities(data.regionId); 
+    this.InsertForm.patchValue({
+      name: data.firstNameAr,
+      nameEn:data.firstName,
+      mname:data.middleNameAr,
+      mnameEn:data.middleName,
+      lname: data.lastNameAr,
+      lnameEn:data.lastName,
+      email:data.email,
+      nid:data.nationalID,
+      mobile:data.phoneNumber.substring(3),
+      address:data.addressAr,
+      addressEn:data.address,
+      cityId: data.cityId,
+      groupid: data.userGroupID,
+      regionId: data.regionId,
+      password: '############',
+      pid: data.passportID,
+      pordid: data.borderNumber,
+    }) 
 
-    this.InsertForm = this._formBuilder.group({
-      name: ['', Validators.required],
-      nameEn: ['', Validators.required],
-      mname: ['', Validators.required],
-      mnameEn: ['-1', Validators.required],
-      lname: ['', Validators.required],
-      lnameEn: ['', Validators.required],
-      email: ['', Validators.required],
-      nid: ['', Validators.required,Validators.minLength(14),Validators.maxLength(14)],
-      mobile: ['', Validators.required,Validators.minLength(13),Validators.maxLength(13)],
-      address: ['', Validators.required],
-      addressEn: ['', Validators.required],
-      cityId: ['-1', Validators.required],
-      groupid: ['-1', Validators.required],
-      regionId: ['-1', Validators.required],
-      password: ['', Validators.required],
-      pid: ['', Validators.required],
-      pordid: ['', Validators.required],
-    });
+    this.region = this.Region_List.filter(x=>x.regionID == data.regionId)[0].regionName;
+    this.City =  data.city;
+    this.group = this.group_List.filter(x=>x.id == data.userGroupID)[0].nameAr;
+        
+    // this.InsertForm = this._formBuilder.group({
+    //   name:   [data.firstNameAr, Validators.required],
+    //   nameEn: [data.firstName, Validators.required],
+    //   mname:    [data.middleNameAr , Validators.required],
+    //   mnameEn: [data.middleName, Validators.required],
+    //   lname: [data.lastNameAr, Validators.required],
+    //   lnameEn: [data.lastName, Validators.required],
+    //   email: [data.email, Validators.required],
+    //   nid: [data.nationalID, Validators.required,Validators.minLength(14),Validators.maxLength(14)],
+    //   mobile: [data.phoneNumber, Validators.required,Validators.minLength(13),Validators.maxLength(13)],
+    //   address: [data.addressAr, Validators.required],
+    //   addressEn: [data.address, Validators.required],
+    //   cityId: [data.cityId, Validators.required],
+    //   groupid: [data, Validators.required],
+    //   regionId: [data.regionId, Validators.required],
+    //   password: ['', Validators.required],
+    //   pid: [data.passportID, Validators.required],
+    //   pordid: [data.borderNumber, Validators.required],
+    // });
   }
   _InitForm() {
     this.InsertForm = this._formBuilder.group({
@@ -129,20 +177,17 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
       lname: ['', Validators.required],
       lnameEn: ['', Validators.required],
       email: ['', Validators.required],
-      nid: ['', Validators.required,Validators.minLength(14),Validators.maxLength(14)],
-      mobile: ['', Validators.required ,Validators.required,Validators.minLength(13),Validators.maxLength(13)],
+      nid: ['', Validators.required],
+      mobile: ['', Validators.required ],
       address: ['', Validators.required],
       addressEn: ['', Validators.required],
       cityId: ['-1', Validators.required],
       groupid: ['-1', Validators.required],
       regionId: ['-1', Validators.required],
-      password: ['', Validators.required],
+      password: ['############', Validators.required],
       pid: ['', Validators.required],
       pordid: ['', Validators.required],
     });
-    this.imgURL = "./assets/images/statics/personAvatar.png";
-    // console.log("imgURL : ",this.imgURL);
-
   }
   //#endregion
 
@@ -162,7 +207,7 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
         text: "أختر المنطقة أولا",
       })
     }
-    else if (this.groupID == -1) {
+    else if (this.InsertForm.get('groupid').value == -1) {
       Swal.fire({
         icon: 'error',
         title: 'خطأ',
@@ -235,52 +280,49 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
 
   //#region Update Client
   UpdateClient() {
-
-    if (this.InsertForm.get('password').value != '')
-      this.pass = this.InsertForm.get('password').value;
-    else
-      this.pass = "*";
-      let logoForm = new FormData();
-   logoForm.append("Id", this.ApiService.Client.clientId)
-   logoForm.append("Name", this.InsertForm.get('name').value)
-   logoForm.append("CityId", this.InsertForm.get('cityId').value)
-   logoForm.append("ClientTypeId", this.InsertForm.get('clientTypeId').value)
-   logoForm.append("UserName", this.InsertForm.get('username').value)
-   logoForm.append("Password", this.pass)
-   logoForm.append("Mobile", this.InsertForm.get('mobile').value)
-   logoForm.append("Address", this.InsertForm.get('address').value)
-   logoForm.append("LogoPath", this.ApiService.Client.logoPath)
-   logoForm.append("Role", Roles.Client)
-   logoForm.append("GroupId",this.groupID as unknown as Blob )
-    if (!logoForm.has("Logo"))
-      logoForm.append("Logo", null)
-
-    // this.ApiService.UpdateClient(this.logoForm).subscribe(
-    //   response => {
-    //     Swal.fire({
-    //       icon: 'success',
-    //       title: "تم تعديل العميل بنجاح",
-    //       showConfirmButton: false,
-    //       timer: 1500
-    //     })
-    //     this.router.navigateByUrl("content/admin/GetClient");
-    //     localStorage.removeItem("RiskClientData")
-    //     window.setInterval(()=>{
-    //       window.location.reload;
-    //     },1000)
-    //   },
-    //   err => {
-    //     // console.log(err.error);
-    //     // Swal.fire({
-    //     //   icon: 'error',
-    //     //   title: 'خطأ',
-    //     //   text: "هناك خطأ ما برجاء المحاولة مرة اخرى",
-    //     // })
-    //   }
-    // )
+    
+    this.ApiService.UpdateuserSr({
+      "firstName": this.InsertForm.get('nameEn').value,
+      "firstNameAr": this.InsertForm.get('name').value,
+      "middleName": this.InsertForm.get('mnameEn').value,
+      "middleNameAr": this.InsertForm.get('mname').value,
+      "lastName": this.InsertForm.get('lnameEn').value,
+      "lastNameAr": this.InsertForm.get('lname').value,
+      "phoneNumber":"966"+this.InsertForm.get('mobile').value,
+      "nationalID": this.InsertForm.get('nid').value,
+      "passportID": this.InsertForm.get('pid').value,
+      "borderNumber": this.InsertForm.get('pordid').value,
+      "regionID": this.InsertForm.get('regionId').value,
+      "cityId": this.InsertForm.get('cityId').value,
+      "userGroupId": this.InsertForm.get('groupid').value,
+      "address": this.InsertForm.get('addressEn').value,
+      "password":this.InsertForm.get('password').value,
+      "addressAR": this.InsertForm.get('address').value,
+      "email": this.InsertForm.get('email').value,
+      "userId": this.route.snapshot.paramMap.get('id')
+    }).subscribe(
+      response => {
+        Swal.fire({
+          icon: 'success',
+          title: "تم التعديل  بنجاح",
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.router.navigateByUrl("content/admin/getServiceProvider");
+      },
+      err => {
+        Swal.fire({
+          icon: 'error',
+          title: 'خطأ',
+          text: err.error,
+        })
+      }
+    )
   }
   //#endregion
-
+  updatepassword(){
+    this.updatepass = !this.updatepass;
+  }
   //#region Selected Governorate
   SelectedGroup(event: any) {
     this.groupID = +event.target.value ;
@@ -334,6 +376,8 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
     this.groupService.Get().subscribe(
       response => {
         this.group_List = response.data;
+        // console.log(response.data);
+        
         // response.data.forEach(element => {
         //   // this.Governorate_Dictionary[element.id] = element.title;
         // }
@@ -361,6 +405,20 @@ export class InsertDepartmentComponent implements OnInit,OnDestroy {
         //   title: 'خطأ',
         //   text: err.error,
         // })
+      }
+    )
+  }
+  
+  GetUserProfile(id) {
+    this.ApiService.GetUserProfile(id).subscribe(
+      response => {
+        // this.userData = response.data[0]
+        console.log(response);
+        
+       this.InitForm(response.data[0]);  
+      },
+      err => {
+       
       }
     )
   }
